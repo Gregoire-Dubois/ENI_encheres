@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+		<Resource
+		name="jdbc/pool_cnx"
+		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		type="javax.sql.DataSource"
+			
+		url="jdbc:sqlserver://srv-projets-eni.database.windows.net:1433;database=BDD_ENCHERES;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30"
+		username="admin-srv"
+		password="9kB52q82"
+		
+		maxTotal="100"
+		maxIdle="30"
+		maxWaitMillis="10000"
+	/>
+</Context>
