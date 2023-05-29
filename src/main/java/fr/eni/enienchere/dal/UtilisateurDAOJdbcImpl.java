@@ -32,6 +32,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_BY_ID_ECHEC);
 		}finally {
 			if(cnx !=null) {
 				try {
