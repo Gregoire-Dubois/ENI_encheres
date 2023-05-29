@@ -2,18 +2,20 @@ package fr.eni.enienchere.bo;
 
 public class Utilisateur {
 	
-	protected int no_utilisateur;
-	protected String pseudo;
-	protected String nom; 
-	protected String prenom;
-	protected String email;
-	protected String telephone;
-	protected String rue;
-	protected String code_postal; 
-	protected String ville; 
-	protected String mot_de_passe; 
-	protected Integer credit; 
-	protected Boolean administrateur;
+	private static final long serialVersionUID = 1L;
+	
+	private int no_utilisateur;
+	private String pseudo;
+	private String nom; 
+	private String prenom;
+	private String email;
+	private String telephone;
+	private String rue;
+	private String code_postal; 
+	private String ville; 
+	private String mot_de_passe; 
+	private Integer credit; 
+	private Boolean administrateur;
 	
 	
 	public Utilisateur() {
