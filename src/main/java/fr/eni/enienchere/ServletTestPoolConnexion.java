@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 /**
  * Servlet implementation class ServletTestPoolConnexion
  */
-@WebServlet("/eni_enchere/ServletTestPoolConnexion")
+@WebServlet("/eni_encheres/ServletTestPoolConnexion")
 public class ServletTestPoolConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
