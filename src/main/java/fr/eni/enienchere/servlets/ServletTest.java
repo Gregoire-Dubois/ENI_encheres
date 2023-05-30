@@ -14,7 +14,7 @@ import fr.eni.enienchere.bo.Utilisateur;
 /**
  * Servlet implementation class ServletTest
  */
-@WebServlet("/servlets/ServletTest")
+@WebServlet("/servlets/test/ServletTest")
 public class ServletTest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -52,3 +52,5 @@ public class ServletTest extends HttpServlet {
 	}
 
 }
+
+
