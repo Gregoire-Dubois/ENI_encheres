@@ -47,5 +47,7 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+*.classpath
+*.project
 
 /build/

@@ -23,6 +23,7 @@ public class ArticleVendu {
 	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
 			Date dateFinEncheres, int prixInitial, int prixVente, int noUtilisateur, int noCategorie) {
 		super();
+		
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
