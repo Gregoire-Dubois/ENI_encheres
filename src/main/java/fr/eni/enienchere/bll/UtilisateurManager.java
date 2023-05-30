@@ -19,9 +19,24 @@ public class UtilisateurManager {
 		return utilisateur;
 	}
 
-	public Utilisateur selectionner_email_mdp(String email, String mdp) throws BusinessException {
+	public Utilisateur selectionnerEmailMdp(String email, String mdp) throws BusinessException {
 
 		Utilisateur utilisateur = this.utilisateurDAO.selectByEmailMdp(email, mdp);
+
+		return utilisateur;
+	}
+	
+	public Utilisateur selectionnerPseudoMdp(String pseudo, String mdp) throws BusinessException {
+
+		Utilisateur utilisateur = this.utilisateurDAO.selectByPseudoMdp(pseudo, mdp);
+
+		return utilisateur;
+	}
+	
+	public Utilisateur inscrire(Utilisateur utilisateur) throws BusinessException {
+		
+
+		utilisateur = this.utilisateurDAO.insert(utilisateur);
 
 		return utilisateur;
 	}
