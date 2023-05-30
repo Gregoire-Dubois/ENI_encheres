@@ -4,16 +4,16 @@ public class Utilisateur {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private int no_utilisateur;
+	private int noUtilisateur;
 	private String pseudo;
 	private String nom; 
 	private String prenom;
 	private String email;
 	private String telephone;
 	private String rue;
-	private String code_postal; 
+	private String codePostal; 
 	private String ville; 
-	private String mot_de_passe; 
+	private String motDePasse; 
 	private Integer credit; 
 	private Boolean administrateur;
 	
@@ -34,9 +34,9 @@ public class Utilisateur {
 		this.email = email;
 		this.telephone = telephone;
 		this.rue = rue;
-		this.code_postal = code_postal;
+		this.codePostal = code_postal;
 		this.ville = ville;
-		this.mot_de_passe = mot_de_passe;
+		this.motDePasse = mot_de_passe;
 		this.credit = credit;
 		this.administrateur = administrateur;
 	}
@@ -44,30 +44,24 @@ public class Utilisateur {
 
 	// constructeur avec toutes les variables utilisateur
 
-	public Utilisateur(int no_utilisateur, String pseudo, String nom, String prenom, String email, String telephone,
+	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String code_postal, String ville, String mot_de_passe, Integer credit, Boolean administrateur) {
 		super();
-		this.no_utilisateur = no_utilisateur;
+		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
 		this.telephone = telephone;
 		this.rue = rue;
-		this.code_postal = code_postal;
+		this.codePostal = code_postal;
 		this.ville = ville;
-		this.mot_de_passe = mot_de_passe;
+		this.motDePasse = mot_de_passe;
 		this.credit = credit;
 		this.administrateur = administrateur;
 	}
 
-	public int getNo_utilisateur() {
-		return no_utilisateur;
-	}
-
-	public void setNo_utilisateur(int no_utilisateur) {
-		this.no_utilisateur = no_utilisateur;
-	}
+	
 
 	public String getPseudo() {
 		return pseudo;
@@ -117,12 +111,30 @@ public class Utilisateur {
 		this.rue = rue;
 	}
 
-	public String getCode_postal() {
-		return code_postal;
+	
+
+	public int getNoUtilisateur() {
+		return noUtilisateur;
 	}
 
-	public void setCode_postal(String code_postal) {
-		this.code_postal = code_postal;
+	public void setNoUtilisateur(int noUtilisateur) {
+		this.noUtilisateur = noUtilisateur;
+	}
+
+	public String getCodePostal() {
+		return codePostal;
+	}
+
+	public void setCodePostal(String codePostal) {
+		this.codePostal = codePostal;
+	}
+
+	public String getMotDePasse() {
+		return motDePasse;
+	}
+
+	public void setMotDePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
 	}
 
 	public String getVille() {
@@ -133,13 +145,7 @@ public class Utilisateur {
 		this.ville = ville;
 	}
 
-	public String getMot_de_passe() {
-		return mot_de_passe;
-	}
-
-	public void setMot_de_passe(String mot_de_passe) {
-		this.mot_de_passe = mot_de_passe;
-	}
+	
 
 	public Integer getCredit() {
 		return credit;
@@ -160,9 +166,9 @@ public class Utilisateur {
 
 	@Override
 	public String toString() {
-		return "Utilisateur [no_utilisateur=" + no_utilisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom="
+		return "Utilisateur [no_utilisateur=" + noUtilisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom="
 				+ prenom + ", email=" + email + ", telephone=" + telephone + ", rue=" + rue + ", code_postal="
-				+ code_postal + ", ville=" + ville + ", mot_de_passe=" + mot_de_passe + ", credit=" + credit
+				+ codePostal + ", ville=" + ville + ", mot_de_passe=" + motDePasse + ", credit=" + credit
 				+ ", administrateur=" + administrateur + "]";
 	}
 

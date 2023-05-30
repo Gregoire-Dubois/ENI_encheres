@@ -14,7 +14,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	private static final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?;";
 	private static final String SELECT_BY_EMAIL_ET_MDP="SELECT * FROM UTILISATEURS WHERE email=? AND mot_de_passe=?";
 	@Override
-	public Utilisateur select_by_id(int id) throws BusinessException {
+	public Utilisateur selectById(int id) throws BusinessException {
 		Utilisateur utilisateur = null;
 		Connection cnx = null;
 		
@@ -52,7 +52,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		
 	}
 	@Override
-	public Utilisateur select_by_email_mdp(String email, String mdp) throws BusinessException {
+	public Utilisateur selectByEmailMdp(String email, String mdp) throws BusinessException {
 		Utilisateur utilisateur = null;
 		Connection cnx;
 		
