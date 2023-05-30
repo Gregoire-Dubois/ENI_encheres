@@ -1,4 +1,4 @@
-package fr.eni.enienchere.servlets;
+package fr.eni.enienchere.priscillia;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -12,16 +12,16 @@ import fr.eni.enienchere.bll.UtilisateurManager;
 import fr.eni.enienchere.bo.Utilisateur;
 
 /**
- * Servlet implementation class ServletTest
+ * Servlet implementation class TestPriscillia
  */
-@WebServlet("/servlets/ServletTest")
-public class ServletTest extends HttpServlet {
+@WebServlet("/priscillia/TestPriscillia")
+public class TestPriscillia extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletTest() {
+    public TestPriscillia() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -52,5 +52,3 @@ public class ServletTest extends HttpServlet {
 	}
 
 }
-
-
