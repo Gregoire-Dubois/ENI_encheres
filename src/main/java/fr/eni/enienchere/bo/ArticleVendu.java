@@ -114,7 +114,9 @@ public class ArticleVendu {
 				+ prixInitial + ", prixVente=" + prixVente + ", noUtilisateur=" + noUtilisateur + ", noCategorie="
 				+ noCategorie + "]";
 	}
+	
+	
 
 }
 
-// A pusher
+
