@@ -14,7 +14,7 @@ import fr.eni.enienchere.bo.Utilisateur;
 /**
  * Servlet implementation class TestPriscillia
  */
-@WebServlet("/priscillia/TestPriscillia")
+@WebServlet("/cedric/priscillia/TestPriscillia")
 public class TestPriscillia extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
