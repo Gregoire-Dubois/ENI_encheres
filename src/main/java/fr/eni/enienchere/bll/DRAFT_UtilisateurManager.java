@@ -84,6 +84,7 @@ public class DRAFT_UtilisateurManager {
 			checkForm = false;
 			System.out.println("Erreur sur la ville");
 		}
+		//Recherche des espaces 
 		if(utilisateur.getMotDePasse().trim()==null || utilisateur.getMotDePasse().matches("^[\\s]+$")) {
 			checkForm = false;
 			System.out.println("Erreur sur le password");
