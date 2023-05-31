@@ -9,5 +9,6 @@ public abstract class CodesResultatBLL {
 	public static final int CODEPOSTAL_NULL_ERREUR=20005;
 	public static final int VILLE_NULL_ERREUR=20006;
 	public static final int MDP_NULL_ERREUR=20007;
+	public static final int PAS_DE_CORRESPONDANCE_ERREUR=20008;
 
 }

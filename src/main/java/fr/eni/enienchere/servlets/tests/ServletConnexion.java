@@ -1,6 +1,7 @@
 package fr.eni.enienchere.servlets.tests;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,20 +50,23 @@ public class ServletConnexion extends HttpServlet {
 		//Si oui, on va sur la page d'accueil en mode connecté sinon on retourne sur la page de connexion avec un message d'erreur
 		try {
 			Utilisateur utilisateur = utilisateurManager.login(identifiant, mdp);
-			//System.out.println(utilisateur);
-			if(utilisateur!=null) {
+
 				request.getSession().setAttribute("userConnected", utilisateur);
 				
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPAccueil.jsp");
 				rd.forward(request, response);
-			}else {
-				//Message d'erreur à afficher sur la page de connexion
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPConnexion.jsp");
-				rd.forward(request, response);
-				
-			}
 		} catch (BusinessException e1) {
 			e1.printStackTrace();
+			//Test affichage des erreurs en console OK
+			List<Integer> listeErreurs = e1.getListeCodesErreur();
+//			for(int erreur: listeErreurs) {
+//				System.out.println(erreur);
+//			}
+			request.setAttribute("listeErreurs", listeErreurs);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPConnexion.jsp");
+			rd.forward(request, response);
 		}
+		
+		
 	}
 }
