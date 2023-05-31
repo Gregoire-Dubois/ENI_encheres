@@ -9,6 +9,8 @@ public interface UtilisateurDAO {
 	public Utilisateur selectByEmailMdp(String email, String mdp) throws BusinessException;
 	public Utilisateur selectByPseudoMdp(String pseudo, String mdp) throws BusinessException;
 	public Utilisateur insert(Utilisateur utilisateur) throws BusinessException;
+	boolean checkEmail(String email) throws BusinessException;
+	boolean checkPseudo(String pseudo) throws BusinessException;
 
 }
 
