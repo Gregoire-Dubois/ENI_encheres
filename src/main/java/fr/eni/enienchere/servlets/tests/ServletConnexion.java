@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bll.UtilisateurManager;
@@ -50,8 +51,11 @@ public class ServletConnexion extends HttpServlet {
 		//Si oui, on va sur la page d'accueil en mode connecté sinon on retourne sur la page de connexion avec un message d'erreur
 		try {
 			Utilisateur utilisateur = utilisateurManager.login(identifiant, mdp);
-
-				request.getSession().setAttribute("userConnected", utilisateur);
+			//On récupère la session
+			HttpSession session = request.getSession();
+			//On indique en paramètre de la session que l'utilisateur est bien connecté
+			session.setAttribute("userConnected", utilisateur);
+				
 				
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPAccueil.jsp");
 				rd.forward(request, response);
