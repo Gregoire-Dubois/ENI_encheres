@@ -6,4 +6,7 @@
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>index.htm</welcome-file>
   </welcome-file-list>
+  <session-config>
+  	<session-timeout>5</session-timeout> <!-- On définit l'interval maximal où l'utilisateur peut être inactif avant la déconnexion automatique -->
+  </session-config>
 </web-app>
