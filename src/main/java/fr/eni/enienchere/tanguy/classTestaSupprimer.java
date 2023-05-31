@@ -16,5 +16,7 @@ public class classTestaSupprimer {
 		}
 
 	}
-
+/* Test Tanguy pour vérif de pull
+ * 
+ */
 }
