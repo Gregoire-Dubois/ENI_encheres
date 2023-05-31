@@ -12,16 +12,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 
 	private static final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?;";
 	private static final String SELECT_BY_EMAIL_ET_MDP="SELECT * FROM UTILISATEURS WHERE email=? AND mot_de_passe=?";
-<<<<<<< HEAD
 	private static final String UPDATE_BY_ID = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ? , rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 	private static final String DELETE_BY_ID = "DELETE FROM UTILISATEUR WHERE no_utilisateur=?;";
 	private static final String DELETE_BY_EMAIL = "DELETE FROM UTILISATEUR WHERE email=?;";
-
-=======
 	private static final String SELECT_BY_PSEUDO_ET_MDP="SELECT * FROM UTILISATEURS WHERE pseudo=? AND mot_de_passe=?";
 	private static final String INSERT_UTILISATEUR="INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 	
->>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
 	@Override
 	public Utilisateur selectById(int id) throws BusinessException {
 		Utilisateur utilisateur = null;
@@ -82,10 +78,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			}
 			
 		} catch (SQLException e) {
-<<<<<<< HEAD
-=======
-			//Gestion des erreurs
->>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
+
 			e.printStackTrace();
 		}finally {
 			if(cnx !=null) {
@@ -104,7 +97,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		return utilisateur;
 	}
 
-<<<<<<< HEAD
+
 	/* Requête : Modification du compte utilisateur
 	 * Fait par Tanguy
 	 */
@@ -211,7 +204,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		}
 	}
 	
-=======
+
 	//Permet une selection par le pseudo et le mot de passe	
 		@Override
 		public Utilisateur selectByPseudoMdp(String pseudo, String mdp) throws BusinessException {
@@ -273,7 +266,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			return utilisateur;
 		}
 
->>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
 }
 
 
