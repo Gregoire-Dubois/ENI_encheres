@@ -38,7 +38,7 @@ public class UtilisateurManager {
 	
 	public Utilisateur inscrire(String pseudo, String nom, String prenom, String email, String telephone, String rue,String codePostal,String ville,String mdp) throws BusinessException {
 		
-		BusinessException businessException = BusinessException.getInstance();
+		BusinessException businessException = new BusinessException();
 		Utilisateur utilisateur=null;
 		//Tests de non nullité //séparer dans différentes méthodes? validerPseudo(pseudo, businessException) ...
 		if(pseudo.trim().isEmpty()) {
@@ -100,7 +100,7 @@ public class UtilisateurManager {
 	
 	//Permet de se connecter en vérifiant si la combinaison email/mdp OU pseudo/mdp correspond à la combinaison identifiant/mdp
 	public Utilisateur login(String identifiant, String mdp) throws BusinessException {
-		BusinessException businessException = BusinessException.getInstance();
+		BusinessException businessException = new BusinessException();
 		Utilisateur utilisateur = null;
 		
 		if(this.selectionnerEmailMdp(identifiant, mdp)!=null || this.selectionnerPseudoMdp(identifiant, mdp)!=null) { //ça veut dire qu'il y a une correspondance

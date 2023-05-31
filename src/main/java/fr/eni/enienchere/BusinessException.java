@@ -12,17 +12,17 @@ private static final long serialVersionUID =1L;
 	private List<Integer> listeCodesErreur;
 	private static BusinessException instance;
 	
-	private BusinessException() {
+	public BusinessException() {
 		super();
 		this.listeCodesErreur=new ArrayList<>();
 	}
-	
-	public static synchronized BusinessException getInstance() {
-		if(instance==null) {
-			instance = new BusinessException();
-		}
-		return instance;
-	}
+	//Pas pertinent d'utiliser un singleton ici car il faut que cette instance soit différente pour chaque session
+//	public static synchronized BusinessException getInstance() {
+//		if(instance==null) {
+//			instance = new BusinessException();
+//		}
+//		return instance;
+//	}
 	
 	//Ajouter un code erreur à la liste
 	
