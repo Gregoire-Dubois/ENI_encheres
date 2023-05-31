@@ -7,11 +7,14 @@
 <title>Connexion - Inscription</title>
 </head>
 <body>
-	<h1>PAGE DE CONNEXION</h1>
+<header>
+<h1>ENI-Encheres</h1>
+</header>
+<section>
 	<form method="post" action="${pageContext.request.contextPath}/connexion">
 		<p>
-			<label for="identifiant">Identifiant :</label> <input type="text" name="identifiant" id="identifiant"> </br> </br>
-			<label for="mdp">Mot de passe:</label> <input type="password" name="mdp" id="mdp"> 
+			<label for="identifiant">Identifiant :</label> <input type="text" name="identifiant" id="identifiant" required> </br> </br>
+			<label for="mdp">Mot de passe:</label> <input type="password" name="mdp" id="mdp" required> 
 			
 			<input type="submit" value="Connexion">
 
@@ -19,5 +22,8 @@
 
 
 	</form>
+	
+	<a href="${pageContext.request.contextPath}/inscription"><input type="submit"value="Créer un compte"></a>
+</section>
 </body>
 </html>

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bll.UtilisateurManager;
+import fr.eni.enienchere.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletConnexion
@@ -47,8 +48,12 @@ public class ServletConnexion extends HttpServlet {
 		//On teste si l'identification par email/mdp OU pseudo/mdp fonctionne
 		//Si oui, on va sur la page d'accueil en mode connecté sinon on retourne sur la page de connexion avec un message d'erreur
 		try {
-			if((utilisateurManager.selectionnerEmailMdp(identifiant, mdp)!=null)||(utilisateurManager.selectionnerPseudoMdp(identifiant, mdp))!=null) {
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPAccueilConnecte.jsp"); //a modifier, même accueil qu'en mode non connecté
+			Utilisateur utilisateur = utilisateurManager.login(identifiant, mdp);
+			//System.out.println(utilisateur);
+			if(utilisateur!=null) {
+				request.getSession().setAttribute("userConnected", utilisateur);
+				
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPAccueil.jsp");
 				rd.forward(request, response);
 			}else {
 				//Message d'erreur à afficher sur la page de connexion
@@ -56,10 +61,8 @@ public class ServletConnexion extends HttpServlet {
 				rd.forward(request, response);
 				
 			}
-		} catch (BusinessException e) {
-			
-			e.printStackTrace();
+		} catch (BusinessException e1) {
+			e1.printStackTrace();
 		}
-		
 	}
 }
