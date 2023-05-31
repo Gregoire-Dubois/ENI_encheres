@@ -17,6 +17,6 @@ public class classTestaSupprimer {
 
 	}
 /* Test Tanguy pour vérif de pull
- * 
+ * Commentaire Cédric 17h36
  */
 }
