@@ -24,7 +24,6 @@
 	
 	</header>
 
-	
 	<table>
 		<tr>
 			<th>Pseudo</th>

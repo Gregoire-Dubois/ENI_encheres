@@ -25,6 +25,7 @@ public class ServletAfficherAcceuilNonConnecte extends HttpServlet {
 		RequestDispatcher rd = null;
 		rd = request.getRequestDispatcher("WEB-INF/JSPPageAcceuilNonConnecte.jsp");
 		rd.forward(request, response);
+		
 	}
 
 	/**

@@ -26,7 +26,6 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 			rd = request.getRequestDispatcher("WEB-INF/JSPMonProfile.jsp");
 			rd.forward(request, response);
 
-		
 	}
 
 	/**

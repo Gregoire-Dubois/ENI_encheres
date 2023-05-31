@@ -22,6 +22,7 @@
 			<a href="#">S'inscrire - Se déconnecter</a>
 		</div>
 	
+	
 	</header>
 	
 	<form action="post" action ="#NomDeLaServletDeModificationDuCompte">

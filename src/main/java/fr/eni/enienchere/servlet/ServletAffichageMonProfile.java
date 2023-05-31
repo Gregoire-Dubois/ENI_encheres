@@ -27,11 +27,7 @@ public class ServletAffichageMonProfile extends HttpServlet {
 		RequestDispatcher rd = null;
 		rd = request.getRequestDispatcher("WEB-INF/JSPMonProfile.jsp");
 		rd.forward(request, response);
-		
-		
 	
-		
-
 	}
 
 	/**

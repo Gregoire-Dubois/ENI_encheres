@@ -43,6 +43,7 @@
 				</select> <input type="submit" value="Rechercher">
 			</form>
 
+
 		</div>
 
 		<div class="resultatsNonConnecte">
@@ -70,7 +71,6 @@
 		<p>Team Les Vioques © 2023</p>
 
 	</footer>
-
 
 </body>
 </html>
