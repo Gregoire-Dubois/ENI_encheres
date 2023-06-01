@@ -9,10 +9,21 @@ import java.util.List;
 import fr.eni.enienchere.BusinessException;
 
 public class UtilisateurManager {
-	private UtilisateurDAO utilisateurDAO;
+	
+	private static UtilisateurManager instance = null;
+	private UtilisateurDAO utilisateurDAO ;
 
+	//Constructeur privé
 	public UtilisateurManager() {
 		this.utilisateurDAO = DAOFactory.getUtilisateurDAO();
+	}
+	
+	//SINGLETON
+	public static UtilisateurManager getInstance() {
+			if (instance == null) {
+				instance = new UtilisateurManager();
+			}
+	 return instance;
 	}
 
 	public Utilisateur selectionner(int id) throws BusinessException {
@@ -36,13 +47,31 @@ public class UtilisateurManager {
 		return utilisateur;
 	}
 	
+<<<<<<< HEAD
+	public List<Utilisateur> findAll(String field,String sens) {
+		try {
+			return utilisateurDAO.selectAll();
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+	
 	public Utilisateur inscrire(String pseudo, String nom, String prenom, String email, String telephone, String rue,String codePostal,String ville,String mdp) throws BusinessException {
 		
 		BusinessException businessException = new BusinessException();
 		Utilisateur utilisateur=null;
 		//Tests de non nullité //séparer dans différentes méthodes? validerPseudo(pseudo, businessException) ...
+
+		if(pseudo.trim() == null || !pseudo.trim().matches("\\p{Alpha}")) {
+
 		if(pseudo.trim().isEmpty()) {
+
+			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_NULL_ERREUR);
+
 			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_VIDE_ERREUR);
+
 		}
 		
 		if(nom.trim().isEmpty()) {
@@ -97,6 +126,69 @@ public class UtilisateurManager {
 
 		return utilisateur;
 	}
+=======
+//	public Utilisateur inscrire(String pseudo, String nom, String prenom, String email, String telephone, String rue,String codePostal,String ville,String mdp) throws BusinessException {
+//		
+//		BusinessException businessException = new BusinessException();
+//		Utilisateur utilisateur=null;
+//		//Tests de non nullité //séparer dans différentes méthodes? validerPseudo(pseudo, businessException) ...
+//		if(pseudo.trim().isEmpty()) {
+//			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_VIDE_ERREUR);
+//		}
+//		
+//		if(nom.trim().isEmpty()) {
+//			businessException.ajouterErreur(CodesResultatBLL.NOM_VIDE_ERREUR);
+//		}
+//		
+//		if(prenom.trim().isEmpty()) {
+//			businessException.ajouterErreur(CodesResultatBLL.PRENOM_VIDE_ERREUR);
+//		}
+//		
+//		if(email.trim().isEmpty()) {
+//			businessException.ajouterErreur(CodesResultatBLL.EMAIL_VIDE_ERREUR);
+//		}
+//		
+//		if(rue.trim().isEmpty()) {
+//			businessException.ajouterErreur(CodesResultatBLL.RUE_VIDE_ERREUR);
+//		}
+//		
+//		if(codePostal.trim().isEmpty()) {
+//			businessException.ajouterErreur(CodesResultatBLL.CODEPOSTAL_VIDE_ERREUR);
+//		}
+//		
+//		if(ville.trim().isEmpty()) {
+//			businessException.ajouterErreur(CodesResultatBLL.VILLE_VIDE_ERREUR);
+//		}
+//		
+//		if(mdp.trim().isEmpty()) {
+//			businessException.ajouterErreur(CodesResultatBLL.MDP_VIDE_ERREUR);
+//		}
+//		
+//		//Pour les tests
+//		List<Integer> listeErreurs = businessException.getListeCodesErreur();
+//		if(listeErreurs!=null) {
+//			for(int erreurs :listeErreurs) {
+//				System.out.println(erreurs);
+//			}
+//			
+//		}else {
+//			System.out.println("Pas d'erreurs");
+//		}
+//			
+//		
+//		//Si il n'y a pas d'erreurs, on fait l'insertion, l'inscription dans la base de données
+//		if(!businessException.hasErreur()) {
+//			utilisateur = new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp, null, null);
+//			utilisateur = this.utilisateurDAO.insert(utilisateur);
+//		}else {
+//			utilisateur =null;
+//			throw businessException;
+//			
+//		}
+//
+//		return utilisateur;
+//	}
+>>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
 	
 	//Permet de se connecter en vérifiant si la combinaison email/mdp OU pseudo/mdp correspond à la combinaison identifiant/mdp
 	public Utilisateur login(String identifiant, String mdp) throws BusinessException {

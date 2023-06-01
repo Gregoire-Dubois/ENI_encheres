@@ -4,7 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bo.Utilisateur;
 
@@ -12,11 +16,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 
 	private static final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?;";
 	private static final String SELECT_BY_EMAIL_ET_MDP="SELECT * FROM UTILISATEURS WHERE email=? AND mot_de_passe=?";
+	private static final String SELECT_ALL = "SELECT * FROM UTILISATEURS;";
 	private static final String UPDATE_BY_ID = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ? , rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 	private static final String DELETE_BY_ID = "DELETE FROM UTILISATEUR WHERE no_utilisateur=?;";
 	private static final String DELETE_BY_EMAIL = "DELETE FROM UTILISATEUR WHERE email=?;";
 	private static final String SELECT_BY_PSEUDO_ET_MDP="SELECT * FROM UTILISATEURS WHERE pseudo=? AND mot_de_passe=?";
 	private static final String INSERT_UTILISATEUR="INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String SELECT_BY_PSEUDO="SELECT * FROM UTILISATEURS WHERE pseudo=?";
+	private static final String SELECT_BY_EMAIL="SELECT * FROM UTILISATEURS WHERE email=?";
 	
 	@Override
 	public Utilisateur selectById(int id) throws BusinessException {
@@ -97,6 +104,123 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		return utilisateur;
 	}
 
+	@Override
+	public List<Utilisateur> selectAll() {
+		Utilisateur utilisateur = null;
+		Connection cnx = null;
+		ArrayList<Utilisateur> lst = null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			Statement stmt = cnx.createStatement();
+			ResultSet rs = stmt.executeQuery(SELECT_ALL);
+			utilisateur = new Utilisateur();
+				
+			while(rs.next()) {
+			if(lst==null)
+			{
+				lst = new ArrayList<>();
+			}
+			lst.add(utilisateur)
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = BusinessException.getInstance();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		
+		return lst;
+
+	
+	public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
+		Utilisateur utilisateur = null;
+		Connection cnx = null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO);
+			
+			pstmt.setString(1, pseudo);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+			utilisateur = new Utilisateur(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11), rs.getBoolean(12));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_BY_PSEUDO_ECHEC);
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		
+		return utilisateur;
+	
+	
+	}
+	public Utilisateur selectByEmail(String email) throws BusinessException {
+		Utilisateur utilisateur = null;
+		Connection cnx = null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_EMAIL);
+			
+			pstmt.setString(1, email);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+			utilisateur = new Utilisateur(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11), rs.getBoolean(12));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_BY_EMAIL_ECHEC);
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		
+		return utilisateur;
+	
+	
+
+	}
 
 	/* Requête : Modification du compte utilisateur
 	 * Fait par Tanguy
@@ -132,37 +256,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
     		e.printStackTrace();
     	}
 	  }	
-	
-	
-	/**public void testUpdateUtilisateur(int IDUtilisateur) throws BusinessException {
-		Connection cnx;
-		
-	    try {
-	    	cnx = ConnectionProvider.getConnection();
-	    	PreparedStatement pstmt = cnx.prepareStatement(UPDATE_BY_ID);
-	    	pstmt.setString(1, IDUtilisateur);
-	    	pstmt.setString(2, IDUtilisateur);
-	    	pstmt.setString(3, IDUtilisateur);
-	    	pstmt.setString(4, IDUtilisateur);
-	    	//gestion du null
-	    	if(IDUtilisateur == null){
-	    		pstmt.setNull(5, Types.VARCHAR);
-	    	}else {
-	    		pstmt.setString(5, IDUtilisateur);
-	    	}
-	    	pstmt.setString(6, IDUtilisateur);
-	    	pstmt.setString(7, IDUtilisateur));
-	    	pstmt.setString(8, IDUtilisateur));
-	    	pstmt.setString(9, IDUtilisateur.getMotDePasse());
-	    	pstmt.setInt(10, IDUtilisateur.getNoUtilisateur());
-	    	pstmt.executeUpdate();
-	    	pstmt.close();
-
-
-    	}catch (SQLException e) {
-    		e.printStackTrace();
-    	}
-	  }	*/
 	
 	/* Requête : Suppression du compte utilisateur par son N° Utilisateur
 	 * Fait par Tanguy
@@ -204,7 +297,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		}
 	}
 	
-
 	//Permet une selection par le pseudo et le mot de passe	
 		@Override
 		public Utilisateur selectByPseudoMdp(String pseudo, String mdp) throws BusinessException {
