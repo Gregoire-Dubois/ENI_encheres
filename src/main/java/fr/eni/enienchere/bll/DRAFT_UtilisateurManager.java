@@ -37,6 +37,8 @@ public class DRAFT_UtilisateurManager {
 		this.checkEmail(utilisateur.getEmail(), businessException);
 		if (!utilisateur.getTelephone().trim().isEmpty()) {
 			this.checkTelephone(utilisateur.getTelephone(), businessException);
+		}else {
+			utilisateur.setTelephone(null);
 		}
 		this.checkRue(utilisateur.getRue(), businessException);
 		this.checkCodePostal(utilisateur.getCodePostal(), businessException);
@@ -103,7 +105,7 @@ public class DRAFT_UtilisateurManager {
 			System.out.println("Erreur sur le pseudo vide");
 			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_VIDE_ERREUR);
 		}
-		if (!pseudo.trim().matches("^[a-zA-Z0-9]+$")) {
+		if (!pseudo.trim().matches("^[a-zA-ZÀ-ÿ0-9]+$")) {
 			System.out.println("Erreur sur le pseudo qui n'est pas alphanumérique");
 			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_ALPHA_NUM_ERREUR);
 		}
@@ -118,7 +120,7 @@ public class DRAFT_UtilisateurManager {
 			System.out.println("Erreur sur le nom vide");
 			businessException.ajouterErreur(CodesResultatBLL.NOM_VIDE_ERREUR);
 		}
-		if (!nom.trim().matches("^[a-zA-Z\\-]+$")) {
+		if (!nom.trim().matches("^[a-zA-ZÀ-ÿ\\-]+$")) {
 			System.out.println("Erreur sur le nom qui n'est pas alphanumérique");
 			businessException.ajouterErreur(CodesResultatBLL.NOM_ALPHA_ERREUR);
 		}
@@ -130,7 +132,7 @@ public class DRAFT_UtilisateurManager {
 			System.out.println("Erreur sur le prenom vide");
 			businessException.ajouterErreur(CodesResultatBLL.PRENOM_VIDE_ERREUR);
 		}
-		if (!prenom.trim().matches("^[a-zA-Z\\-]+$")) {
+		if (!prenom.trim().matches("^[a-zA-ZÀ-ÿ\\-]+$")) {
 			System.out.println("Erreur sur le prenom qui n'est pas alphanumérique");
 			businessException.ajouterErreur(CodesResultatBLL.PRENOM_ALPHA_ERREUR);
 		}
@@ -142,7 +144,7 @@ public class DRAFT_UtilisateurManager {
 			System.out.println("Erreur sur la rue vide");
 			businessException.ajouterErreur(CodesResultatBLL.RUE_VIDE_ERREUR);
 		}
-		if (!rue.trim().matches("^[a-zA-Z0-9\\s]+$")) {
+		if (!rue.trim().matches("^[A-Za-zÀ-ÿ0-9\\s'-]+$")) {
 			System.out.println("Erreur sur la rue qui n'est pas alphanumérique + espace");
 			businessException.ajouterErreur(CodesResultatBLL.RUE_ALPHA_NUM_ESP_ERREUR);
 		}
@@ -166,7 +168,7 @@ public class DRAFT_UtilisateurManager {
 			System.out.println("Erreur sur la ville vide");
 			businessException.ajouterErreur(CodesResultatBLL.VILLE_VIDE_ERREUR);
 		}
-		if (!ville.trim().matches("^[a-zA-Z\\-]+$")) {
+		if (!ville.trim().matches("^[a-zA-ZÀ-ÿ\\-]+$")) {
 			System.out.println("Erreur sur la ville qui ne contient pas uniquement des caractères alpha et -");
 			businessException.ajouterErreur(CodesResultatBLL.VILLE_ALPHA_ERREUR);
 		}

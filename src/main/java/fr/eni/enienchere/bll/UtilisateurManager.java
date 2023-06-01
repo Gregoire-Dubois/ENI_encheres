@@ -47,7 +47,8 @@ public class UtilisateurManager {
 		return utilisateur;
 	}
 	
-	public List<Utilisateur> findAll(String field,String sens) {
+
+	/*public List<Utilisateur> findAll(String field,String sens) {
 		try {
 			return utilisateurDAO.selectAll();
 		} catch (BusinessException e) {
@@ -57,12 +58,9 @@ public class UtilisateurManager {
 
 	}
 	
-	public Utilisateur inscrire(String pseudo, String nom, String prenom, String email, String telephone, String rue,String codePostal,String ville,String mdp) throws BusinessException {
-		
-		BusinessException businessException = new BusinessException();
-		Utilisateur utilisateur=null;
-		//Tests de non nullité //séparer dans différentes méthodes? validerPseudo(pseudo, businessException) ...
+	
 
+<<<<<<< HEAD
 		if(pseudo.trim() == null || !pseudo.trim().matches("\\p{Alpha}")) {
 
 		if(pseudo.trim().isEmpty()) {
@@ -124,7 +122,7 @@ public class UtilisateurManager {
 		}
 
 		return utilisateur;
-	}
+	}*/
 
 //	public Utilisateur inscrire(String pseudo, String nom, String prenom, String email, String telephone, String rue,String codePostal,String ville,String mdp) throws BusinessException {
 //		
@@ -187,6 +185,7 @@ public class UtilisateurManager {
 //
 //		return utilisateur;
 //	}
+
 
 	
 	//Permet de se connecter en vérifiant si la combinaison email/mdp OU pseudo/mdp correspond à la combinaison identifiant/mdp

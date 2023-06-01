@@ -4,10 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bo.Utilisateur;
@@ -16,7 +14,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 
 	private static final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?;";
 	private static final String SELECT_BY_EMAIL_ET_MDP="SELECT * FROM UTILISATEURS WHERE email=? AND mot_de_passe=?";
-	private static final String SELECT_ALL = "SELECT * FROM UTILISATEURS;";
+	/*private static final String SELECT_ALL = "SELECT * FROM UTILISATEURS;"; A Supprimer*/
 	private static final String UPDATE_BY_ID = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ? , rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 	private static final String DELETE_BY_ID = "DELETE FROM UTILISATEUR WHERE no_utilisateur=?;";
 	private static final String DELETE_BY_EMAIL = "DELETE FROM UTILISATEUR WHERE email=?;";
@@ -65,6 +63,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	}
 	
 	//Permet une selection par l'email et le mot de passe
+	/*
+	 * Ajout hashpwd CCN 01/06/23
+	 */
 	
 	@Override
 	public Utilisateur selectByEmailMdp(String email, String mdp) throws BusinessException {
@@ -76,7 +77,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_EMAIL_ET_MDP);
 			
 			pstmt.setString(1, email);
-			pstmt.setString(2, mdp);
+			pstmt.setString(2, Utilisateur.hashPwd(mdp));
 			
 			ResultSet rs = pstmt.executeQuery();
 			
@@ -104,7 +105,49 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		return utilisateur;
 	}
 
+/*
+	@Override
+	public List<Utilisateur> selectAll() {
+		Utilisateur utilisateur = null;
+		Connection cnx = null;
+		ArrayList<Utilisateur> lst = null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			Statement stmt = cnx.createStatement();
+			ResultSet rs = stmt.executeQuery(SELECT_ALL);
+			utilisateur = new Utilisateur();
+				
+			while(rs.next()) {
+			if(lst==null)
+			{
+				lst = new ArrayList<>();
+			}
+			lst.add(utilisateur);
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		return lst;
+
+	}
+*/
 	
+
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
 		Utilisateur utilisateur = null;
 		Connection cnx = null;
@@ -185,6 +228,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 
 	/* Requête : Modification du compte utilisateur
 	 * Fait par Tanguy
+	 * ajout hashpwd CCN 01/06/23
 	 */
 		
 	@Override
@@ -207,7 +251,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	    	pstmt.setString(6, utilisateur.getRue());
 	    	pstmt.setString(7, utilisateur.getCodePostal());
 	    	pstmt.setString(8, utilisateur.getVille());
-	    	pstmt.setString(9, utilisateur.getMotDePasse());
+	    	pstmt.setString(9, Utilisateur.hashPwd(utilisateur.getMotDePasse()));
 	    	pstmt.setInt(10, utilisateur.getNoUtilisateur());
 	    	pstmt.executeUpdate();
 	    	pstmt.close();
@@ -259,6 +303,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	}
 	
 	//Permet une selection par le pseudo et le mot de passe	
+	/*
+	 * Ajout du hash CCN 01/06/23
+	 */
 		@Override
 		public Utilisateur selectByPseudoMdp(String pseudo, String mdp) throws BusinessException {
 			Utilisateur utilisateur = null;
@@ -269,7 +316,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 				PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO_ET_MDP);
 				
 				pstmt.setString(1, pseudo);
-				pstmt.setString(2, mdp);
+				pstmt.setString(2, Utilisateur.hashPwd(mdp));
 				
 				ResultSet rs = pstmt.executeQuery();
 				
@@ -286,7 +333,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			return utilisateur;
 		}
 		
-		//Permet l'insertion d'un utilisateur	
+		//Permet l'insertion d'un utilisateur
+		/*
+		 * Ajout du hash CCN 01/06/23
+		 */
 		@Override
 		public Utilisateur insert(Utilisateur utilisateur) throws BusinessException {
 			Connection cnt;
@@ -302,7 +352,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 				pstmt.setString(6,utilisateur.getRue());
 				pstmt.setString(7,utilisateur.getCodePostal());
 				pstmt.setString(8,utilisateur.getVille());
-				pstmt.setString(9,utilisateur.getMotDePasse()); //hash à ajouter
+				pstmt.setString(9,Utilisateur.hashPwd(utilisateur.getMotDePasse())); 
 				pstmt.setInt(10, 0); 
 				pstmt.setInt(11, 0); //par défaut, la personne qui s'inscrit n'est pas administrateur
 				pstmt.executeUpdate();
