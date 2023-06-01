@@ -10,23 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletAffichageModifierProfile
+ * Servlet implementation class ServletPageVendreUnArticle
  */
-@WebServlet("/ServletAffichageModifierProfile")
-public class ServletAffichageModifierProfile extends HttpServlet {
+@WebServlet("/ServletPageVendreUnArticle")
+public class ServletPageVendreUnArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
+  
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			RequestDispatcher rd = null;
-			rd = request.getRequestDispatcher("WEB-INF/JSPModifierMonProfile.jsp");
-			rd.forward(request, response);
-
+		RequestDispatcher rd = null; 
+		rd = request.getRequestDispatcher("WEB-INF/JSPPageVendreUnArticle.jsp");
+		rd.forward(request, response);
+	
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -15,29 +15,39 @@
 	<%@ include file="JSPHeader.jsp" %>
 
 
+
 	<table>
-		<tr>
-			<th>Pseudo</th>
-			<th>Nom</th>
-			<th>Prénom</th>
-			<th>Email</th>
-			<th>Téléphone</th>
-			<th>Rue</th>
-			<th>Code postal</th>
-			<th>Ville</th>
-		</tr>
 		<c:forEach var="v" items="${utilisateur}">
 			<tr>
-				<th>${v.pseudo}</th>
-				<th>${v.nom}</th>
-				<th>${v.prenom}</th>
-				<th>${v.email}</th>
-				<th>${v.telephone}</th>
-				<th>${v.rue}</th>
-				<th>${v.codePostal}</th>
-				<th>${v.ville}</th>
+			
+				<td>Pseudo : </td>
+				<td>${v.pseudo}</td>
 			</tr>
-		</c:forEach>		
+			<tr>
+				<td>Nom : </td>
+				<td>${v.nom}</td>
+			</tr>
+			<tr>	
+				<td>Prénom : </td>
+				<td>${v.prenom}</td>
+			</tr>
+			<tr>
+				<td>Email : </td>
+				<td>${v.email}</td>
+			</tr>
+				<td>Téléphone : </td>
+				<td>${v.telephone}</td>
+			<tr>
+				<td>Rue : </td>
+				<td>${v.rue}</td>
+			</tr>
+				<td>Code postal : </td>
+				<td>${v.codePostal}</td>
+			<tr>
+				<td>Ville : </td>
+				<td>${v.ville}</td>
+			</tr>
+		</c:forEach>
 		
 	
 	</table>
