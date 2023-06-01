@@ -56,9 +56,9 @@ public class ServletConnexion extends HttpServlet {
 			//On indique en paramètre de la session que l'utilisateur est bien connecté
 			session.setAttribute("userConnected", utilisateur);
 				
-				
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPAccueil.jsp");
-				rd.forward(request, response);
+			response.sendRedirect(request.getContextPath()+"/accueil");	
+//				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPAccueil.jsp");
+//				rd.forward(request, response);
 		} catch (BusinessException e1) {
 			e1.printStackTrace();
 			//Test affichage des erreurs en console OK
