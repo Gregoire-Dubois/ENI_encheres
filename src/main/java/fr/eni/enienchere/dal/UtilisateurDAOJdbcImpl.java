@@ -4,15 +4,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bo.Utilisateur;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 
-	private static final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS;";
+	private static final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?;";
 	private static final String SELECT_BY_EMAIL_ET_MDP="SELECT * FROM UTILISATEURS WHERE email=? AND mot_de_passe=?";
+	private static final String SELECT_ALL = "SELECT * FROM UTILISATEURS;";
 	private static final String UPDATE_BY_ID = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ? , rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 	private static final String DELETE_BY_ID = "DELETE FROM UTILISATEUR WHERE no_utilisateur=?;";
 	private static final String DELETE_BY_EMAIL = "DELETE FROM UTILISATEUR WHERE email=?;";
@@ -98,6 +102,45 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		return utilisateur;
 	}
 
+	@Override
+	public List<Utilisateur> selectAll() {
+		Utilisateur utilisateur = null;
+		Connection cnx = null;
+		ArrayList<Utilisateur> lst = null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			Statement stmt = cnx.createStatement();
+			ResultSet rs = stmt.executeQuery(SELECT_ALL);
+			utilisateur = new Utilisateur();
+				
+			while(rs.next()) {
+			if(lst==null)
+			{
+				lst = new ArrayList<>();
+			}
+			lst.add(utilisateur)
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = BusinessException.getInstance();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		
+		return lst;
+	}
 
 	/* Requête : Modification du compte utilisateur
 	 * Fait par Tanguy

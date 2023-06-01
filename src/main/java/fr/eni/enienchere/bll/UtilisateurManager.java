@@ -47,16 +47,26 @@ public class UtilisateurManager {
 		return utilisateur;
 	}
 	
+	public List<Utilisateur> findAll(String field,String sens) {
+		try {
+			return utilisateurDAO.selectAll();
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+	
 	public Utilisateur inscrire(String pseudo, String nom, String prenom, String email, String telephone, String rue,String codePostal,String ville,String mdp) throws BusinessException {
 		
 		BusinessException businessException = BusinessException.getInstance();
 		Utilisateur utilisateur=null;
 		//Tests de non nullité //séparer dans différentes méthodes? validerPseudo(pseudo, businessException) ...
-<<<<<<< HEAD
+
 		if(pseudo.trim() == null || !pseudo.trim().matches("\\p{Alpha}")) {
-=======
+
 		if(pseudo.trim().isEmpty()) {
->>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
+
 			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_NULL_ERREUR);
 		}
 		
