@@ -19,8 +19,7 @@
 	    
 	    <label for="nom">Nom :</label>
 	    <input type="text" id="nom" name="nom" minlength="2" maxlenght="30" required><br><br>
-	    
-	    
+	   
 	   
 	    <label for="prenom">Prénom :</label>
 	    <input type="text" id="prenom" name="prenom" required minlength="2" maxlenght="30"><br><br>
