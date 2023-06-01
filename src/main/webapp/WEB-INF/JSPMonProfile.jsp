@@ -12,17 +12,8 @@
 </head>
 <body>
 
-<header>
-	
-		<div class="entreprise">
-			<h1>ENI-Enchères</h1>
-		</div>
-		
-		<div>
-			<a href="#">S'inscrire - Se déconnecter</a>
-		</div>
-	
-	</header>
+	<%@ include file="JSPHeader.jsp" %>
+
 
 	<table>
 		<tr>
@@ -51,9 +42,8 @@
 	
 	</table>
 	
-	<footer>
-		<p>Team Les Vioques © 2023</p>
-	</footer>
+	<%@ include file="JSPFooter.jsp" %>
+
 	
 
 </body>

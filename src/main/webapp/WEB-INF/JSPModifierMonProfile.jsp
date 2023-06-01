@@ -11,19 +11,8 @@
 <title>Modifier mon profile</title>
 </head>
 <body>
-
-<header>
 	
-		<div class="entreprise">
-			<h1>ENI-Enchères</h1>
-		</div>
-		
-		<div>
-			<a href="#">S'inscrire - Se déconnecter</a>
-		</div>
-	
-	
-	</header>
+	<%@ include file="JSPHeader.jsp" %>
 	
 	<form action="post" action ="#NomDeLaServletDeModificationDuCompte">
 	
@@ -64,9 +53,7 @@
 	
 	</form>
 	
-	<footer>
-		<p>Team Les Vioques © 2023</p>
-	</footer>
+	<%@ include file="JSPFooter.jsp" %>
 
 </body>
 </html>
