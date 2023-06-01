@@ -104,45 +104,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		return utilisateur;
 	}
 
-	@Override
-	public List<Utilisateur> selectAll() {
-		Utilisateur utilisateur = null;
-		Connection cnx = null;
-		ArrayList<Utilisateur> lst = null;
-		
-		try {
-			cnx = ConnectionProvider.getConnection();
-			Statement stmt = cnx.createStatement();
-			ResultSet rs = stmt.executeQuery(SELECT_ALL);
-			utilisateur = new Utilisateur();
-				
-			while(rs.next()) {
-			if(lst==null)
-			{
-				lst = new ArrayList<>();
-			}
-			lst.add(utilisateur)
-			}
-			
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}finally {
-			if(cnx !=null) {
-				try {
-					cnx.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-					BusinessException businessException = BusinessException.getInstance();
-					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
-				}
-			}
-			
-		}
-		
-		
-		return lst;
-
 	
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
 		Utilisateur utilisateur = null;

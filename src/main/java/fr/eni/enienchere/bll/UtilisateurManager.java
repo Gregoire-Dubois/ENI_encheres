@@ -47,7 +47,6 @@ public class UtilisateurManager {
 		return utilisateur;
 	}
 	
-<<<<<<< HEAD
 	public List<Utilisateur> findAll(String field,String sens) {
 		try {
 			return utilisateurDAO.selectAll();
@@ -126,7 +125,7 @@ public class UtilisateurManager {
 
 		return utilisateur;
 	}
-=======
+
 //	public Utilisateur inscrire(String pseudo, String nom, String prenom, String email, String telephone, String rue,String codePostal,String ville,String mdp) throws BusinessException {
 //		
 //		BusinessException businessException = new BusinessException();
@@ -188,7 +187,7 @@ public class UtilisateurManager {
 //
 //		return utilisateur;
 //	}
->>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
+
 	
 	//Permet de se connecter en vérifiant si la combinaison email/mdp OU pseudo/mdp correspond à la combinaison identifiant/mdp
 	public Utilisateur login(String identifiant, String mdp) throws BusinessException {
