@@ -63,12 +63,12 @@ public class DRAFT_UtilisateurManager {
     		checkForm = false;
     		System.out.println("Erreur sur le pseudo");
 		}
-		if(utilisateur.getNom() ==null || !utilisateur.getNom().trim().matches("^[a-zA-Z]+$")) {
+		if(utilisateur.getNom() ==null || !utilisateur.getNom().trim().matches("^[a-zA-Z\\-]+$")) {
 			checkForm = false;
 			System.out.println("Erreur sur le nom");
 		}
 		
-		if(utilisateur.getPrenom().trim()==null || !utilisateur.getPrenom().trim().matches("^[a-zA-Z]+$")) {
+		if(utilisateur.getPrenom().trim()==null || !utilisateur.getPrenom().trim().matches("^[a-zA-Z\\-]+$")) {
 			checkForm = false;
 			System.out.println("Erreur sur le prénom");
 		}
@@ -80,7 +80,7 @@ public class DRAFT_UtilisateurManager {
 			checkForm = false;
 			System.out.println("Erreur sur le codepostal");
 		}
-		if(utilisateur.getVille().trim()==null || !utilisateur.getVille().trim().matches("^[a-zA-Z]+$")) {
+		if(utilisateur.getVille().trim()==null || !utilisateur.getVille().trim().matches("^[a-zA-Z\\-]+$")) {
 			checkForm = false;
 			System.out.println("Erreur sur la ville");
 		}
