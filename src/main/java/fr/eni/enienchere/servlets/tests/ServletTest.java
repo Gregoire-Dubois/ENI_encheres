@@ -43,8 +43,8 @@ public class ServletTest extends HttpServlet {
 			System.out.println("select_by_pseudo :" +utilisateur3);
 			//Test insertion d'un utilisateur
 			Utilisateur utilisateur4 = new Utilisateur(0,"Test","Kirby","Xenos","semper@outlook.ca",null,"51 cki ctqewjjvim","26764","Saint-Jalles","MTB79WPE3SN",null,null);
-			Utilisateur utilisateur5 = utilisateurManager.inscrire(utilisateur4);
-			System.out.println("inscription :" +utilisateur5);
+			//Utilisateur utilisateur5 = utilisateurManager.inscrire(utilisateur4);
+			//System.out.println("inscription :" +utilisateur5);
 			//Test selection par email et mdp si l'email n'existe pas -- Résultat retourne null -- Exception à gérer
 			Utilisateur utilisateur6 = utilisateurManager.selectionnerEmailMdp("bob@lep.fr", "leponge");
 			System.out.println("select_by_email :" +utilisateur6);

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ <%@ page import="fr.eni.enienchere.messages.LecteurMessage"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +13,11 @@
 <h1>ENI-Encheres</h1>
 </header>
 <section>
+	<c:if test="${!empty listeErreurs}">
+		<c:forEach var="code" items="${listeErreurs}">
+			<li>Erreur: ${LecteurMessage.getMessageErreur(code)}</li>
+		</c:forEach>
+	</c:if>
 	<form method="post" action="${pageContext.request.contextPath}/connexion">
 		<p>
 			<label for="identifiant">Identifiant :</label> <input type="text" name="identifiant" id="identifiant" required> </br> </br>

@@ -7,21 +7,28 @@ import java.util.List;
  */
 
 public class BusinessException extends Exception{
-	private static final long serialVersionUID =1L;
+private static final long serialVersionUID =1L;
 	
 	private List<Integer> listeCodesErreur;
+	private static BusinessException instance;
 	
-	public BusinessException() {
+	private BusinessException() {
 		super();
 		this.listeCodesErreur=new ArrayList<>();
 	}
 	
+	public static synchronized BusinessException getInstance() {
+		if(instance==null) {
+			instance = new BusinessException();
+		}
+		return instance;
+	}
 	
 	//Ajouter un code erreur à la liste
 	
 	public void ajouterErreur(int code) {
-		if(!this.listeCodesErreur.contains(code)) {
-			this.listeCodesErreur.add(code);
+		if(!listeCodesErreur.contains(code)) {
+			listeCodesErreur.add(code);
 		}
 	}
 	

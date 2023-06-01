@@ -38,7 +38,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			BusinessException businessException = new BusinessException();
+			BusinessException businessException = BusinessException.getInstance();
 			businessException.ajouterErreur(CodesResultatDAL.SELECT_BY_ID_ECHEC);
 		}finally {
 			if(cnx !=null) {
@@ -46,7 +46,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 					cnx.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					BusinessException businessException = new BusinessException();
+					BusinessException businessException = BusinessException.getInstance();
 					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
 				}
 			}
@@ -87,7 +87,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 					cnx.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					BusinessException businessException = new BusinessException();
+					BusinessException businessException = BusinessException.getInstance();
 					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
 				}
 			}
@@ -219,7 +219,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 				pstmt.setString(7,utilisateur.getCodePostal());
 				pstmt.setString(8,utilisateur.getVille());
 				pstmt.setString(9,utilisateur.getMotDePasse()); //hash à ajouter
-				pstmt.setInt(10, 200); //valeur arbitraire à voir ce qu'on fait, peut être un random?
+				pstmt.setInt(10, 0); 
 				pstmt.setInt(11, 0); //par défaut, la personne qui s'inscrit n'est pas administrateur
 				pstmt.executeUpdate();
 				ResultSet rs = pstmt.getGeneratedKeys();

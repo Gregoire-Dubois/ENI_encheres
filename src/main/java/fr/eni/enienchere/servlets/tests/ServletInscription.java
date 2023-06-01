@@ -74,22 +74,19 @@ public class ServletInscription extends HttpServlet {
 				UtilisateurManager utilisateurManager = new UtilisateurManager();
 				Utilisateur utilisateur = utilisateurManager.inscrire(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp);
 				
-				if(utilisateur !=null) {
+				
 					request.getSession().setAttribute("userConnected", utilisateur);
 					
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPAccueil.jsp");
 					rd.forward(request, response);	
-				}else {
-					
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPInscription.jsp");
-					rd.forward(request, response);
-					
-				}
 				
 				
 				
 			} catch (BusinessException e) {
 				e.printStackTrace();
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPInscription.jsp");
+				rd.forward(request, response);
+				//A faire: afficher les messages d'erreurs sur la page d'inscription
 			}
 			
 		}
