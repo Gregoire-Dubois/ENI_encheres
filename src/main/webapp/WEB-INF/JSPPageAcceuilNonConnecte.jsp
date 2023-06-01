@@ -13,6 +13,7 @@
 </head>
 <body>
 
+	<! -- la première carte est à supprimer elle sert de modèle de présentation -->
 	<%@ include file="JSPHeaderNonConnecte.jsp" %>
 
 
