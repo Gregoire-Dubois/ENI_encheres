@@ -37,14 +37,13 @@
 			type="file" id="photo" name="photo"><br>
 		<br> 
 		
-		<label for="miseaprix">Mise à prix:</label> <select
-			id="miseaprix" name="miseaprix">
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<!-- Ajouter d'autres options si nécessaire -->
-			
+		<label for="offre">Mise à prix :</label>
+		<input type="text" id="offre">
+		<br>			
 		</select>
+		
+	
+		
 		<br> 
 		<label for="debutenchere">Début de l'enchère:</label> 
 		<input
@@ -79,7 +78,6 @@
 	</form>
 
 	<%@ include file="JSPFooter.jsp"%>
-
 
 </body>
 </html>
