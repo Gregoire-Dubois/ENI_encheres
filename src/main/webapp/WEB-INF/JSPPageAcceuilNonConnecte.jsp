@@ -54,8 +54,8 @@
 					alt="Image de la card">
 				<div class="card-content">
 					<h2>Zelda: Tears Of The Kingdom</h2>
-					<p>Prix</p>
-					<p>Fin de l'enchère</p>
+					<p>Prix :</p>
+					<p>Fin de l'enchère :</p>
 					<p>Vendeur :</p>
 				</div>
 			</div>
@@ -63,13 +63,32 @@
 		</div>
 
 	</div>
+	
+	
+	
+	
+		<div class="resultatsNonConnecte">
 
-	</div>
+			<div class="card">
+					<c:forEach var="v" items="${produit}">
+			
+				<img
+					src=""
+					alt="Image de la card">
+				<div class="card-content">
+					<h2>${v.nomArticle}</h2>
+					<p>Prix : ${v.montantEnchere}</p>
+					<p>Fin de l'enchère : ${v.dateFinEnchere}</p>
+					<p>Vendeur : ${v.nom}</p>
+				</div>
+					</c:forEach>		
+				
+			</div>
 
-
+		</div>
+	
 	<footer>
 		<p>Team Les Vioques © 2023</p>
-
 	</footer>
 
 </body>
