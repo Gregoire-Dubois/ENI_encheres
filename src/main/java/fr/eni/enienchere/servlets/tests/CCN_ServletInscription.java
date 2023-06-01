@@ -25,6 +25,7 @@ public class CCN_ServletInscription extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/CCN_JSPInscription.jsp");
+       
         rd.forward(request, response);
     }
 
@@ -33,6 +34,7 @@ public class CCN_ServletInscription extends HttpServlet {
 	 */
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
         String pseudo       = request.getParameter("pseudo");
         String nom          = request.getParameter("nom");
         String prenom       = request.getParameter("prenom");
@@ -43,10 +45,11 @@ public class CCN_ServletInscription extends HttpServlet {
         String ville        = request.getParameter("ville");
         String motDePasse   = request.getParameter("mdp");
         String mdpConfirm = request.getParameter("confirmationMdp");
-
+        
         Utilisateur newUser = new Utilisateur(pseudo,nom,prenom,email,telephone,rue,codePostal,ville,mdpConfirm,0,false);
 		DRAFT_UtilisateurManager utilisateurManager = DRAFT_UtilisateurManager.getInstance();
 		HttpSession session;
+		
 		//Si les mots de passe ne sont pas identiques, on recharge la page avec les infos
 		if (!motDePasse.equals(mdpConfirm)) {
 			//System.out.println("Les mots de passes ne sont pas identiques"); //Affichage console pour les tests
