@@ -35,7 +35,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		Utilisateur utilisateur = utilisateurManager.selectionner(1);
 		System.out.println("select by id : " +utilisateur);
-		Utilisateur utilisateur2 = utilisateurManager.selectionner_email_mdp("bob@leponge.fr", "leponge");
+		Utilisateur utilisateur2 = utilisateurManager.selectionnerEmailMdp("bob@leponge.fr", "leponge");
 		System.out.println("select_by_email :" +utilisateur2);
 	} catch (BusinessException e) {
 		// TODO Auto-generated catch block
@@ -58,8 +58,8 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 /*Salut*/
 
 /*
- * un carré de chocolat pour la route avant de courir 
+ * Je teste une nouvelle fois un push - Tanguy
  * 
  * 
  */
-
+//Test
