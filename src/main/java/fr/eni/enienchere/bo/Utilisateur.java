@@ -1,5 +1,7 @@
 package fr.eni.enienchere.bo;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public class Utilisateur {
@@ -177,4 +179,31 @@ public class Utilisateur {
 				+ ", administrateur=" + administrateur + "]";
 	}
 
+	
+	/*
+	 * 01/06/2023
+	 * Ajout de CCN pour la hash du mot de passe
+	 */
+	
+	public static String hashPwd(String pwd)
+	{
+		//Instance de MessageDigest et de StringBuffer
+		MessageDigest md=null;
+		StringBuffer sb=new StringBuffer();
+		byte[] reponse;
+		
+		try {
+			md=MessageDigest.getInstance("MD5");
+			reponse=md.digest(pwd.getBytes());
+			for(int i:reponse)
+			{
+				sb.append((Integer.toString((i&0xff)+0x100, 16).substring(1)));
+			}
+			
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return sb.toString();
+	}
 }

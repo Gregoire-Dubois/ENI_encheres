@@ -121,7 +121,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			{
 				lst = new ArrayList<>();
 			}
-			lst.add(utilisateur)
+			lst.add(utilisateur);
 			}
 			
 		} catch (SQLException e) {
@@ -133,7 +133,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 					cnx.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					BusinessException businessException = BusinessException.getInstance();
+					BusinessException businessException = new BusinessException();
 					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
 				}
 			}
@@ -142,7 +142,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		
 		
 		return lst;
-
+	}
 	
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
 		Utilisateur utilisateur = null;
@@ -341,7 +341,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 				pstmt.setString(6,utilisateur.getRue());
 				pstmt.setString(7,utilisateur.getCodePostal());
 				pstmt.setString(8,utilisateur.getVille());
-				pstmt.setString(9,utilisateur.getMotDePasse()); //hash à ajouter
+				pstmt.setString(9,Utilisateur.hashPwd(utilisateur.getMotDePasse())); //hash à ajouter
 				pstmt.setInt(10, 0); 
 				pstmt.setInt(11, 0); //par défaut, la personne qui s'inscrit n'est pas administrateur
 				pstmt.executeUpdate();
