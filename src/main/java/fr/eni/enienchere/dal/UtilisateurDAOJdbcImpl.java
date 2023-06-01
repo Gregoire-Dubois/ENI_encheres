@@ -5,12 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bo.Utilisateur;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 
-	private static final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?;";
+	private static final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS;";
 	private static final String SELECT_BY_EMAIL_ET_MDP="SELECT * FROM UTILISATEURS WHERE email=? AND mot_de_passe=?";
 	private static final String UPDATE_BY_ID = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ? , rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 	private static final String DELETE_BY_ID = "DELETE FROM UTILISATEUR WHERE no_utilisateur=?;";
@@ -133,37 +134,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
     	}
 	  }	
 	
-	
-	/**public void testUpdateUtilisateur(int IDUtilisateur) throws BusinessException {
-		Connection cnx;
-		
-	    try {
-	    	cnx = ConnectionProvider.getConnection();
-	    	PreparedStatement pstmt = cnx.prepareStatement(UPDATE_BY_ID);
-	    	pstmt.setString(1, IDUtilisateur);
-	    	pstmt.setString(2, IDUtilisateur);
-	    	pstmt.setString(3, IDUtilisateur);
-	    	pstmt.setString(4, IDUtilisateur);
-	    	//gestion du null
-	    	if(IDUtilisateur == null){
-	    		pstmt.setNull(5, Types.VARCHAR);
-	    	}else {
-	    		pstmt.setString(5, IDUtilisateur);
-	    	}
-	    	pstmt.setString(6, IDUtilisateur);
-	    	pstmt.setString(7, IDUtilisateur));
-	    	pstmt.setString(8, IDUtilisateur));
-	    	pstmt.setString(9, IDUtilisateur.getMotDePasse());
-	    	pstmt.setInt(10, IDUtilisateur.getNoUtilisateur());
-	    	pstmt.executeUpdate();
-	    	pstmt.close();
-
-
-    	}catch (SQLException e) {
-    		e.printStackTrace();
-    	}
-	  }	*/
-	
 	/* Requête : Suppression du compte utilisateur par son N° Utilisateur
 	 * Fait par Tanguy
 	 */
@@ -204,7 +174,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		}
 	}
 	
-
 	//Permet une selection par le pseudo et le mot de passe	
 		@Override
 		public Utilisateur selectByPseudoMdp(String pseudo, String mdp) throws BusinessException {

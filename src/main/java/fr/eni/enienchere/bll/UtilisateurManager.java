@@ -6,10 +6,21 @@ import fr.eni.enienchere.dal.UtilisateurDAO;
 import fr.eni.enienchere.BusinessException;
 
 public class UtilisateurManager {
-	private UtilisateurDAO utilisateurDAO;
+	
+	private static UtilisateurManager instance = null;
+	private UtilisateurDAO utilisateurDAO ;
 
+	//Constructeur privé
 	public UtilisateurManager() {
 		this.utilisateurDAO = DAOFactory.getUtilisateurDAO();
+	}
+	
+	//SINGLETON
+	public static UtilisateurManager getInstance() {
+			if (instance == null) {
+				instance = new UtilisateurManager();
+			}
+	 return instance;
 	}
 
 	public Utilisateur selectionner(int id) throws BusinessException {
@@ -37,7 +48,7 @@ public class UtilisateurManager {
 		BusinessException businessException = new BusinessException();
 		Utilisateur utilisateur=null;
 		//Tests de non nullité //séparer dans différentes méthodes? validerPseudo(pseudo, businessException) ...
-		if(pseudo.trim() == null) {
+		if(pseudo.trim() == null || !pseudo.trim().matches("\\p{Alpha}")) {
 			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_NULL_ERREUR);
 		}
 		
