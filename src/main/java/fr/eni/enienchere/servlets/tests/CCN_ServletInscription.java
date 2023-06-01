@@ -1,6 +1,7 @@
 package fr.eni.enienchere.servlets.tests;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -42,31 +43,41 @@ public class CCN_ServletInscription extends HttpServlet {
         String motDePasse   = request.getParameter("mdp");
         String mdpConfirm = request.getParameter("confirmationMdp");
 
-		Utilisateur newUser = new Utilisateur(pseudo,nom,prenom,email,telephone,rue,codePostal,ville,mdpConfirm,0,false);
-		DRAFT_UtilisateurManager utilisateurManager = DRAFT_UtilisateurManager.getInstante();
+        Utilisateur newUser = new Utilisateur(pseudo,nom,prenom,email,telephone,rue,codePostal,ville,mdpConfirm,0,false);
+		DRAFT_UtilisateurManager utilisateurManager = DRAFT_UtilisateurManager.getInstance();
 		
 		//Si les mots de passe ne sont pas identiques, on recharge la page avec les infos
 		if (!motDePasse.equals(mdpConfirm)) {
-			System.out.println("Les mots de passes ne sont pas identiques"); //Affichage console pour les tests
-			//A faire : Erreur retour sur la page d'inscription
+			//System.out.println("Les mots de passes ne sont pas identiques"); //Affichage console pour les tests
 			request.setAttribute("newUser", newUser);
 			request.getRequestDispatcher("/WEB-INF/jsp/tests/CCN_JSPInscription.jsp").forward(request, response);	
 		} else {
 			try {
 				Utilisateur utilisateur = utilisateurManager.insert(newUser);
-				if(utilisateur !=null) {
+			
 					request.getSession().setAttribute("userConnected", utilisateur);
 					
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPAccueil.jsp");
 					rd.forward(request, response);	
-				}else {
-					
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/CCN_JSPInscription.jsp");
-					rd.forward(request, response);
-			}
+
 			}catch (BusinessException e) {
-				// TODO Auto-generated catch block
+				//System.out.println("Je suis bien la?");
 				e.printStackTrace();
+				
+				//On récupère la liste d'erreurs générée plus tôt
+				List<Integer> listeErreursInscription = e.getListeCodesErreur();
+				
+				//Pour les tests
+				for(int erreur : listeErreursInscription) {
+					System.out.println(erreur);
+				}
+				
+				//On ajoute la liste dans les attributs de la requête pour les communiquer à la JSP
+				request.setAttribute("listeErreursInscription", listeErreursInscription);
+				
+				//On envoie à la JSP
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/CCN_JSPInscription.jsp");
+				rd.forward(request, response);
 			}
 		}
 	}
