@@ -142,8 +142,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		
 		
 		return lst;
+
 	}
-	
+
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
 		Utilisateur utilisateur = null;
 		Connection cnx = null;

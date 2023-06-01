@@ -20,7 +20,7 @@
 <a href="">Enchères</a>
 <a href="">Vendre un article</a>
 <a href="">Mon Profil</a>
-<a href="">Déconnexion</a>
+<a href="${pageContext.request.contextPath}/deconnexion">Déconnexion</a>
 </p>
 </c:when>
 <c:otherwise><!-- Si l'utilisateur n'est pas connecte -->

@@ -142,7 +142,7 @@ public class DRAFT_UtilisateurManager {
 			System.out.println("Erreur sur la rue vide");
 			businessException.ajouterErreur(CodesResultatBLL.RUE_VIDE_ERREUR);
 		}
-		if (!rue.trim().matches("^[a-zA-Z0-9\\s]+$")) {
+		if (!rue.trim().matches("^[A-Za-z0-9\\s'-]+$")) {
 			System.out.println("Erreur sur la rue qui n'est pas alphanumérique + espace");
 			businessException.ajouterErreur(CodesResultatBLL.RUE_ALPHA_NUM_ESP_ERREUR);
 		}
