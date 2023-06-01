@@ -11,6 +11,7 @@
 <body>
 
 
+
 	<%@ include file="JSPHeader.jsp"%>
 
 	<h1>Vendre un article</h1>
