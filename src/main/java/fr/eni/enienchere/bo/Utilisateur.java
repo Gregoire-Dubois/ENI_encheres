@@ -1,5 +1,7 @@
 package fr.eni.enienchere.bo;
 
+import java.util.List;
+
 public class Utilisateur {
 	
 	private static final long serialVersionUID = 1L;
@@ -17,6 +19,9 @@ public class Utilisateur {
 	private Integer credit; 
 	private Boolean administrateur;
 	
+	//Pas sure
+	private List<ArticleVendu> listeAchats;
+	private List<ArticleVendu> listeVentes;
 	
 	public Utilisateur() {
 		super();

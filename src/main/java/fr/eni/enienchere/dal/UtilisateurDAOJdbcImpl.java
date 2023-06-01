@@ -42,7 +42,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			BusinessException businessException = BusinessException.getInstance();
+			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.SELECT_BY_ID_ECHEC);
 		}finally {
 			if(cnx !=null) {
@@ -50,7 +50,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 					cnx.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					BusinessException businessException = BusinessException.getInstance();
+					BusinessException businessException = new BusinessException();
 					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
 				}
 			}
@@ -91,7 +91,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 					cnx.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					BusinessException businessException = BusinessException.getInstance();
+					BusinessException businessException = new BusinessException();
 					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
 				}
 			}

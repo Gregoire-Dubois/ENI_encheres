@@ -50,4 +50,8 @@ Thumbs.db
 
 /build/
 .classpath
+<<<<<<< HEAD
 .project
+=======
+.project
+>>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
