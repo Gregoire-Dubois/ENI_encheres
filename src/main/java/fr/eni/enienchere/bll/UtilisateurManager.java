@@ -59,7 +59,7 @@ public class UtilisateurManager {
 	
 	public Utilisateur inscrire(String pseudo, String nom, String prenom, String email, String telephone, String rue,String codePostal,String ville,String mdp) throws BusinessException {
 		
-		BusinessException businessException = BusinessException.getInstance();
+		BusinessException businessException = new BusinessException();
 		Utilisateur utilisateur=null;
 		//Tests de non nullité //séparer dans différentes méthodes? validerPseudo(pseudo, businessException) ...
 
@@ -68,34 +68,37 @@ public class UtilisateurManager {
 		if(pseudo.trim().isEmpty()) {
 
 			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_NULL_ERREUR);
+
+			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_VIDE_ERREUR);
+
 		}
 		
 		if(nom.trim().isEmpty()) {
-			businessException.ajouterErreur(CodesResultatBLL.NOM_NULL_ERREUR);
+			businessException.ajouterErreur(CodesResultatBLL.NOM_VIDE_ERREUR);
 		}
 		
 		if(prenom.trim().isEmpty()) {
-			businessException.ajouterErreur(CodesResultatBLL.PRENOM_NULL_ERREUR);
+			businessException.ajouterErreur(CodesResultatBLL.PRENOM_VIDE_ERREUR);
 		}
 		
 		if(email.trim().isEmpty()) {
-			businessException.ajouterErreur(CodesResultatBLL.EMAIL_NULL_ERREUR);
+			businessException.ajouterErreur(CodesResultatBLL.EMAIL_VIDE_ERREUR);
 		}
 		
 		if(rue.trim().isEmpty()) {
-			businessException.ajouterErreur(CodesResultatBLL.RUE_NULL_ERREUR);
+			businessException.ajouterErreur(CodesResultatBLL.RUE_VIDE_ERREUR);
 		}
 		
 		if(codePostal.trim().isEmpty()) {
-			businessException.ajouterErreur(CodesResultatBLL.CODEPOSTAL_NULL_ERREUR);
+			businessException.ajouterErreur(CodesResultatBLL.CODEPOSTAL_VIDE_ERREUR);
 		}
 		
 		if(ville.trim().isEmpty()) {
-			businessException.ajouterErreur(CodesResultatBLL.VILLE_NULL_ERREUR);
+			businessException.ajouterErreur(CodesResultatBLL.VILLE_VIDE_ERREUR);
 		}
 		
 		if(mdp.trim().isEmpty()) {
-			businessException.ajouterErreur(CodesResultatBLL.MDP_NULL_ERREUR);
+			businessException.ajouterErreur(CodesResultatBLL.MDP_VIDE_ERREUR);
 		}
 		
 		//Pour les tests
@@ -125,7 +128,7 @@ public class UtilisateurManager {
 	
 	//Permet de se connecter en vérifiant si la combinaison email/mdp OU pseudo/mdp correspond à la combinaison identifiant/mdp
 	public Utilisateur login(String identifiant, String mdp) throws BusinessException {
-		BusinessException businessException = BusinessException.getInstance();
+		BusinessException businessException = new BusinessException();
 		Utilisateur utilisateur = null;
 		
 		if(this.selectionnerEmailMdp(identifiant, mdp)!=null || this.selectionnerPseudoMdp(identifiant, mdp)!=null) { //ça veut dire qu'il y a une correspondance
