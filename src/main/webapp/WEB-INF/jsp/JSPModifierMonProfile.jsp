@@ -19,7 +19,6 @@
 	
 		<fieldset>
 		<legend>Mon profile</legend>
-		
 
 			<label>Pseudo</label> <input type="text" name="pseudo" value="${user.pseudo}" id="pseudo" minlength="2" maxlenght="30" required>
 			<br>
@@ -50,6 +49,7 @@
 		<button type="submit">Enregistrer</button>
 	</form>
 	
+
 	<form method="post" action="A nommer">
 	
 		<input type="button" value="Supprimer mon compte">

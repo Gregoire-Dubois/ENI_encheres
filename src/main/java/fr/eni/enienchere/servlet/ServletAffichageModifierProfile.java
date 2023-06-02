@@ -17,8 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletAffichageModifierProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	
 
 
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -28,6 +30,7 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 			rd.forward(request, response);
 	}
 
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
