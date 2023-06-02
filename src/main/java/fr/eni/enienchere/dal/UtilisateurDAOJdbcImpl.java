@@ -104,54 +104,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		
 		return utilisateur;
 	}
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> d8a02d3038b818f5a8ed7666e2b7801b0eba0d9f
-/*
-	@Override
-	public List<Utilisateur> selectAll() {
-		Utilisateur utilisateur = null;
-		Connection cnx = null;
-		ArrayList<Utilisateur> lst = null;
-		
-		try {
-			cnx = ConnectionProvider.getConnection();
-			Statement stmt = cnx.createStatement();
-			ResultSet rs = stmt.executeQuery(SELECT_ALL);
-			utilisateur = new Utilisateur();
-				
-			while(rs.next()) {
-			if(lst==null)
-			{
-				lst = new ArrayList<>();
-			}
-			lst.add(utilisateur);
-			}
-			
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}finally {
-			if(cnx !=null) {
-				try {
-					cnx.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-					BusinessException businessException = new BusinessException();
-					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
-				}
-			}
-			
-		}
-		
-		return lst;
-		
-		*/
-
-	}
-*/
 	
 
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
@@ -374,12 +326,16 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			
 			return utilisateur;
 		}
+	/*
 		// A compléter
 		@Override
 		public List<Utilisateur> selectAll() throws BusinessException {
 			// TODO Auto-generated method stub
 			return null;
 		}
+		
+		*/
+		
 
 }
 
