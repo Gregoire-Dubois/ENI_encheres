@@ -17,6 +17,7 @@ import fr.eni.enienchere.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletConnexionTJ
+ * A SUPPRIMER ?
  */
 @WebServlet("/ServletConnexionTJ")
 public class ServletConnexionTJ extends HttpServlet {

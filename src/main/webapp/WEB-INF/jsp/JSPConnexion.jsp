@@ -6,12 +6,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="css/style.css" />
 <title>Connexion - Inscription</title>
 </head>
+
 <body>
-<header>
-<h1>ENI-Encheres</h1>
-</header>
+
+<%@ include file="JSPHeader.jsp" %>
+
 <section>
 	<c:if test="${!empty listeErreurs}">
 		<c:forEach var="code" items="${listeErreurs}">
@@ -20,8 +22,15 @@
 	</c:if>
 	<form method="post" action="${pageContext.request.contextPath}/connexion">
 		<p>
-			<label for="identifiant">Identifiant :</label> <input type="text" name="identifiant" id="identifiant" required> </br> </br>
-			<label for="mdp">Mot de passe:</label> <input type="password" name="mdp" id="mdp" required> 
+			<label for="identifiant">Identifiant :</label> 
+			<input type="text" name="identifiant" id="identifiant" required> 
+			</br> </br>
+			<label for="mdp">Mot de passe:</label> 
+			<input type="password" name="mdp" id="mdp" required>
+			</br> 
+			<input type="checkbox" id="se-souvenir-de-moi" name="se-souvenir-de-moi">
+	        <label for="se-souvenir-de-moi">Se souvenir de moi</label>
+	        <br>
 			
 			<input type="submit" value="Connexion">
 
@@ -31,6 +40,9 @@
 	</form>
 	
 	<a href="${pageContext.request.contextPath}/inscription"><input type="submit"value="Créer un compte"></a>
+	<a href="mot-de-passe-oublie.html">Mot de passe oublié</a><br>
+	   <!--  <button onclick="location.href='creer-compte.html'">Créer un compte</button> --> <!-- ???? -->
 </section>
+<%@ include file="JSPFooter.jsp" %>
 </body>
 </html>

@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletAfficherAcceuilNonConnecte
+ * Servlet implementation class ServletAfficherAcceuilNonConnecte 
+ * A SUPPRIMER
  */
 @WebServlet("/ServletAfficherAcceuilNonConnecte")
 public class ServletAfficherAcceuilNonConnecte extends HttpServlet {

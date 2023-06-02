@@ -1,4 +1,4 @@
-package fr.eni.enienchere.servlets.tests;
+package fr.eni.enienchere.servlet;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,7 +34,7 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPConnexion.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPConnexion.jsp");
 		rd.forward(request, response);
 	}
 
@@ -67,7 +67,7 @@ public class ServletConnexion extends HttpServlet {
 //				System.out.println(erreur);
 //			}
 			request.setAttribute("listeErreurs", listeErreurs);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPConnexion.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPConnexion.jsp");
 			rd.forward(request, response);
 		}
 		
