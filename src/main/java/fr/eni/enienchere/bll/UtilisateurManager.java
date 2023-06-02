@@ -6,6 +6,8 @@ import fr.eni.enienchere.dal.UtilisateurDAO;
 
 import java.util.List;
 
+import org.eclipse.jdt.internal.compiler.ast.ThisReference;
+
 import fr.eni.enienchere.BusinessException;
 
 public class UtilisateurManager {
@@ -47,6 +49,11 @@ public class UtilisateurManager {
 		return utilisateur;
 	}
 	
+	public void modifierUtilisateur(Utilisateur utilisateurConnecte) throws BusinessException {
+
+		utilisateurDAO.updateUtilisateur(utilisateurConnecte);
+
+	}
 
 	/*public List<Utilisateur> findAll(String field,String sens) {
 		try {
