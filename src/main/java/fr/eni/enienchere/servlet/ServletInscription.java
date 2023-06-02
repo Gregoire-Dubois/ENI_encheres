@@ -56,7 +56,7 @@ public class ServletInscription extends HttpServlet {
         String mdpConfirm = request.getParameter("confirmationMdp");
         
         Utilisateur newUser = new Utilisateur(pseudo,nom,prenom,email,telephone,rue,codePostal,ville,mdpConfirm,0,false);
-		DRAFT_UtilisateurManager utilisateurManager = DRAFT_UtilisateurManager.getInstance();
+		UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
 		HttpSession session;
 		
 		//Si les mots de passe ne sont pas identiques, on recharge la page avec les infos
