@@ -47,7 +47,7 @@
 			
 		</fieldset>
 			
-		<button type"submit>Enregistrer</button>
+		<button type="submit">Enregistrer</button>
 	</form>
 	
 	<form action="post" action="#nomDelaServletDeSuppressionDuCompte">
