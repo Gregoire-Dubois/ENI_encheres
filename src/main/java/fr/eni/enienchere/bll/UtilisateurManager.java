@@ -59,7 +59,6 @@ public class UtilisateurManager {
 		try {
 			utilisateurDAO.deleteById(id);
 		} catch (BusinessException e) {
-			System.err.println("Une erreur s'est produite lors de la suppression de l'utilisateur : " + e.getMessage())
 			e.printStackTrace();
 		}
 	}

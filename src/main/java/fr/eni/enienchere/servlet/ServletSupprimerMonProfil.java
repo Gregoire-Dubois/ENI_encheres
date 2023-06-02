@@ -31,7 +31,7 @@ public class ServletSupprimerMonProfil extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-		int no_utilisateur = (int) session.getAttribute("userID");		
+		int no_utilisateur = (int) session.getAttribute("userID");	
 		
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
         utilisateurManager.deleteById(no_utilisateur);
