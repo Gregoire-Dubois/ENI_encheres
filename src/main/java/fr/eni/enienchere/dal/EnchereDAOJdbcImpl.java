@@ -23,7 +23,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
         enchere.setUtilisateur(utilisateur);
         enchere.setDateEnchere((Timestamp) rs.getObject("dateEnchere")); // ------> apres
         enchere.setMontantEnchere(rs.getInt("montantEnchere"));
-
+      
         return enchere;
     }
 
