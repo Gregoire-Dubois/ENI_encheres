@@ -39,15 +39,15 @@ public class ServletSupprimerMonProfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		
-		int no_utilisateur = (Integer) session.getAttribute("userID");	
-		
-		UtilisateurManager utilisateurManager = new UtilisateurManager();
-        utilisateurManager.deleteById(no_utilisateur);
-        
-        session.invalidate();
-        response.sendRedirect(request.getContextPath()+"/accueil");
+//		HttpSession session = request.getSession();
+//		
+//		int no_utilisateur = (Integer) session.getAttribute("userID");	
+//		
+//		UtilisateurManager utilisateurManager = new UtilisateurManager();
+//        utilisateurManager.deleteById(no_utilisateur);
+//        
+//        session.invalidate();
+//        response.sendRedirect(request.getContextPath()+"/accueil");
 	}
 
 }
