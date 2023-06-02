@@ -10,7 +10,7 @@
 </head>
 <body>
 
-	<%@ include file="JSPHeader.jsp"%>
+	<%@ include file="/WEB-INF/jsp/JSPHeader.jsp" %>
 
 	<h1>Vendre un article</h1>
 
@@ -77,7 +77,7 @@
 			type="reset" value="Annuler">
 	</form>
 
-	<%@ include file="JSPFooter.jsp"%>
+	<%@ include file="/WEB-INF/jsp/JSPFooter.jsp" %>
 
 </body>
 </html>

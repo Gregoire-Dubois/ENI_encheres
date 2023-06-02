@@ -16,7 +16,7 @@
 </head>
 <body>
 
-	<%@ include file="JSPHeader.jsp" %>
+	<%@ include file="/WEB-INF/jsp/JSPHeader.jsp" %>
 
 	<table>
 			<tr>
@@ -52,7 +52,7 @@
 	
 	<button type="submit">Modifier</button>
 	
-	<%@ include file="JSPFooter.jsp" %>
+	<%@ include file="/WEB-INF/jsp/JSPFooter.jsp" %>
 
 </body>
 </html>

@@ -13,7 +13,7 @@
 </head>
 <body>
 	
-	<%@ include file="JSPHeader.jsp" %>
+	<%@ include file="/WEB-INF/jsp/JSPHeader.jsp" %>
 	
 	<form action="post" action ="ServletAModifierMonProfile">
 	
@@ -56,7 +56,7 @@
 	
 	</form>
 	
-	<%@ include file="JSPFooter.jsp" %>
+	<%@ include file="/WEB-INF/jsp/JSPFooter.jsp" %>
 
 </body>
 </html>
