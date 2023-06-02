@@ -1,13 +1,14 @@
 package fr.eni.enienchere.servlet;
 
 import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+
 
 /**
  * Servlet implementation class ServletAffichageModifierProfile
@@ -25,14 +26,12 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 			RequestDispatcher rd = null;
 			rd = request.getRequestDispatcher("WEB-INF/JSPModifierMonProfile.jsp");
 			rd.forward(request, response);
-
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		String pseudo = request.getParameter("pseudo");
 		String prenom = request.getParameter("prenom");
 		String telephone = request.getParameter("telephone"); 
@@ -53,10 +52,12 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 		System.out.println(nouveauMotDePass);
 		System.out.println(confirmationNouveauMotDePass);
 		System.out.println(nom);
-		System.out.println(email);
+		System.out.println(email);	
+		
+		RequestDispatcher rd = null;
+		rd = request.getRequestDispatcher("WEB-INF/JSPModifierMonProfile.jsp");
+		rd.forward(request, response);
 
-		
-		
 		
 		doGet(request, response);
 	}

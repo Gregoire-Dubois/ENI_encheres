@@ -21,9 +21,9 @@
 		<fieldset>
 		<legend>Mon profile</legend>
 		
-			<lablel>Pseudo</lablel> <input type="text" name="pseudo" value="exemple : Bob Léponge" id="pseudo" minlength="2" maxlenght="30" required>
+			<lablel>Pseudo</lablel> <input type="text" name="pseudo" value= "${userConnected.pseudo}" id="pseudo" minlength="2" maxlenght="30" required>
 			<br>
-			<lablel>Prénom</lablel> <input type="text" name="prenom" value="exemple : Bob" id="prenom" minlength="2" maxlenght="30" required>
+			<lablel>Prénom</lablel> <input type="text" name="prenom" value="${userConnected.prenom}" minlength="2" maxlenght="30" required>
 			<br>
 			<lablel>Téléphone</lablel> <input type="tel" name="téléphone" value="0900000000" id="telephone" required>
 			<br>
@@ -47,10 +47,10 @@
 			
 		</fieldset>
 			
-		<button type"submit>Enregistrer</button>
+		<button type="submit">Enregistrer</button>
 	</form>
 	
-	<form action="post" action="#nomDelaServletDeSuppressionDuCompte">
+	<form action="post" action="ServletAffichageModifierProfile">
 	
 		<input type="button" value="Supprimer mon compte">
 	
