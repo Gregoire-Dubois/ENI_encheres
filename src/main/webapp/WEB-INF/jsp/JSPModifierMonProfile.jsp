@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="fr.eni.enienchere.messages.LecteurMessage"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,56 +10,85 @@
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 
 
-<title>Modifier mon profile</title>
+<title>Modifier mon profil</title>
 </head>
 <body>
 	
 	<%@ include file="JSPHeader.jsp" %>
 	
-	<form method="post" action ="ServletAffichageModifierProfile">
+	<section>
+	
+	<div>
+		<h1>Mon Profil</h1>
+	</div>
+	
+		
+		<p> 
+			<c:if test="${!empty listeErreursInscription }">
+				<c:forEach var="code" items="${listeErreursInscription}">
+					<li>Erreur: ${LecteurMessage.getMessageErreur(code)}</li>
+				</c:forEach>
+			</c:if>
+
+		</p>
+	
+	<form method="post" action="${pageContext.request.contextPath}/modification">
 		<input type="hidden" name="id" value="${userConnected.noUtilisateur}">
 		<fieldset>
-		<legend>Mon profile</legend>
+		<legend>Mon profil</legend>
 			
-			<label>Pseudo</label> <input type="text" name="pseudo" value="${userConnected.pseudo}" id="pseudo" minlength="2" maxlenght="30" required>
+			<label for="pseudo">Pseudo :</label>  
+			<input type="text" name="pseudo" value="${userConnected.pseudo}" id="pseudo" minlength="2" maxlength="30" required>
 			<br>
-			<label>Prénom</label> <input type="text" name="prenom" value="${userConnected.prenom}" id="prenom" minlength="2" maxlenght="30" required>
+			<label for="nom">Nom :</label> 
+			<input type="text" name="nom" value="${userConnected.getNom()}" id="nom" minlength="2" maxlength="30" required>
+			</br>
+			<label for="prenom">Prénom :</label> 
+			<input type="text" name="prenom" value="${userConnected.getPrenom()}" id="prenom" minlength="2" maxlength="30" required>
 			<br>
-			<label>Téléphone</label> <input type="tel" name="téléphone" value="${userConnected.telephone}" id="telephone" required>
+			<label for="email">Email :</label> 
+			<input type="text" name="email" value="${userConnected.getEmail()}" id="email" minlength="2" maxlength="30" required>
 			<br>
-			<label for="codepostal">Code postal :</label>
-  			<input type="text" id="codepostal" name="codepostal" pattern="[0-9]{5}" value="${userConnected.codePostal}" title="Code postal">
-		
+			<label for="telephone">Téléphone :</label>
+			<input type="tel" name="telephone" value="${userConnected.getTelephone()}" id="telephone">
 			<br>
-			<label>Mot de passe actuel</label> <input type="password" name="password" id="password" minlength="2" maxlenght="30" required>
+			<label for="rue">Rue:</label>
+			<input type="text" name="rue" value="${userConnected.getRue()}" id="rue" minlength="2" maxlength="30" required>
 			<br>
-			<label>Nouveau Mot de passe</label> <input type="password" name="newPassword"  id="newPassword" minlength="2" maxlenght="30" required>
-			<br>
-			<label>confirmation</label> <input type="password" name="confirmNewPassword"  id="confirmNewPassword" minlength="2" maxlenght="30" required>
-			<br>
-			<label>Nom</label> <input type="text" name="nom" value="${userConnected.nom}" id="nom" minlength="2" maxlenght="30" required>
-			<br>
-			<label>Email</lablel> <input type="text" name="email" value="${userConnected.email}" id="email" minlength="2" maxlenght="30" required>
-			<br>
-			<label>Rue</lablel> <input type="text" name="rue" value="${userConnected.rue}" id="rue" minlength="2" maxlenght="30" required>
+			<label for="codePostal">Code Postal :</label> 
+  			<input type="text" id="codePostal" name="codePostal" pattern="[0-9]{5}" value="${userConnected.getCodePostal()}" title="Code postal">
 			<br>			
-			<label>Ville</label> <input type="text" name="ville" value="${userConnected.ville}" id="ville" minlength="2" maxlenght="30" required>
+			<label for="ville">Ville :</label>  
+			<input type="text" name="ville" value="${userConnected.getVille()}" id="ville" minlength="2" maxlength="30" required>
+			<br>
+			<label for="mdp">Mot de passe :</label> 
+			<input type="password" name="mdp" id="mdp" minlength="2" maxlength="30" required>
+			<br>
+			<label for="nouveauMdp">Nouveau mot de passe :</label> 
+			<input type="password" name="nouveauMdp"  id="nouveauMdp" minlength="2" maxlength="30">
+			<br>
+			<label for="confirmationMdp">Confirmation:</label> 
+			<input type="password" name="confirmationMdp"  id="confirmationMdp" minlength="2" maxlength="30">
+			<br>
+			</br>
 			
+			<input type="submit" value="Enregistrer">
 		</fieldset>
-		<p>	
-		<button type="submit">Enregistrer</button>
+		
+		
 	</form>
-	<p>
+	
 
-	<!-- <form method="post" action="/supprimermoncompte"> -->
-	<!-- Modification de la redirection du bouton supprimer vers une servlet de test -->
-		<!-- <a href="${pageContext.request.contextPath}/supprimermoncompte"><input type="button" value="Supprimer mon compte"></a>-->
+	
 		<form method="post" action="<%=request.getContextPath()%>/delete">
-              <input type="hidden" name="id" value="${utilisateur.id}">
+              <input type="hidden" name="id" value="${utilisateur.noUtilisateur}">
               <input type="submit" value="SUPPRIMER">
         </form>
+        
+		
+		
+	<a href="${pageContext.request.contextPath}/accueil"><input	type="submit" value="Annuler"></a>
 	
-	<!-- </form> -->
 	
 	
 	<%@ include file="JSPFooter.jsp" %>

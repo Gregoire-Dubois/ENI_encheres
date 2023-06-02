@@ -34,6 +34,24 @@ public class UtilisateurManager {
 
 		return utilisateur;
 	}
+	
+	//Utiliser dans la servlet de modification du profil
+	public Utilisateur selectionnerParIdMdp(int id, String mdp) throws BusinessException {
+		BusinessException businessException = new BusinessException();	
+		Utilisateur utilisateur = null;
+		System.out.println(this.utilisateurDAO.selectByIdMdp(id, mdp));
+		if(this.utilisateurDAO.selectByIdMdp(id, mdp)!=null) {
+		utilisateur = this.utilisateurDAO.selectByIdMdp(id, mdp);
+		}else {
+			System.out.println("Je suis là");
+			businessException.ajouterErreur(CodesResultatBLL.MDP_ERREUR);
+			for(int erreur : businessException.getListeCodesErreur()) {
+				System.out.println(erreur);
+			}
+			throw businessException;
+		}
+		return utilisateur;
+	}
 
 	public Utilisateur selectionnerEmailMdp(String email, String mdp) throws BusinessException {
 
@@ -50,7 +68,7 @@ public class UtilisateurManager {
 	}
 	
 	public void modifierUtilisateur(Utilisateur utilisateurConnecte) throws BusinessException {
-
+		//VERIFICATION A FAIRE
 		utilisateurDAO.updateUtilisateur(utilisateurConnecte);
 
 	}

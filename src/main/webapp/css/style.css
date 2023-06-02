@@ -1,8 +1,10 @@
 @charset "UTF-8";
-
+*{
+	background-color: pink;
+}
 html{
 	
-
+background-color: pink;
 
 	}
 
