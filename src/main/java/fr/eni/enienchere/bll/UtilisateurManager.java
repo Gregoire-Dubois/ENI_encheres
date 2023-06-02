@@ -55,16 +55,14 @@ public class UtilisateurManager {
 
 	}
 
-	/*public List<Utilisateur> findAll(String field,String sens) {
+	public void deleteById(int id) {
 		try {
-			return utilisateurDAO.selectAll();
+			utilisateurDAO.deleteById(id);
 		} catch (BusinessException e) {
+			System.err.println("Une erreur s'est produite lors de la suppression de l'utilisateur : " + e.getMessage())
 			e.printStackTrace();
 		}
-		return null;
-
 	}
-	*/
 
 	public Utilisateur insert(Utilisateur utilisateur) throws BusinessException {
 		BusinessException businessException = new BusinessException();

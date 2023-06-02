@@ -1,8 +1,5 @@
 package fr.eni.enienchere.dal;
 
-
-import java.util.List;
-
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bo.Utilisateur;
 

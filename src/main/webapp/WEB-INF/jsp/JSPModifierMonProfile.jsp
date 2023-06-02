@@ -50,7 +50,7 @@
 		<button type="submit">Enregistrer</button>
 	</form>
 	
-	<form action="post" action="ServletAffichageModifierProfile">
+	<form method="post" action="supprimermoncompte">
 	
 		<input type="button" value="Supprimer mon compte">
 	
