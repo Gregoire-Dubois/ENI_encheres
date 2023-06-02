@@ -52,6 +52,7 @@ public class ServletAffichageMonProfile extends HttpServlet {
 			rd.forward(request, response);
 		} else {
 			noVendeur = Integer.parseInt(request.getParameter("idVendeur"));
+			System.out.println(noVendeur);
 			if (noUtilisateur == noVendeur) {
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
 				rd.forward(request, response);
