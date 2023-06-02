@@ -27,7 +27,6 @@ public class ServletAffichageMonProfile extends HttpServlet {
 		//UtilisateurDAOJdbcImpl userDaoJdbcImpl = new UtilisateurDAOJdbcImpl();
 		//System.out.println(user.toString());
 		//request.setAttribute("user", user);
-		
 		request.getSession().setAttribute("user", user);
 		getServletContext().getRequestDispatcher("/WEB-INF/JSPMonProfile.jsp").forward(request, response);
 	
