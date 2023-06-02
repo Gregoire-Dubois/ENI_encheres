@@ -6,6 +6,8 @@ import fr.eni.enienchere.dal.UtilisateurDAO;
 
 import java.util.List;
 
+import org.eclipse.jdt.internal.compiler.ast.ThisReference;
+
 import fr.eni.enienchere.BusinessException;
 
 public class UtilisateurManager {
@@ -47,6 +49,11 @@ public class UtilisateurManager {
 		return utilisateur;
 	}
 	
+	public void modifierUtilisateur(Utilisateur utilisateurConnecte) throws BusinessException {
+
+		utilisateurDAO.updateUtilisateur(utilisateurConnecte);
+
+	}
 
 	/*public List<Utilisateur> findAll(String field,String sens) {
 		try {
@@ -57,134 +64,47 @@ public class UtilisateurManager {
 		return null;
 
 	}
-	
-	
+	*/
 
-<<<<<<< HEAD
-		if(pseudo.trim() == null || !pseudo.trim().matches("\\p{Alpha}")) {
+	public Utilisateur insert(Utilisateur utilisateur) throws BusinessException {
+		BusinessException businessException = new BusinessException();
+		this.checkPseudo(utilisateur.getPseudo(), businessException);
+		this.checkNom(utilisateur.getNom(), businessException);
+		this.checkPrenom(utilisateur.getPrenom(), businessException);
+		System.out.println(utilisateur.getEmail());
+		this.checkEmail(utilisateur.getEmail(), businessException);
+		if (!utilisateur.getTelephone().trim().isEmpty()) {
+			this.checkTelephone(utilisateur.getTelephone(), businessException);
+		}else {
+			utilisateur.setTelephone(null);
+		}
+		this.checkRue(utilisateur.getRue(), businessException);
+		this.checkCodePostal(utilisateur.getCodePostal(), businessException);
+		this.checkVille(utilisateur.getVille(), businessException);
+		this.checkMdp(utilisateur.getMotDePasse(), businessException);
 
-		if(pseudo.trim().isEmpty()) {
-
-			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_NULL_ERREUR);
-
-			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_VIDE_ERREUR);
-
-		}
-		
-		if(nom.trim().isEmpty()) {
-			businessException.ajouterErreur(CodesResultatBLL.NOM_VIDE_ERREUR);
-		}
-		
-		if(prenom.trim().isEmpty()) {
-			businessException.ajouterErreur(CodesResultatBLL.PRENOM_VIDE_ERREUR);
-		}
-		
-		if(email.trim().isEmpty()) {
-			businessException.ajouterErreur(CodesResultatBLL.EMAIL_VIDE_ERREUR);
-		}
-		
-		if(rue.trim().isEmpty()) {
-			businessException.ajouterErreur(CodesResultatBLL.RUE_VIDE_ERREUR);
-		}
-		
-		if(codePostal.trim().isEmpty()) {
-			businessException.ajouterErreur(CodesResultatBLL.CODEPOSTAL_VIDE_ERREUR);
-		}
-		
-		if(ville.trim().isEmpty()) {
-			businessException.ajouterErreur(CodesResultatBLL.VILLE_VIDE_ERREUR);
-		}
-		
-		if(mdp.trim().isEmpty()) {
-			businessException.ajouterErreur(CodesResultatBLL.MDP_VIDE_ERREUR);
-		}
-		
-		//Pour les tests
+		// Pour les tests
 		List<Integer> listeErreurs = businessException.getListeCodesErreur();
-		if(listeErreurs!=null) {
-			for(int erreurs :listeErreurs) {
+		if (listeErreurs != null) {
+			for (int erreurs : listeErreurs) {
 				System.out.println(erreurs);
 			}
-			
-		}else {
+		} else {
 			System.out.println("Pas d'erreurs");
 		}
-			
-		
-		//Si il n'y a pas d'erreurs, on fait l'insertion, l'inscription dans la base de données
-		if(!businessException.hasErreur()) {
-			utilisateur = new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp, null, null);
+
+		// Si il n'y a pas d'erreurs, on fait l'insertion, l'inscription dans la base de
+		// données
+		if (!businessException.hasErreur()) {
 			utilisateur = this.utilisateurDAO.insert(utilisateur);
-		}else {
-			utilisateur =null;
+		} else {
+			utilisateur = null;
 			throw businessException;
-			
 		}
 
 		return utilisateur;
-	}*/
 
-//	public Utilisateur inscrire(String pseudo, String nom, String prenom, String email, String telephone, String rue,String codePostal,String ville,String mdp) throws BusinessException {
-//		
-//		BusinessException businessException = new BusinessException();
-//		Utilisateur utilisateur=null;
-//		//Tests de non nullité //séparer dans différentes méthodes? validerPseudo(pseudo, businessException) ...
-//		if(pseudo.trim().isEmpty()) {
-//			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_VIDE_ERREUR);
-//		}
-//		
-//		if(nom.trim().isEmpty()) {
-//			businessException.ajouterErreur(CodesResultatBLL.NOM_VIDE_ERREUR);
-//		}
-//		
-//		if(prenom.trim().isEmpty()) {
-//			businessException.ajouterErreur(CodesResultatBLL.PRENOM_VIDE_ERREUR);
-//		}
-//		
-//		if(email.trim().isEmpty()) {
-//			businessException.ajouterErreur(CodesResultatBLL.EMAIL_VIDE_ERREUR);
-//		}
-//		
-//		if(rue.trim().isEmpty()) {
-//			businessException.ajouterErreur(CodesResultatBLL.RUE_VIDE_ERREUR);
-//		}
-//		
-//		if(codePostal.trim().isEmpty()) {
-//			businessException.ajouterErreur(CodesResultatBLL.CODEPOSTAL_VIDE_ERREUR);
-//		}
-//		
-//		if(ville.trim().isEmpty()) {
-//			businessException.ajouterErreur(CodesResultatBLL.VILLE_VIDE_ERREUR);
-//		}
-//		
-//		if(mdp.trim().isEmpty()) {
-//			businessException.ajouterErreur(CodesResultatBLL.MDP_VIDE_ERREUR);
-//		}
-//		
-//		//Pour les tests
-//		List<Integer> listeErreurs = businessException.getListeCodesErreur();
-//		if(listeErreurs!=null) {
-//			for(int erreurs :listeErreurs) {
-//				System.out.println(erreurs);
-//			}
-//			
-//		}else {
-//			System.out.println("Pas d'erreurs");
-//		}
-//			
-//		
-//		//Si il n'y a pas d'erreurs, on fait l'insertion, l'inscription dans la base de données
-//		if(!businessException.hasErreur()) {
-//			utilisateur = new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp, null, null);
-//			utilisateur = this.utilisateurDAO.insert(utilisateur);
-//		}else {
-//			utilisateur =null;
-//			throw businessException;
-//			
-//		}
-//
-//		return utilisateur;
-//	}
+	}
 
 
 	
@@ -215,4 +135,101 @@ public class UtilisateurManager {
 		
 		return utilisateur;
 	}
+	
+	public void checkPseudo(String pseudo, BusinessException businessException) throws BusinessException {
+
+		if (pseudo.trim().isEmpty()) {
+			System.out.println("Erreur sur le pseudo vide");
+			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_VIDE_ERREUR);
+		}
+		if (!pseudo.trim().matches("^[a-zA-ZÀ-ÿ0-9]+$")) {
+			System.out.println("Erreur sur le pseudo qui n'est pas alphanumérique");
+			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_ALPHA_NUM_ERREUR);
+		}
+		if (this.utilisateurDAO.selectByPseudo(pseudo) != null) {
+			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_DOUBLON_ERREUR);
+		}
+	}
+
+	public void checkNom(String nom, BusinessException businessException) {
+
+		if (nom.trim().isEmpty()) {
+			System.out.println("Erreur sur le nom vide");
+			businessException.ajouterErreur(CodesResultatBLL.NOM_VIDE_ERREUR);
+		}
+		if (!nom.trim().matches("^[a-zA-ZÀ-ÿ\\-]+$")) {
+			System.out.println("Erreur sur le nom qui n'est pas alphanumérique");
+			businessException.ajouterErreur(CodesResultatBLL.NOM_ALPHA_ERREUR);
+		}
+	}
+
+	public void checkPrenom(String prenom, BusinessException businessException) {
+
+		if (prenom.trim().isEmpty()) {
+			System.out.println("Erreur sur le prenom vide");
+			businessException.ajouterErreur(CodesResultatBLL.PRENOM_VIDE_ERREUR);
+		}
+		if (!prenom.trim().matches("^[a-zA-ZÀ-ÿ\\-]+$")) {
+			System.out.println("Erreur sur le prenom qui n'est pas alphanumérique");
+			businessException.ajouterErreur(CodesResultatBLL.PRENOM_ALPHA_ERREUR);
+		}
+	}
+
+	public void checkRue(String rue, BusinessException businessException) {
+
+		if (rue.trim().isEmpty()) {
+			System.out.println("Erreur sur la rue vide");
+			businessException.ajouterErreur(CodesResultatBLL.RUE_VIDE_ERREUR);
+		}
+		if (!rue.trim().matches("^[A-Za-zÀ-ÿ0-9\\s'-]+$")) {
+			System.out.println("Erreur sur la rue qui n'est pas alphanumérique + espace");
+			businessException.ajouterErreur(CodesResultatBLL.RUE_ALPHA_NUM_ESP_ERREUR);
+		}
+	}
+
+	public void checkCodePostal(String codePostal, BusinessException businessException) {
+
+		if (codePostal.trim().isEmpty()) {
+			System.out.println("Erreur sur le code postal vide");
+			businessException.ajouterErreur(CodesResultatBLL.CODEPOSTAL_VIDE_ERREUR);
+		}
+		if (!codePostal.trim().matches("\\d+")) {
+			System.out.println("Erreur sur le code postal qui n'est pas numérique");
+			businessException.ajouterErreur(CodesResultatBLL.CODEPOSTAL_NUM_ERREUR);
+		}
+	}
+
+	public void checkVille(String ville, BusinessException businessException) {
+
+		if (ville.trim().isEmpty()) {
+			System.out.println("Erreur sur la ville vide");
+			businessException.ajouterErreur(CodesResultatBLL.VILLE_VIDE_ERREUR);
+		}
+		if (!ville.trim().matches("^[a-zA-ZÀ-ÿ\\-]+$")) {
+			System.out.println("Erreur sur la ville qui ne contient pas uniquement des caractères alpha et -");
+			businessException.ajouterErreur(CodesResultatBLL.VILLE_ALPHA_ERREUR);
+		}
+	}
+
+	public void checkMdp(String motDePasse, BusinessException businessException) {
+		if (motDePasse.trim().isEmpty()) {
+			System.out.println("Erreur sur le mot de passe vide");
+			businessException.ajouterErreur(CodesResultatBLL.MDP_VIDE_ERREUR);
+		}
+	}
+
+	public void checkEmail(String email, BusinessException businessException) throws BusinessException {
+		System.out.println(this.utilisateurDAO.selectByEmail(email));
+		if (this.utilisateurDAO.selectByEmail(email) != null) {
+			businessException.ajouterErreur(CodesResultatBLL.EMAIL_DOUBLON_ERREUR);
+		}
+	}
+
+	public void checkTelephone(String telephone, BusinessException businessException) {
+		if (!telephone.trim().matches("^[0-9\\s\\/\\-]+$")) {
+			System.out.println("Erreur sur le telephone qui ne contient pas uniquement des chiffres");
+			businessException.ajouterErreur(CodesResultatBLL.TELEPHONE_NUM_ERREUR);
+		}
+	}
+
 }

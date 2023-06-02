@@ -1,6 +1,7 @@
 package fr.eni.enienchere.servlets.tests;
-
+//A SUPPRIMER
 import java.io.IOException;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

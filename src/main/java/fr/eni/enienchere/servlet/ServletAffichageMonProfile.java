@@ -2,17 +2,16 @@ package fr.eni.enienchere.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bll.UtilisateurManager;
 import fr.eni.enienchere.bo.Utilisateur;
-import fr.eni.enienchere.dal.UtilisateurDAOJdbcImpl;
 
 /**
  * Servlet implementation class ServletAffichageMonProfile
@@ -26,10 +25,38 @@ public class ServletAffichageMonProfile extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = null;
 		
-		Utilisateur user = new Utilisateur();
-		UtilisateurDAOJdbcImpl userDaoJdbcImpl = new UtilisateurDAOJdbcImpl();
+		HttpSession session = request.getSession();
+        String pseudo = (String) session.getAttribute("pseudo");
+        String mot_de_passe = (String) session.getAttribute("mot_de_passe");
+        
+        // Vérifier si l'utilisateur est connecté
+        if (pseudo == null) {
+            response.sendRedirect("Connexion.jsp");
+            return;
+        }
+        
+        
+        UtilisateurManager user = new UtilisateurManager();
+        Utilisateur utilisateur;
+		try {
+			utilisateur = user.selectionnerPseudoMdp(pseudo, mot_de_passe);
+			request.setAttribute("utilisateur", utilisateur);
+	        
+		} catch (BusinessException e) {
+			
+			e.printStackTrace();
+		}
+		request.getRequestDispatcher("JSPMonProfil.jsp").forward(request, response);
+        
+        
+	}
+		
+		
+		
+		
+		
+		//UtilisateurDAOJdbcImpl userDaoJdbcImpl = new UtilisateurDAOJdbcImpl();
 		//System.out.println(user.toString());
 /*		
 		try {
@@ -48,7 +75,7 @@ public class ServletAffichageMonProfile extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-*/
+
 		
 		request.setAttribute("user", user);
 		
