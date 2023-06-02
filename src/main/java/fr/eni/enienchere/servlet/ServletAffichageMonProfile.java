@@ -55,7 +55,7 @@ public class ServletAffichageMonProfile extends HttpServlet {
 		request.setAttribute("user", user);
 		
 		//request.getSession().setAttribute("user", user);
-		rd = request.getRequestDispatcher("/WEB-INF/JSPMonProfile.jsp");
+		rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
 		rd.forward(request, response);	
 	
 	}

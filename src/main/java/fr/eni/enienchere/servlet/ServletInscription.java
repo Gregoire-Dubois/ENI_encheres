@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.enienchere.BusinessException;
-import fr.eni.enienchere.bll.DRAFT_UtilisateurManager;
+
 import fr.eni.enienchere.bll.UtilisateurManager;
 import fr.eni.enienchere.bo.Utilisateur;
 

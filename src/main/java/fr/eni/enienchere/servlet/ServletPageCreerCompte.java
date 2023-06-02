@@ -22,7 +22,7 @@ public class ServletPageCreerCompte extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
-		rd = request.getRequestDispatcher("WEB-INF/JSPPageCreerCompte.jsp");
+		rd = request.getRequestDispatcher("WEB-INF/jsp/JSPPageCreerCompte.jsp");
 		rd.forward(request, response);
 	}
 

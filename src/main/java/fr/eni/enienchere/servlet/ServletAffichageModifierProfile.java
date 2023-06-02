@@ -24,7 +24,7 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			RequestDispatcher rd = null;
-			rd = request.getRequestDispatcher("WEB-INF/JSPModifierMonProfile.jsp");
+			rd = request.getRequestDispatcher("WEB-INF/jsp/JSPModifierMonProfile.jsp");
 			rd.forward(request, response);
 	}
 
