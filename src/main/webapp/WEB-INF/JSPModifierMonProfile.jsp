@@ -20,17 +20,10 @@
 		<fieldset>
 		<legend>Mon profile</legend>
 		
-<<<<<<< HEAD
-			<lablel>Pseudo</lablel> <input type="text" name="pseudo" value= "${userConnected.pseudo}" id="pseudo" minlength="2" maxlenght="30" required>
-=======
+
 			<label>Pseudo</label> <input type="text" name="pseudo" value="${user.pseudo}" id="pseudo" minlength="2" maxlenght="30" required>
->>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
 			<br>
-<<<<<<< HEAD
-			<lablel>Prénom</lablel> <input type="text" name="prenom" value="${userConnected.prenom}" minlength="2" maxlenght="30" required>
-=======
 			<label>Prénom</label> <input type="text" name="prenom" value="exemple : Bob" id="prenom" minlength="2" maxlenght="30" required>
->>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
 			<br>
 			<label>Téléphone</label> <input type="tel" name="téléphone" value="0900000000" id="telephone" required>
 			<br>

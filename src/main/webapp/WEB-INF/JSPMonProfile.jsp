@@ -50,6 +50,8 @@
 	
 	</table>
 	
+	<button type="submit">Modifier</button>
+	
 	<%@ include file="JSPFooter.jsp" %>
 
 </body>
