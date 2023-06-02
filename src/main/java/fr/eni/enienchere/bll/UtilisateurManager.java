@@ -57,7 +57,7 @@ public class UtilisateurManager {
 
 	public void deleteById(int id) {
 		try {
-			utilisateurDAO.deleteById(id);
+			this.utilisateurDAO.deleteById(id);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}

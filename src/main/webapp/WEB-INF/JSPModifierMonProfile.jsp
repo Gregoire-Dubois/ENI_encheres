@@ -13,12 +13,13 @@
 </head>
 <body>
 	
-	<%@ include file="JSPHeader.jsp" %>
+	<%@ include file="/WEB-INF/jsp/JSPHeader.jsp" %>
 	
-	<form method="post" action ="ServletAffichageModifierProfile">
+	<form action="post" action ="ServletAModifierMonProfile">
 	
 		<fieldset>
 		<legend>Mon profile</legend>
+		
 
 			<label>Pseudo</label> <input type="text" name="pseudo" value="${user.pseudo}" id="pseudo" minlength="2" maxlenght="30" required>
 			<br>
@@ -49,19 +50,13 @@
 		<button type="submit">Enregistrer</button>
 	</form>
 	
-<<<<<<< HEAD
-	<form method="post" action="/supprimermoncompte">
-=======
-
-	<form method="post" action="A nommer">
->>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
+	<form action="post" action="ServletAffichageModifierProfile">
 	
 		<input type="button" value="Supprimer mon compte">
 	
 	</form>
 	
-	
-	<%@ include file="JSPFooter.jsp" %>
+	<%@ include file="/WEB-INF/jsp/JSPFooter.jsp" %>
 
 </body>
 </html>
