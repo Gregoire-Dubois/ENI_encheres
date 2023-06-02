@@ -24,7 +24,7 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			RequestDispatcher rd = null;
-			rd = request.getRequestDispatcher("WEB-INF/JSPModifierMonProfile.jsp");
+			rd = request.getRequestDispatcher("WEB-INF/jsp/JSPModifierMonProfile.jsp");
 			rd.forward(request, response);
 	}
 
@@ -32,6 +32,8 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		
 		String pseudo = request.getParameter("pseudo");
 		String prenom = request.getParameter("prenom");
 		String telephone = request.getParameter("telephone"); 
@@ -54,7 +56,7 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 		System.out.println(nom);
 		System.out.println(email);	
 		 
-		
+		doGet(request, response);
 
 	}
 

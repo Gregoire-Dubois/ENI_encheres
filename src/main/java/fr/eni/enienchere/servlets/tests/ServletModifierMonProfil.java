@@ -33,7 +33,7 @@ public class ServletModifierMonProfil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
-		rd = request.getRequestDispatcher("/WEB-INF/JSPModifierMonProfile.jsp");
+		rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPModifierMonProfile.jsp");
 		rd.forward(request, response);
 	}
 
@@ -75,7 +75,7 @@ public class ServletModifierMonProfil extends HttpServlet {
 			utilisateurManager.modifierUtilisateur(utilisateurConnecte);
 			session.setAttribute("UtilisateurConnecte", utilisateurConnecte);
 			
-			this.getServletContext().getRequestDispatcher("/JSPMonProfil").forward(request, response);
+			this.getServletContext().getRequestDispatcher("/jsp/JSPMonProfil").forward(request, response);
 		
 		} catch (Exception e) {
 		e.printStackTrace();
