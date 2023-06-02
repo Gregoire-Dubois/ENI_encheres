@@ -82,10 +82,21 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 			utilisateur = utilisateurManager.selectionnerParIdMdp(id, motDePasse); //Si il n'y a pas de correspondance, message d'erreur
 			//System.out.println(utilisateur);
 			if(!nouveauMdp.isEmpty()) { //Si le nouveau mot de passe n'est pas vide, on vérifie qu'il est egal à la confirmation sinon message d'erreur.
-				if(nouveauMdp != confirmationMdp) {
+				if(!nouveauMdp.equals(confirmationMdp)) {
 					businessException.ajouterErreur(CodesResultatServlet.MDP_NON_IDENTIQUE_ECHEC);
 					throw businessException;
-				}//Il manque une action à faire ici dans le cas où les deux mots de passe correspondent.
+				}else{
+					//dans le cas où les deux mots de passe correspondent.
+					
+					Utilisateur utilisateurModif = new Utilisateur(utilisateur.getNoUtilisateur(), pseudo, nom, prenom, email, telephone, rue, codePostal, ville, nouveauMdp, utilisateur.getCredit(), utilisateur.getAdministrateur());
+					utilisateurManager.modifierUtilisateur(utilisateurModif);
+					request.setAttribute("utilisateur", utilisateurModif);
+					session.setAttribute("userConnected",utilisateurModif);
+					//System.out.println(utilisateurModif);
+
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
+					rd.forward(request, response);
+				}
 			}else { 
 				//On doit maintenant insérer sans modifier les crédits et le role.
 				
