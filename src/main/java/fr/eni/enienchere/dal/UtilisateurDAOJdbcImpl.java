@@ -238,27 +238,27 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	 */
 		
 	@Override
-	public void updateUtilisateur(Utilisateur utilisateur) throws BusinessException {
+	public void updateUtilisateur(Utilisateur utilisateurConnecte) throws BusinessException {
 		Connection cnx;
 		
 	    try {
 	    	cnx = ConnectionProvider.getConnection();
 	    	PreparedStatement pstmt = cnx.prepareStatement(UPDATE_BY_ID);
-	    	pstmt.setString(1, utilisateur.getPseudo());
-	    	pstmt.setString(2, utilisateur.getNom());
-	    	pstmt.setString(3, utilisateur.getPrenom());
-	    	pstmt.setString(4, utilisateur.getEmail());
+	    	pstmt.setString(1, utilisateurConnecte.getPseudo());
+	    	pstmt.setString(2, utilisateurConnecte.getNom());
+	    	pstmt.setString(3, utilisateurConnecte.getPrenom());
+	    	pstmt.setString(4, utilisateurConnecte.getEmail());
 	    	//gestion du null
-	    	if(utilisateur.getTelephone() == null){
+	    	if(utilisateurConnecte.getTelephone() == null){
 	    		pstmt.setNull(5, Types.VARCHAR);
 	    	}else {
-	    		pstmt.setString(5, utilisateur.getTelephone());
+	    		pstmt.setString(5, utilisateurConnecte.getTelephone());
 	    	}
-	    	pstmt.setString(6, utilisateur.getRue());
-	    	pstmt.setString(7, utilisateur.getCodePostal());
-	    	pstmt.setString(8, utilisateur.getVille());
-	    	pstmt.setString(9, Utilisateur.hashPwd(utilisateur.getMotDePasse()));
-	    	pstmt.setInt(10, utilisateur.getNoUtilisateur());
+	    	pstmt.setString(6, utilisateurConnecte.getRue());
+	    	pstmt.setString(7, utilisateurConnecte.getCodePostal());
+	    	pstmt.setString(8, utilisateurConnecte.getVille());
+	    	pstmt.setString(9, Utilisateur.hashPwd(utilisateurConnecte.getMotDePasse()));
+	    	pstmt.setInt(10, utilisateurConnecte.getNoUtilisateur());
 	    	pstmt.executeUpdate();
 	    	pstmt.close();
 

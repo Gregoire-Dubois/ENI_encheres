@@ -12,9 +12,9 @@
 	<%@ include file="JSPHeader.jsp" %>
 	
 	<h1>Mon profil</h1>
-	  <form action="ServletAffichageModifierProfile" method="post">
+	  <form action="ServletModifierProfile" method="post">
 	    <label for="pseudo">Pseudo :</label>
-	    <input type="text" id="pseudo" name="pseudo" required minlength="2" maxlenght="30"><br><br>
+	    <input type="text" id="pseudo" name="pseudo" required minlength="2" maxlenght="30" value=${user.pseudo};><br><br>
 	    
 	    <label for="nom">Nom :</label>
 	    <input type="text" id="nom" name="nom" minlength="2" maxlenght="30" required><br><br>
