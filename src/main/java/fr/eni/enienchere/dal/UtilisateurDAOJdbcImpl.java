@@ -103,7 +103,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		
 		return utilisateur;
 	}
-
+	
+/*
 	@Override
 	public List<Utilisateur> selectAll() {
 		Utilisateur utilisateur = null;
@@ -121,7 +122,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			{
 				lst = new ArrayList<>();
 			}
-			lst.add(utilisateur)
+			lst.add(utilisateur);
 			}
 			
 		} catch (SQLException e) {
@@ -142,6 +143,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		
 		
 		return lst;
+		
+		*/
 
 	
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
@@ -356,6 +359,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			
 			
 			return utilisateur;
+		}
+		// A compléter
+		@Override
+		public List<Utilisateur> selectAll() throws BusinessException {
+			// TODO Auto-generated method stub
+			return null;
 		}
 
 }

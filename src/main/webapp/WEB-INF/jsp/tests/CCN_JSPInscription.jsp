@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>INSCRIPTION</title>
 </head>
 <body>

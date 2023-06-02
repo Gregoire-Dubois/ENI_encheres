@@ -17,44 +17,38 @@
 
 
 	<table>
-		<c:forEach var="v" items="${utilisateur}">
 			<tr>
-			
 				<td>Pseudo : </td>
-				<td>${v.pseudo}</td>
+				<td>${user.pseudo}</td>
 			</tr>
 			<tr>
 				<td>Nom : </td>
-				<td>${v.nom}</td>
+				<td>${user.nom}</td>
 			</tr>
 			<tr>	
 				<td>Prénom : </td>
-				<td>${v.prenom}</td>
+				<td>${user.prenom}</td>
 			</tr>
 			<tr>
 				<td>Email : </td>
-				<td>${v.email}</td>
+				<td>${user.email}</td>
 			</tr>
 				<td>Téléphone : </td>
-				<td>${v.telephone}</td>
+				<td>${user.telephone}</td>
 			<tr>
 				<td>Rue : </td>
-				<td>${v.rue}</td>
+				<td>${user.rue}</td>
 			</tr>
 				<td>Code postal : </td>
-				<td>${v.codePostal}</td>
+				<td>${user.codePostal}</td>
 			<tr>
 				<td>Ville : </td>
-				<td>${v.ville}</td>
+				<td>${user.ville}</td>
 			</tr>
-		</c:forEach>
-		
 	
 	</table>
 	
 	<%@ include file="JSPFooter.jsp" %>
-
-	
 
 </body>
 </html>

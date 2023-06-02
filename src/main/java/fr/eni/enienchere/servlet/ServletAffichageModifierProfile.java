@@ -33,6 +33,31 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		String pseudo = request.getParameter("pseudo");
+		String prenom = request.getParameter("prenom");
+		String telephone = request.getParameter("telephone"); 
+		String codePostal = request.getParameter("codepostal"); 
+		String motDePass = request.getParameter("password");
+		String nouveauMotDePass = request.getParameter("newPassword");
+		String confirmationNouveauMotDePass = request.getParameter("confirmNewPassword");
+		String nom = request.getParameter("nom");
+		String email = request.getParameter("email"); 
+		String rue = request.getParameter("rue"); 
+		String ville = request.getParameter("ville");
+		
+		System.out.println(pseudo);
+		System.out.println(prenom);
+		System.out.println(telephone);
+		System.out.println(codePostal);
+		System.out.println(motDePass);
+		System.out.println(nouveauMotDePass);
+		System.out.println(confirmationNouveauMotDePass);
+		System.out.println(nom);
+		System.out.println(email);
+
+		
+		
+		
 		doGet(request, response);
 	}
 
