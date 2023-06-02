@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.enienchere.bll.UtilisateurManager;
+import fr.eni.enienchere.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletSupprimerMonProfil
@@ -21,7 +22,17 @@ public class ServletSupprimerMonProfil extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	response.sendRedirect(request.getContextPath()+"/accueil");
+    	HttpSession session = request.getSession();
+    	//On récupere l'utilisateur connecté
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("userConnected");
+		//On récupère son id
+		int noUtilisateur = utilisateur.getNoUtilisateur();	
+		System.out.println(noUtilisateur); //Pour les tests en console
+		UtilisateurManager utilisateurManager = new UtilisateurManager();
+        utilisateurManager.deleteById(noUtilisateur);
+        
+        session.invalidate();
+        response.sendRedirect(request.getContextPath()+"/accueil");
     }
            
 	/**
@@ -29,15 +40,16 @@ public class ServletSupprimerMonProfil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
-		
-		int no_utilisateur = (int) session.getAttribute("userID");	
-		
-		UtilisateurManager utilisateurManager = new UtilisateurManager();
-        utilisateurManager.deleteById(no_utilisateur);
-        
-        session.invalidate();
-        response.sendRedirect(request.getContextPath()+"/accueil");
+//		HttpSession session = request.getSession();
+//		Utilisateur utilisateur = (Utilisateur) session.getAttribute("userConnected");
+//		
+//		int noUtilisateur = utilisateur.getNoUtilisateur();	
+//		System.out.println(noUtilisateur);
+//		UtilisateurManager utilisateurManager = new UtilisateurManager();
+//        utilisateurManager.deleteById(noUtilisateur);
+//        
+//        session.invalidate();
+//        response.sendRedirect(request.getContextPath()+"/accueil");
 	}
 
 }

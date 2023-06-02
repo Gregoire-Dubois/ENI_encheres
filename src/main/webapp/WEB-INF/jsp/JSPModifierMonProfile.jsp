@@ -49,16 +49,12 @@
 		<button type="submit">Enregistrer</button>
 	</form>
 	
-<<<<<<< HEAD
-	<form method="post" action="/supprimermoncompte">
-=======
 
-	<form method="post" action="A nommer">
->>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
+	<!-- <form method="post" action="/supprimermoncompte"> -->
 	
-		<input type="button" value="Supprimer mon compte">
+		<a href="${pageContext.request.contextPath}/supprimermoncompte"><input type="button" value="Supprimer mon compte"></a>
 	
-	</form>
+	<!-- </form> -->
 	
 	
 	<%@ include file="JSPFooter.jsp" %>
