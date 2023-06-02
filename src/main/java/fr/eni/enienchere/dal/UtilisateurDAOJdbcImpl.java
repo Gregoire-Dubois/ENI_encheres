@@ -104,7 +104,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		
 		return utilisateur;
 	}
-
+	
 
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
 		Utilisateur utilisateur = null;
@@ -326,12 +326,16 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			
 			return utilisateur;
 		}
-//		// A compléter
-//		@Override
-//		public List<Utilisateur> selectAll() throws BusinessException {
-//			// TODO Auto-generated method stub
-//			return null;
-//		}
+	/*
+		// A compléter
+		@Override
+		public List<Utilisateur> selectAll() throws BusinessException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+		*/
+
 
 }
 

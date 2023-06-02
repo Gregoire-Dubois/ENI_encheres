@@ -1,3 +1,9 @@
+/*BO Utilisateur
+ *v1 Gregoire Dubois 
+ *v2 Ced : correction sur les associations  
+ */
+
+
 package fr.eni.enienchere.bo;
 
 import java.util.Date;
@@ -13,13 +19,75 @@ public class ArticleVendu {
 	private Date dateFinEncheres;
 	private int prixInitial;
 	private int prixVente;
-	private int noUtilisateur; 
-	private int noCategorie;
+	private Utilisateur utilisateur; 
+	private Categorie categorie;
+	private Retrait retrait;
 	
 	public ArticleVendu() {
 		super();
 	}
 
+	
+	
+	/**
+	 * @param noArticle
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param prixInitial
+	 * @param prixVente
+	 * @param utilisateur
+	 * @param categorie
+	 * @param retrait
+	 */
+	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int prixInitial, int prixVente, Utilisateur utilisateur, Categorie categorie,
+			Retrait retrait) {
+		super();
+		this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.prixVente = prixVente;
+		this.utilisateur = utilisateur;
+		this.categorie = categorie;
+		this.retrait = retrait;
+	}
+
+	
+
+	/**
+	 * @param noArticle
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param prixInitial
+	 * @param prixVente
+	 * @param utilisateur
+	 * @param categorie
+	 */
+	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int prixInitial, int prixVente, Utilisateur utilisateur, Categorie categorie) {
+		super();
+		this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.prixVente = prixVente;
+		this.utilisateur = utilisateur;
+		this.categorie = categorie;
+	}
+
+
+/*
+ * Comment CCN 02/06/2023
+ * 
 	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
 			Date dateFinEncheres, int prixInitial, int prixVente, int noUtilisateur, int noCategorie) {
 		super();
@@ -34,7 +102,7 @@ public class ArticleVendu {
 		this.noUtilisateur = noUtilisateur;
 		this.noCategorie = noCategorie;
 	}
-
+*/
 	public int getNoArticle() {
 		return noArticle;
 	}
@@ -90,29 +158,22 @@ public class ArticleVendu {
 	public void setPrixVente(int prixVente) {
 		this.prixVente = prixVente;
 	}
-
-	public int getNoUtilisateur() {
-		return noUtilisateur;
-	}
-
-	public void setNoUtilisateur(int noUtilisateur) {
-		this.noUtilisateur = noUtilisateur;
-	}
-
-	public int getNoCategorie() {
-		return noCategorie;
-	}
-
-	public void setNoCategorie(int noCategorie) {
-		this.noCategorie = noCategorie;
-	}
+	
+	
 
 	@Override
 	public String toString() {
-		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
-				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", prixInitial="
-				+ prixInitial + ", prixVente=" + prixVente + ", noUtilisateur=" + noUtilisateur + ", noCategorie="
-				+ noCategorie + "]";
+		return "ArticleVendu [" +
+				"noArticle=" + noArticle + 
+				", nomArticle=" + nomArticle + 
+				", description=" + description +
+				", dateDebutEncheres=" + dateDebutEncheres + 
+				", dateFinEncheres=" + dateFinEncheres + 
+				", prixInitial=" + prixInitial + 
+				", prixVente=" + prixVente + 
+				", utilisateur=" + utilisateur + 
+				", categorie=" + categorie + 
+				"]";
 	}
 
 }

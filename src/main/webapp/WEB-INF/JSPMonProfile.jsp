@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-        
+
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,36 +18,34 @@
 
 	<%@ include file="JSPHeader.jsp" %>
 
-
-
 	<table>
 			<tr>
 				<td>Pseudo : </td>
-				<td>${user.pseudo}</td>
+				<td>${userConnected.pseudo}</td>
 			</tr>
 			<tr>
 				<td>Nom : </td>
-				<td>${user.nom}</td>
+				<td>${userConnected.nom}</td>
 			</tr>
 			<tr>	
 				<td>Prénom : </td>
-				<td>${user.prenom}</td>
+				<td>${userConnected.prenom}</td>
 			</tr>
 			<tr>
 				<td>Email : </td>
-				<td>${user.email}</td>
+				<td>${userConnected.email}</td>
 			</tr>
 				<td>Téléphone : </td>
-				<td>${user.telephone}</td>
+				<td>${userConnected.telephone}</td>
 			<tr>
 				<td>Rue : </td>
-				<td>${user.rue}</td>
+				<td>${userConnected.rue}</td>
 			</tr>
 				<td>Code postal : </td>
-				<td>${user.codePostal}</td>
+				<td>${userConnected.codePostal}</td>
 			<tr>
 				<td>Ville : </td>
-				<td>${user.ville}</td>
+				<td>${userConnected.ville}</td>
 			</tr>
 	
 	</table>
