@@ -45,14 +45,18 @@
 			<label>Ville</label> <input type="text" name="ville" value="${userConnected.ville}" id="ville" minlength="2" maxlenght="30" required>
 			
 		</fieldset>
-			
+		<p>	
 		<button type="submit">Enregistrer</button>
 	</form>
-	
+	<p>
 
 	<!-- <form method="post" action="/supprimermoncompte"> -->
-	
-		<a href="${pageContext.request.contextPath}/supprimermoncompte"><input type="button" value="Supprimer mon compte"></a>
+	<!-- Modification de la redirection du bouton supprimer vers une servlet de test -->
+		<!-- <a href="${pageContext.request.contextPath}/supprimermoncompte"><input type="button" value="Supprimer mon compte"></a>-->
+		<form method="post" action="<%=request.getContextPath()%>/delete">
+              <input type="hidden" name="id" value="${utilisateur.id}">
+              <input type="submit" value="SUPPRIMER">
+        </form>
 	
 	<!-- </form> -->
 	
