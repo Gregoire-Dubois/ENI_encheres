@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%> <!-- OK A SUPPRIMER -->
 <%@ page import="fr.eni.enienchere.bo.Utilisateur"%>
 <!DOCTYPE html>
 <html>

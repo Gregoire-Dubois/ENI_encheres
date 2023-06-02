@@ -1,4 +1,4 @@
-package fr.eni.enienchere.servlets.tests;
+package fr.eni.enienchere.servlet;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,27 +13,36 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bll.DRAFT_UtilisateurManager;
+import fr.eni.enienchere.bll.UtilisateurManager;
 import fr.eni.enienchere.bo.Utilisateur;
 
 /**
- * Servlet implementation class CCN_ServletInscription  OK A SUPPRIMER
+ * Servlet implementation class ServletInscription
  */
-@WebServlet("/CCN_ServletInscription")
-public class CCN_ServletInscription extends HttpServlet {
+@WebServlet("/inscription")
+public class ServletInscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/CCN_JSPInscription.jsp");
        
-        rd.forward(request, response);
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ServletInscription() {
+        super();
+        // TODO Auto-generated constructor stub
     }
+
+    /**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPInscription.jsp");
+		rd.forward(request, response);
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	@Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
         String pseudo       = request.getParameter("pseudo");
         String nom          = request.getParameter("nom");
@@ -53,18 +62,16 @@ public class CCN_ServletInscription extends HttpServlet {
 		//Si les mots de passe ne sont pas identiques, on recharge la page avec les infos
 		if (!motDePasse.equals(mdpConfirm)) {
 			//System.out.println("Les mots de passes ne sont pas identiques"); //Affichage console pour les tests
+			//Reste à reste affichage message d'erreur en console
 			session = request.getSession();
-			session.setAttribute("newUser", newUser);
-			request.getRequestDispatcher("/WEB-INF/jsp/tests/CCN_JSPInscription.jsp").forward(request, response);	
+			session.setAttribute("newUser", newUser); 
+			request.getRequestDispatcher("/WEB-INF/jsp/JSPInscription.jsp").forward(request, response);	
 		} else {
 			try {
 				Utilisateur utilisateur = utilisateurManager.insert(newUser);
 					
 					request.getSession().setAttribute("userConnected", utilisateur);
 					response.sendRedirect(request.getContextPath()+"/accueil");
-					
-//					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPAccueil.jsp");
-//					rd.forward(request, response);	
 
 			}catch (BusinessException e) {
 				//System.out.println("Je suis bien la?");
@@ -82,9 +89,13 @@ public class CCN_ServletInscription extends HttpServlet {
 				request.setAttribute("listeErreursInscription", listeErreursInscription);
 				
 				//On envoie à la JSP
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/CCN_JSPInscription.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPInscription.jsp");
 				rd.forward(request, response);
 			}
 		}
+		
+		
+	
 	}
+
 }

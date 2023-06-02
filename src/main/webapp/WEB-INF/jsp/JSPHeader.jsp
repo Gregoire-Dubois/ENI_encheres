@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%> <!-- OK A SUPPRIMER -->
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="css/style.css" />
+
 
 <title>Insert title here</title>
 </head>
@@ -14,10 +15,6 @@
 	
 		<div class="entreprise">
 			<h1>ENI-Enchères</h1>
-		</div>
-		
-		<div>
-			<a href="#">S'inscrire - Se déconnecter</a>
 		</div>
 	
 	</header>

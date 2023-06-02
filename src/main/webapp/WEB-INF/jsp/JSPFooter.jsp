@@ -4,9 +4,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ACCUEIL CONNECTE</title>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<title>Insert title here</title>
 </head>
 <body>
-<h1>ACCUEIL CONNECTE</h1>
+
+
+
+	<footer>
+		<p>Team Les Vioques © 2023</p>
+	</footer>
+
 </body>
 </html>

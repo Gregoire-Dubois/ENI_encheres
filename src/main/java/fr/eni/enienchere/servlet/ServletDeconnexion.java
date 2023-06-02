@@ -1,4 +1,4 @@
-package fr.eni.enienchere.servlets.tests;
+package fr.eni.enienchere.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
