@@ -56,7 +56,7 @@ public class ServletInscription extends HttpServlet {
         String mdpConfirm = request.getParameter("confirmationMdp");
         
         Utilisateur newUser = new Utilisateur(pseudo,nom,prenom,email,telephone,rue,codePostal,ville,mdpConfirm,0,false);
-		DRAFT_UtilisateurManager utilisateurManager = DRAFT_UtilisateurManager.getInstance();
+		UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
 		HttpSession session;
 		
 		//Si les mots de passe ne sont pas identiques, on recharge la page avec les infos
@@ -64,7 +64,19 @@ public class ServletInscription extends HttpServlet {
 			//System.out.println("Les mots de passes ne sont pas identiques"); //Affichage console pour les tests
 			//Reste à reste affichage message d'erreur en console
 			session = request.getSession();
-			session.setAttribute("newUser", newUser); 
+			session.setAttribute("newUser", newUser);
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatServlet.MDP_NON_IDENTIQUE_ECHEC);
+			//On récupère la liste d'erreurs générée plus tôt
+			List<Integer> listeErreursInscription = businessException.getListeCodesErreur();
+			
+			//Pour les tests
+			for(int erreur : listeErreursInscription) {
+				System.out.println(erreur);
+			}
+			
+			//On ajoute la liste dans les attributs de la requête pour les communiquer à la JSP
+			request.setAttribute("listeErreursInscription", listeErreursInscription);
 			request.getRequestDispatcher("/WEB-INF/jsp/JSPInscription.jsp").forward(request, response);	
 		} else {
 			try {

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * A SUPPRIMER
  * Servlet implementation class ServletAffichagePAgeConnexion
  */
 @WebServlet("/ServletAffichagePAgeConnexion")

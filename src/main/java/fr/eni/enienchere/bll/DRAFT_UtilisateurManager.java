@@ -1,5 +1,5 @@
 package fr.eni.enienchere.bll;
-
+// A SUPPRIMER
 import fr.eni.enienchere.bo.Utilisateur;
 import fr.eni.enienchere.dal.DAOFactory;
 import fr.eni.enienchere.dal.UtilisateurDAO;
