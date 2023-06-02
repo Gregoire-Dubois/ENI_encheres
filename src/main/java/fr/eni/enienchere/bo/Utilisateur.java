@@ -1,3 +1,10 @@
+/* BO Utilisateur
+ * v1 Priscillia
+ * v2 Ced : correction sur les types int et boolean (anc. Integer et Boolean)
+ * 
+ */
+
+
 package fr.eni.enienchere.bo;
 
 import java.security.MessageDigest;
@@ -6,8 +13,9 @@ import java.util.List;
 
 public class Utilisateur {
 	
+	/* Bout de code inutile ici ? 
 	private static final long serialVersionUID = 1L;
-	
+	*/
 	private int noUtilisateur;
 	private String pseudo;
 	private String nom; 
@@ -18,13 +26,13 @@ public class Utilisateur {
 	private String codePostal; 
 	private String ville; 
 	private String motDePasse; 
-	private Integer credit; 
-	private Boolean administrateur;
+	private int credit; 
+	private boolean administrateur;
 	
-	//Pas sure
+	/*//Pas sure
 	private List<ArticleVendu> listeAchats;
 	private List<ArticleVendu> listeVentes;
-	
+	*/
 	public Utilisateur() {
 		super();
 	
@@ -33,7 +41,7 @@ public class Utilisateur {
 	// constructeur sans le numéro utilisateur
 
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
-			String code_postal, String ville, String mot_de_passe, Integer credit, Boolean administrateur) {
+			String code_postal, String ville, String mot_de_passe, int credit, boolean administrateur) {
 		super();
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -52,7 +60,7 @@ public class Utilisateur {
 	// constructeur avec toutes les variables utilisateur
 
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String code_postal, String ville, String mot_de_passe, Integer credit, Boolean administrateur) {
+			String rue, String code_postal, String ville, String mot_de_passe, int credit, boolean administrateur) {
 		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -154,19 +162,19 @@ public class Utilisateur {
 
 	
 
-	public Integer getCredit() {
+	public int getCredit() {
 		return credit;
 	}
 
-	public void setCredit(Integer credit) {
+	public void setCredit(int credit) {
 		this.credit = credit;
 	}
 
-	public Boolean getAdministrateur() {
+	public boolean getAdministrateur() {
 		return administrateur;
 	}
 
-	public void setAdministrateur(Boolean administrateur) {
+	public void setAdministrateur(boolean administrateur) {
 		this.administrateur = administrateur;
 	}
 	
