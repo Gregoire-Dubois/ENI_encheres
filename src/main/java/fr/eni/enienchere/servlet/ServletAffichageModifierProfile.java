@@ -53,13 +53,9 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 		System.out.println(confirmationNouveauMotDePass);
 		System.out.println(nom);
 		System.out.println(email);	
+		 
 		
-		RequestDispatcher rd = null;
-		rd = request.getRequestDispatcher("WEB-INF/JSPModifierMonProfile.jsp");
-		rd.forward(request, response);
 
-		
-		doGet(request, response);
 	}
 
 }

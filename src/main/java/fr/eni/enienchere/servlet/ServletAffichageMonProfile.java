@@ -2,6 +2,7 @@ package fr.eni.enienchere.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bll.UtilisateurManager;
 import fr.eni.enienchere.bo.Utilisateur;
+import fr.eni.enienchere.dal.UtilisateurDAOJdbcImpl;
 
 /**
  * Servlet implementation class ServletAffichageMonProfile
@@ -26,37 +28,10 @@ public class ServletAffichageMonProfile extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
-        String pseudo = (String) session.getAttribute("pseudo");
-        String mot_de_passe = (String) session.getAttribute("mot_de_passe");
-        
-        // Vérifier si l'utilisateur est connecté
-        if (pseudo == null) {
-            response.sendRedirect("Connexion.jsp");
-            return;
-        }
-        
-        
-        UtilisateurManager user = new UtilisateurManager();
-        Utilisateur utilisateur;
-		try {
-			utilisateur = user.selectionnerPseudoMdp(pseudo, mot_de_passe);
-			request.setAttribute("utilisateur", utilisateur);
-	        
-		} catch (BusinessException e) {
-			
-			e.printStackTrace();
-		}
-		request.getRequestDispatcher("JSPMonProfil.jsp").forward(request, response);
-        
-        
-	}
+		RequestDispatcher rd = null;
+		UtilisateurDAOJdbcImpl userDaoJdbcImpl = new UtilisateurDAOJdbcImpl();
 		
-		
-		
-		
-		
-		//UtilisateurDAOJdbcImpl userDaoJdbcImpl = new UtilisateurDAOJdbcImpl();
+		Utilisateur user = new Utilisateur();
 		//System.out.println(user.toString());
 /*		
 		try {
@@ -74,7 +49,7 @@ public class ServletAffichageMonProfile extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+*/
 
 		
 		request.setAttribute("user", user);
