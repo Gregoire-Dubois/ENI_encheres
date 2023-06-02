@@ -1,3 +1,7 @@
+/*
+ * 02/06/23 CCN : Modification de la servlet pour permettre l'affichage des valeurs de sessions dans la JSP
+ */
+
 package fr.eni.enienchere.servlet;
 
 import java.io.IOException;
@@ -7,6 +11,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import fr.eni.enienchere.bo.Utilisateur;
 
 
 
@@ -26,6 +33,10 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			RequestDispatcher rd = null;
+			HttpSession session = request.getSession();
+			Utilisateur utilisateur = (Utilisateur) session.getAttribute("userConnected");
+			//Pour test en console
+			//System.out.println(utilisateur);
 			rd = request.getRequestDispatcher("WEB-INF/jsp/JSPModifierMonProfile.jsp");
 			rd.forward(request, response);
 	}
@@ -36,7 +47,7 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		
+	/*	
 		String pseudo = request.getParameter("pseudo");
 		String prenom = request.getParameter("prenom");
 		String telephone = request.getParameter("telephone"); 
@@ -59,8 +70,6 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 		System.out.println(nom);
 		System.out.println(email);	
 		 
-		doGet(request, response);
-
+*/
 	}
-
 }
