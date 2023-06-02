@@ -38,6 +38,8 @@
 					Code Postal:${utilisateur.getCodePostal() } 
 					</br> 
 					Ville: ${utilisateur.getVille() }
+					</br> 
+					Crédit: ${utilisateur.getCredit() }
 				</p>
 			
 			</c:when>

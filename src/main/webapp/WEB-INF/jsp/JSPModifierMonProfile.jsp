@@ -72,6 +72,8 @@
 			<br>
 			</br>
 			
+					Crédit: ${userConnected.getCredit() }
+			</br> 
 			<input type="submit" value="Enregistrer">
 		</fieldset>
 		
