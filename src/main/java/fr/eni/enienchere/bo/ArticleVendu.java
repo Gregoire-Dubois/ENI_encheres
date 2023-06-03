@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class ArticleVendu {
 	
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 
 	private int noArticle;
 	private String nomArticle;
