@@ -1,4 +1,5 @@
 /**
+ * @author CCN
  * Creation le 02/06/23
  */
 package fr.eni.enienchere.dal;
@@ -13,6 +14,6 @@ import fr.eni.enienchere.bo.Categorie;
  */
 public interface CategorieDAO {
 	List<Categorie> selectAllCategorie() throws BusinessException;
-    Categorie selectCategorieByID(int CategorieId) throws BusinessException;
+    Categorie selectCategorieById(int CategorieId) throws BusinessException;
     Categorie selectByName(String nomCategorie) throws BusinessException;
 }

@@ -1,4 +1,5 @@
 /**
+ * @author CCN
  * Creation le 02/06/23
  */
 package fr.eni.enienchere.dal;
@@ -57,7 +58,7 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	}
 
 	@Override
-	public Categorie selectCategorieByID(int CategorieId) throws BusinessException {
+	public Categorie selectCategorieById(int CategorieId) throws BusinessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
