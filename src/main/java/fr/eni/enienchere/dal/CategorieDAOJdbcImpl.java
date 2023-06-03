@@ -58,15 +58,43 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	}
 
 	@Override
-	public Categorie selectCategorieById(int CategorieId) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+	public Categorie selectCategorieById(int categorieId) throws BusinessException {
+		Connection cnx = null;
+		Categorie categorie = null;
+		try {
+			cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_CATEGORIE_BY_ID);
+			pstmt.setString(1, categorieID);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				categorie = new Categorie(rs.getInt(1), rs.getString(2));
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_CATEGORIE_BY_ID_ECHEC);
+		}
+		return categorie;
 	}
 
 	@Override
 	public Categorie selectByName(String nomCategorie) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection cnx = null;
+		Categorie categorie = null;
+		try {
+			cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_CATEGORIE_BY_NAME);
+			pstmt.setString(1, nomCategorie);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				categorie = new Categorie(rs.getInt(1), rs.getString(2));
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_CATEGORIE_BY_NAME_ECHEC);
+		}
+		return categorie;
 	}
 
 }

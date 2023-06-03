@@ -8,6 +8,7 @@ package fr.eni.enienchere.bll;
 
 import fr.eni.enienchere.dal.DAOFactory;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,4 +43,10 @@ public List<Categorie> selectAll() throws BusinessException {
 	listCategorie = this.categorieDAO.selectAllCategorie();
 	return listCategorie;
 	}
+
+public Categorie selectByName(String nomCategorie) throws BusinessException {
+    Categorie categorie = new Categorie();
+    categorie = this.categorieDAO.selectByName(nomCategorie);
+    return categorie;
+}
 }

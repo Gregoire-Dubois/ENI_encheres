@@ -35,12 +35,17 @@
 				<input type="text" name="search" placeholder="Le nom de l'article contient"> 
 				</br>
 				<label for="categorie">Catégorie:</label>
-				<select name="categorie" id="categorie">
-					<!-- Boucle à faire sur les catégories -->
+					<select name="categorie" id="categorie">
+						<!-- <option value="">Choix</option>-->
+				<c:forEach items="${listeCategorie}" var="categorie">
+					<option value="${categorie.libelle}"${categorie.libelle == article.categorie.libelle ? 'selected' : ''}>${categorie.libelle}</option>
+				</c:forEach>
+		</select>
+				<!-- <select name="categorie" id="categorie">
 					<option value="categorie1" >Catégorie 1</option>
 					<option value="categorie2" >Catégorie 2</option>
 					<option value="categorie3" >Catégorie 3</option>
-				</select> </br>
+				</select>--> </br>
 				<input type="submit" value="Rechercher">
 			</form>
 	
