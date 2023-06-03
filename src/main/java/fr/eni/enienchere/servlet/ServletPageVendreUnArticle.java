@@ -112,12 +112,12 @@ public class ServletPageVendreUnArticle extends HttpServlet {
 			ArticleVendu article = articleManager.ajouter(nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, categorie, retrait, vendeur);
 			System.out.println(article);
 			//Test
-//			List<ArticleVendu> test = vendeur.getListeVentes();
-//			if(test!=null) {
-//				for(ArticleVendu a:test) {
-//					System.out.println("test" + a);
-//				}
-//			}
+			List<ArticleVendu> test = vendeur.getListeVentes();
+			if(test!=null) {
+				for(ArticleVendu a:test) {
+					System.out.println("test" + a);
+				}
+			}
 			
 			response.sendRedirect(request.getContextPath()+"/accueil");
 		} catch (BusinessException e) {

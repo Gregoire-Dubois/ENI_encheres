@@ -46,7 +46,7 @@ private ArticleDAO articleDAO;
 			throw businessException;
 		}
 
-		return article;
+		return articleVendu;
 	}
 
 	private void checkDateFin(LocalDate dateFinEncheres) {
