@@ -12,13 +12,59 @@
 
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 
-<title>Mon profile</title>
+<title>Mon profil</title>
 </head>
 <body>
 
 	<%@ include file="JSPHeader.jsp" %>
+	
+	<section>
+		<c:choose>
+			
+			<c:when test="${utilisateur !=null || vendeur!=null}">
+				<p>
+					Pseudo: ${utilisateur.getPseudo() } 
+					</br> 
+					Nom: ${utilisateur.getNom() } 
+					</br> 
+					Prénom:${utilisateur.getPrenom() } 
+					</br> 
+					Email: ${utilisateur.getEmail() } 
+					</br> 
+					Téléphone:${utilisateur.getTelephone() } 
+					</br> 
+					Rue: ${utilisateur.getRue() } 
+					</br> 
+					Code Postal:${utilisateur.getCodePostal() } 
+					</br> 
+					Ville: ${utilisateur.getVille() }
+					</br> 
+					Crédit: ${utilisateur.getCredit() }
+				</p>
+			
+			</c:when>
+			
+			<c:otherwise>
+				<c:forEach var="code" items="${listeErreursProfil}">
+					<li>${LecteurMessage.getMessageErreur(code)}</li>
 
-	<table>
+				</c:forEach>
+
+			</c:otherwise>
+
+
+		</c:choose>
+		
+		<!-- Si l'attribut "utilisateur" de la session = userConnected, alors il a accès au bouton modifier -->
+		<c:if test="${utilisateur == userConnected}">
+			<a href="${pageContext.request.contextPath}/modification"><button type="button" id="modifier" name="modifier" value="modifier">Modifier</button></a>
+
+			
+		</c:if>
+		
+	</section>
+
+	<%-- <table>
 			<tr>
 				<td>Pseudo : </td>
 				<td>${userConnected.pseudo}</td>
@@ -50,7 +96,7 @@
 	
 	</table>
 	
-	<button type="submit">Modifier</button>
+	<button type="submit">Modifier</button> --%>
 	
 	<%@ include file="JSPFooter.jsp" %>
 

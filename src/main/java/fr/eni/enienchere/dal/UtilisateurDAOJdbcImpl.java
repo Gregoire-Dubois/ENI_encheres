@@ -16,12 +16,13 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	private static final String SELECT_BY_EMAIL_ET_MDP="SELECT * FROM UTILISATEURS WHERE email=? AND mot_de_passe=?";
 	/*private static final String SELECT_ALL = "SELECT * FROM UTILISATEURS;"; A Supprimer*/
 	private static final String UPDATE_BY_ID = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ? , rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
-	private static final String DELETE_BY_ID = "DELETE FROM UTILISATEUR WHERE no_utilisateur=?;";
+	private static final String DELETE_BY_ID = "DELETE FROM UTILISATEURS WHERE no_utilisateur=?;";
 	private static final String DELETE_BY_EMAIL = "DELETE FROM UTILISATEUR WHERE email=?;";
 	private static final String SELECT_BY_PSEUDO_ET_MDP="SELECT * FROM UTILISATEURS WHERE pseudo=? AND mot_de_passe=?";
 	private static final String INSERT_UTILISATEUR="INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String SELECT_BY_PSEUDO="SELECT * FROM UTILISATEURS WHERE pseudo=?";
 	private static final String SELECT_BY_EMAIL="SELECT * FROM UTILISATEURS WHERE email=?";
+	private static final String SELECT_BY_ID_MDP="SELECT * FROM UTILISATEURS WHERE no_utilisateur=? AND mot_de_passe = ?"; //AJOUT
 	
 	@Override
 	public Utilisateur selectById(int id) throws BusinessException {
@@ -335,7 +336,47 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		}
 		
 		*/
+		
+		/*
+		 * Permet la selection par id et mdp, utilisé dans la servlet de modification du profil
+		 */
+		@Override
+		public Utilisateur selectByIdMdp(int id, String mdp) throws BusinessException {
+			Utilisateur utilisateur = null;
+			Connection cnx = null;
+			
+			try {
+				cnx = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID_MDP);
+				
+				pstmt.setInt(1, id);
+				pstmt.setString(2, Utilisateur.hashPwd(mdp));
+				
+				ResultSet rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+				utilisateur = new Utilisateur(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11), rs.getBoolean(12));
+				}
+				
+			} catch (SQLException e) {
 
+				e.printStackTrace();
+			}finally {
+				if(cnx !=null) {
+					try {
+						cnx.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+						BusinessException businessException = new BusinessException();
+						businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+					}
+				}
+				
+			}
+			
+			
+			return utilisateur;
+		}
 
 }
 

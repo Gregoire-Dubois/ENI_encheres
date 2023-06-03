@@ -19,5 +19,7 @@ public abstract class CodesResultatBLL {
 	public static final int PSEUDO_DOUBLON_ERREUR=20015;
 	public static final int EMAIL_DOUBLON_ERREUR=20016;
 	public static final int TELEPHONE_NUM_ERREUR=20017;
+	public static final int ID_INEXISTANT_ERREUR=20018;
+	public static final int MDP_ERREUR=20019;
 
 }
