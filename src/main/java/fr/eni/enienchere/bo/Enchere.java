@@ -7,57 +7,55 @@
 */
 package fr.eni.enienchere.bo;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Enchere {
 
 	//private static final long serialVersionUID = 1L;
 	
-	private int id; //??? Déjà présent dans ArticleVendu non?
+	//private int id; //??? Déjà présent dans ArticleVendu non?
 	private ArticleVendu article;
 	private Utilisateur utilisateur;
-	private Timestamp dateEnchere; //LocalDateTime ou lieu de Timestamp
+	private LocalDateTime dateEnchere;
 	private int montantEnchere;
 	
 	public Enchere() {
 	}
-
-	public Enchere(int id, ArticleVendu article, Utilisateur utilisateur, Timestamp dateEnchere, int montantEnchere) {
+	
+	public Enchere(ArticleVendu article, Utilisateur utilisateur, LocalDateTime dateEnchere, int montantEnchere) {
 		super();
-		this.id = id;
 		this.article = article;
-		this.utilisateur = utilisateur;
+		this.setUtilisateur(utilisateur);
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
 	}
+//Modification des constructeurs LocalDate et ajout des relations?
+//	public Enchere(int id, ArticleVendu article, Utilisateur utilisateur, Timestamp dateEnchere, int montantEnchere) {
+//		super();
+//		this.id = id;
+//		this.article = article;
+//		this.utilisateur = utilisateur;
+//		this.dateEnchere = dateEnchere;
+//		this.montantEnchere = montantEnchere;
+//	}
+//
+//	public Enchere(ArticleVendu article, Utilisateur utilisateur, Timestamp dateEnchere, int montantEnchere) {
+//		super();
+//		this.article = article;
+//		this.utilisateur = utilisateur;
+//		this.dateEnchere = dateEnchere;
+//		this.montantEnchere = montantEnchere;
+//	}
 
-	public Enchere(ArticleVendu article, Utilisateur utilisateur, Timestamp dateEnchere, int montantEnchere) {
-		super();
-		this.article = article;
-		this.utilisateur = utilisateur;
-		this.dateEnchere = dateEnchere;
-		this.montantEnchere = montantEnchere;
-	}
+	
 
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return "Enchere [" +
-				"id= " + id +
-				", article = " + article +
-				", utilisateur = " + utilisateur +
-				", dateEnchere = " + dateEnchere +
-				", montantEnchere = " + montantEnchere +
-				']';
-	}
-
-	public int getId() {
-		return id; 
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+//	public int getId() {
+//		return id; 
+//	}
+//
+//	public void setId(int id) {
+//		this.id = id;
+//	}
 
 	public ArticleVendu getArticle() {
 		return article;
@@ -67,19 +65,19 @@ public class Enchere {
 		this.article = article;
 	}
 
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
-	}
+//	public Utilisateur getUtilisateur() {
+//		return utilisateur;
+//	}
+//
+//	public void setUtilisateur(Utilisateur utilisateur) {
+//		this.utilisateur = utilisateur;
+//	}
 
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
-	}
-
-	public Timestamp getDateEnchere() {
+	public LocalDateTime getDateEnchere() {
 		return dateEnchere;
 	}
 
-	public void setDateEnchere(Timestamp dateEnchere) {
+	public void setDateEnchere(LocalDateTime dateEnchere) {
 		this.dateEnchere = dateEnchere;
 	}
 
@@ -90,4 +88,25 @@ public class Enchere {
 	public void setMontantEnchere(int montantEnchere) {
 		this.montantEnchere = montantEnchere;
 	}	
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+		if(utilisateur!=null) {
+			utilisateur.ajouterEnchere(this);
+		}
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Enchere [" +
+				", article = " + article +
+				", utilisateur = " + utilisateur +
+				", dateEnchere = " + dateEnchere +
+				", montantEnchere = " + montantEnchere +
+				']';
+	}
 }

@@ -42,7 +42,7 @@
 <input type="text" name="rue" id="rue" value="${not empty param.rue ? param.rue : ''}" required>
  </br>
 <label for="codePostal">Code Postal :</label> 
-<input type="text" name="codePostal" id="codePostal" value="${not empty param.codePostal ? param.codePostal : ''}" required>
+<input type="text" name="codePostal" id="codePostal" pattern="[0-9]{5}" value="${not empty param.codePostal ? param.codePostal : ''}" required>
  </br>
 <label for="ville">Ville :</label> 
 <input type="text" name="ville" id="ville" value="${not empty param.ville ? param.ville : ''}" required>

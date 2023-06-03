@@ -14,7 +14,7 @@
 
 	<h1>Vendre un article</h1>
 
-	<form action="NomDelaServlet" method="post">
+	<form action="/vendre" method="post">
 		<label for="article">Article:</label>
 		<input type="text" id="article" name="article" required><br>
 		<br> 

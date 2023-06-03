@@ -6,6 +6,8 @@
 
 package fr.eni.enienchere.bo;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,40 +18,28 @@ public class ArticleVendu {
 	private int noArticle;
 	private String nomArticle;
 	private String description;
-	private Date dateDebutEncheres;//LocalDate
-	private Date dateFinEncheres;//LocalDate
+	private LocalDate dateDebutEncheres;
+	private LocalDate dateFinEncheres;
 	private int prixInitial;
 	private int prixVente;
-	private Utilisateur utilisateur; //Différencier acquéreur et vendeur?
+	private String etatVente;
+	//private Utilisateur utilisateur; //Différencier acquéreur et vendeur?
+	private Utilisateur acquereur;
 	//private Utilisateur acquereur;
 	private Categorie categorie;
 	private Retrait retrait;
+	private Utilisateur vendeur;//OK
+	private List<Enchere> listeEncheres;
 	
 	
-	//private Utilisateur vendeur;
-	//private List<Enchere> listeEncheres;
-
 	public ArticleVendu() {
 		super();
+		listeEncheres =new ArrayList<>();
 	}
 
-	
-	
-	/**
-	 * @param noArticle
-	 * @param nomArticle
-	 * @param description
-	 * @param dateDebutEncheres
-	 * @param dateFinEncheres
-	 * @param prixInitial
-	 * @param prixVente
-	 * @param utilisateur
-	 * @param categorie
-	 * @param retrait
-	 */
-	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
-			Date dateFinEncheres, int prixInitial, int prixVente, Utilisateur utilisateur, Categorie categorie,
-			Retrait retrait) {
+	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int prixInitial, int prixVente, Utilisateur acquereur, Categorie categorie,
+			Retrait retrait, String etatVente, Utilisateur vendeur, List<Enchere> listeEncheres) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -58,44 +48,94 @@ public class ArticleVendu {
 		this.dateFinEncheres = dateFinEncheres;
 		this.prixInitial = prixInitial;
 		this.prixVente = prixVente;
-		this.utilisateur = utilisateur;
-		this.categorie = categorie;
-		this.retrait = retrait;
+		this.etatVente = etatVente;
+		this.setAcquereur(acquereur);
+		this.setCategorie(categorie);
+		this.setRetrait(retrait);
+		this.setVendeur(vendeur);
+		this.listeEncheres = listeEncheres;
 	}
-
 	
-
-	/**
-	 * @param noArticle
-	 * @param nomArticle
-	 * @param description
-	 * @param dateDebutEncheres
-	 * @param dateFinEncheres
-	 * @param prixInitial
-	 * @param prixVente
-	 * @param utilisateur
-	 * @param categorie
-	 */
-	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
-			Date dateFinEncheres, int prixInitial, int prixVente, Utilisateur utilisateur, Categorie categorie) {
+	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int prixInitial,
+			Categorie categorie, Retrait retrait, Utilisateur vendeur) {
 		super();
-		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.prixInitial = prixInitial;
-		this.prixVente = prixVente;
-		this.utilisateur = utilisateur;
-		this.categorie = categorie;
+		this.setCategorie(categorie);
+		this.setRetrait(retrait);
+		this.setVendeur(vendeur);
 	}
+
+//	public ArticleVendu() {
+//		super();
+//	}
+
+	
+	//Modification des constructeurs car ajout d'attributs et changement Date en LocalDate
+//	/**
+//	 * @param noArticle
+//	 * @param nomArticle
+//	 * @param description
+//	 * @param dateDebutEncheres
+//	 * @param dateFinEncheres
+//	 * @param prixInitial
+//	 * @param prixVente
+//	 * @param utilisateur
+//	 * @param categorie
+//	 * @param retrait
+//	 */
+//	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+//			LocalDate dateFinEncheres, int prixInitial, int prixVente, Utilisateur utilisateur, Categorie categorie,
+//			Retrait retrait) {
+//		super();
+//		this.noArticle = noArticle;
+//		this.nomArticle = nomArticle;
+//		this.description = description;
+//		this.dateDebutEncheres = dateDebutEncheres;
+//		this.dateFinEncheres = dateFinEncheres;
+//		this.prixInitial = prixInitial;
+//		this.prixVente = prixVente;
+//		this.utilisateur = utilisateur;
+//		this.categorie = categorie;
+//		this.retrait = retrait;
+//	}
+
+	
+
+//	/**
+//	 * @param noArticle
+//	 * @param nomArticle
+//	 * @param description
+//	 * @param dateDebutEncheres
+//	 * @param dateFinEncheres
+//	 * @param prixInitial
+//	 * @param prixVente
+//	 * @param utilisateur
+//	 * @param categorie
+//	 */
+//	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+//			LocalDate dateFinEncheres, int prixInitial, int prixVente, Utilisateur utilisateur, Categorie categorie) {
+//		super();
+//		this.noArticle = noArticle;
+//		this.nomArticle = nomArticle;
+//		this.description = description;
+//		this.dateDebutEncheres = dateDebutEncheres;
+//		this.dateFinEncheres = dateFinEncheres;
+//		this.prixInitial = prixInitial;
+//		this.prixVente = prixVente;
+//		this.utilisateur = utilisateur;
+//		this.categorie = categorie;
+//	}
 
 
 /*
  * Comment CCN 02/06/2023
  * 
-	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
-			Date dateFinEncheres, int prixInitial, int prixVente, int noUtilisateur, int noCategorie) {
+	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDatedateDebutEncheres,
+			LocalDatedateFinEncheres, int prixInitial, int prixVente, int noUtilisateur, int noCategorie) {
 		super();
 		
 		this.noArticle = noArticle;
@@ -133,19 +173,19 @@ public class ArticleVendu {
 		this.description = description;
 	}
 
-	public Date getDateDebutEncheres() {
+	public LocalDate getDateDebutEncheres() {
 		return dateDebutEncheres;
 	}
 
-	public void setDateDebutEncheres(Date dateDebutEncheres) {
+	public void setDateDebutEncheres(LocalDate dateDebutEncheres) {
 		this.dateDebutEncheres = dateDebutEncheres;
 	}
 
-	public Date getDateFinEncheres() {
+	public LocalDate getDateFinEncheres() {
 		return dateFinEncheres;
 	}
 
-	public void setDateFinEncheres(Date dateFinEncheres) {
+	public void setDateFinEncheres(LocalDate dateFinEncheres) {
 		this.dateFinEncheres = dateFinEncheres;
 	}
 
@@ -166,20 +206,81 @@ public class ArticleVendu {
 	}
 	
 	
+	public Utilisateur getAcquereur() {
+		return acquereur;
+	}
+
+	public void setAcquereur(Utilisateur acquereur) {
+
+		this.acquereur=acquereur;
+		
+		if(acquereur!=null) {
+			acquereur.ajouterArticleAchat(this);
+		}
+	}
+
+	public Categorie getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+
+		if(categorie!=null) {
+			categorie.ajouterArticle(this);
+		}
+	}
+
+	public Retrait getRetrait() {
+		return retrait;
+	}
+
+	public void setRetrait(Retrait retrait) {
+		this.retrait = retrait;
+
+	}
+
+	public Utilisateur getVendeur() {
+		return vendeur;
+	}
+
+	public void setVendeur(Utilisateur vendeur) {
+		this.vendeur = vendeur;
+		
+		if(vendeur!=null) {
+			vendeur.ajouterArticleVente(this);
+		}
+	}
+
+	public List<Enchere> getListeEncheres() {
+		return listeEncheres;
+	}
+
+	public void ajouterEnchere(Enchere enchere) {
+		if(enchere.getArticle().equals(this) && !listeEncheres.contains(enchere))
+		{
+			this.listeEncheres.add(enchere);
+		}
+		else
+		{
+			System.out.println("ajout impossible");
+		}
+	}
+	public String getEtatVente() {
+		return etatVente;
+	}
+
+	public void setEtatVente(String etatVente) {
+		this.etatVente = etatVente;
+	}
 
 	@Override
 	public String toString() {
-		return "ArticleVendu [" +
-				"noArticle=" + noArticle + 
-				", nomArticle=" + nomArticle + 
-				", description=" + description +
-				", dateDebutEncheres=" + dateDebutEncheres + 
-				", dateFinEncheres=" + dateFinEncheres + 
-				", prixInitial=" + prixInitial + 
-				", prixVente=" + prixVente + 
-				", utilisateur=" + utilisateur + 
-				", categorie=" + categorie + 
-				"]";
+		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
+				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", prixInitial="
+				+ prixInitial + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", acquereur=" + acquereur
+				+ ", categorie=" + categorie + ", retrait=" + retrait + ", vendeur=" + vendeur + ", listeEncheres="
+				+ listeEncheres + "]";
 	}
 
 }
