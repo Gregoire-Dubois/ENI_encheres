@@ -22,7 +22,7 @@ import fr.eni.enienchere.bll.UtilisateurManager;
 /**
  * Servlet implementation class ServletPageVendreUnArticle
  */
-@WebServlet("/ServletPageVendreUnArticle")
+@WebServlet("/vendre")
 public class ServletPageVendreUnArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     CategorieManager categorieManager = null;
