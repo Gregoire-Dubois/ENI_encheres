@@ -23,10 +23,10 @@
 	<form method="post" action="${pageContext.request.contextPath}/connexion">
 		<p>
 			<label for="identifiant">Identifiant :</label> 
-			<input type="text" name="identifiant" id="identifiant" required> 
+			<input type="text" name="identifiant" id="identifiant" value="${identifiant}" required> 
 			</br> </br>
 			<label for="mdp">Mot de passe:</label> 
-			<input type="password" name="mdp" id="mdp" required>
+			<input type="password" name="mdp" id="mdp" value="${mdp}" required>
 			</br> 
 			<input type="checkbox" id="se-souvenir-de-moi" name="se-souvenir-de-moi">
 	        <label for="se-souvenir-de-moi">Se souvenir de moi</label>

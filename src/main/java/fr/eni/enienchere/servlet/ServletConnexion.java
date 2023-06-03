@@ -62,11 +62,11 @@ public class ServletConnexion extends HttpServlet {
 		String mdp = request.getParameter("mdp");
 		String cookieId = request.getParameter("se-souvenir-de-moi");
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
-		String mdphash = Utilisateur.hashPwd(mdp);
+		//String mdphash = Utilisateur.hashPwd(mdp);
 		
 		if(cookieId != null){
 			
-			Cookie cookie = new Cookie("eni_ucred", identifiant + ":" + mdphash);
+			Cookie cookie = new Cookie("eni_ucred", identifiant + ":" + mdp);
 			cookie.setMaxAge(60 * 60 * 24 * 30);
 			response.addCookie(cookie);
 		}
