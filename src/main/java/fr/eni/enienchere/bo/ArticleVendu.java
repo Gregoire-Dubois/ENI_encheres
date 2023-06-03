@@ -7,6 +7,7 @@
 package fr.eni.enienchere.bo;
 
 import java.util.Date;
+import java.util.List;
 
 public class ArticleVendu {
 	
@@ -15,14 +16,19 @@ public class ArticleVendu {
 	private int noArticle;
 	private String nomArticle;
 	private String description;
-	private Date dateDebutEncheres;
-	private Date dateFinEncheres;
+	private Date dateDebutEncheres;//LocalDate
+	private Date dateFinEncheres;//LocalDate
 	private int prixInitial;
 	private int prixVente;
-	private Utilisateur utilisateur; 
+	private Utilisateur utilisateur; //Différencier acquéreur et vendeur?
+	//private Utilisateur acquereur;
 	private Categorie categorie;
 	private Retrait retrait;
 	
+	
+	//private Utilisateur vendeur;
+	//private List<Enchere> listeEncheres;
+
 	public ArticleVendu() {
 		super();
 	}

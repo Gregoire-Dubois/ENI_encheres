@@ -32,6 +32,7 @@ public class Utilisateur {
 	/*//Pas sure
 	private List<ArticleVendu> listeAchats;
 	private List<ArticleVendu> listeVentes;
+	private List<Enchere> listeEncheres;
 	*/
 	public Utilisateur() {
 		super();

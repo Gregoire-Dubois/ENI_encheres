@@ -13,10 +13,10 @@ public class Enchere {
 
 	//private static final long serialVersionUID = 1L;
 	
-	private int id;
+	private int id; //??? Déjà présent dans ArticleVendu non?
 	private ArticleVendu article;
 	private Utilisateur utilisateur;
-	private Timestamp dateEnchere;
+	private Timestamp dateEnchere; //LocalDateTime ou lieu de Timestamp
 	private int montantEnchere;
 	
 	public Enchere() {

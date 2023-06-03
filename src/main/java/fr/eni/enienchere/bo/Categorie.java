@@ -1,9 +1,13 @@
 package fr.eni.enienchere.bo;
 
+import java.util.List;
+
 public class Categorie {
 
     private int id;
     private String libelle;
+    
+    //private List<ArticleVendu> listeArticles; //Pour pouvoir afficher les éléments de chaque catégorie?
 
     public Categorie() {}
 
