@@ -9,6 +9,7 @@ package fr.eni.enienchere.bo;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Utilisateur {
@@ -29,13 +30,14 @@ public class Utilisateur {
 	private int credit; 
 	private boolean administrateur;
 	
-	/*//Pas sure
 	private List<ArticleVendu> listeAchats;
-	private List<ArticleVendu> listeVentes;
-	*/
+	private List<ArticleVendu> listeVentes; // = new ArrayList<>();
+	private List<Enchere> listeEncheres;
+	
+	
 	public Utilisateur() {
 		super();
-	
+		listeVentes = new ArrayList<>();
 	}
 	
 	// constructeur sans le numéro utilisateur
@@ -77,7 +79,27 @@ public class Utilisateur {
 	}
 
 	
-
+	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
+			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur,
+			List<ArticleVendu> listeAchats, List<ArticleVendu> listeVentes, List<Enchere> listeEncheres) {
+		super();
+		this.noUtilisateur = noUtilisateur;
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.motDePasse = motDePasse;
+		this.credit = credit;
+		this.administrateur = administrateur;
+		
+		this.listeAchats = listeAchats;
+		this.listeVentes = listeVentes;
+		this.listeEncheres = listeEncheres;
+	}
 	public String getPseudo() {
 		return pseudo;
 	}
@@ -178,7 +200,67 @@ public class Utilisateur {
 		this.administrateur = administrateur;
 	}
 	
+	public void ajouterEnchere(Enchere enchere) {
+		if(enchere.getUtilisateur().equals(this) && !listeEncheres.contains(enchere)){
+			this.listeEncheres.add(enchere);
+		}
+		else
+		{
+			//Message d'erreurs?
+			System.out.println("ajout impossible");
+		}
+	}
+	
+	public void ajouterArticleAchat(ArticleVendu article) {
+		if(article.getAcquereur().equals(this) && !listeAchats.contains(article)){
+			this.listeAchats.add(article);
+		}
+		else
+		{
+			//Message d'erreurs?
+			System.out.println("ajout impossible");
+		}
+	}
+//	public void ajouterArticleVente(ArticleVendu article) {
+//		if(article.getVendeur().equals(this) && (!listeVentes.contains(article))){
+//			this.listeVentes.add(article);
+//		}
+//		else
+//		{
+//			//Message d'erreurs?
+//			System.out.println("ajout impossible");
+//		}
+//	}
+	
+	public void ajouterArticleVente(ArticleVendu article) {
+		if(article.getVendeur().equals(this)) {
+			if(listeVentes!=null && (!listeVentes.contains(article))){
+				this.listeVentes.add(article);
+			}
+			if(listeVentes==null) {
+				listeVentes = new ArrayList<>();
+				this.listeVentes.add(article);
+			}
+			
+		}
+		else
+		{
+			//Message d'erreurs?
+			System.out.println("ajout impossible");
+		}
+	}
 
+	public List<ArticleVendu> getListeAchats() {
+		return listeAchats;
+	}
+
+	public List<ArticleVendu> getListeVentes() {
+		return listeVentes;
+	}
+
+	public List<Enchere> getListeEncheres() {
+		return listeEncheres;
+	}
 	@Override
 	public String toString() {
 		return "Utilisateur [no_utilisateur=" + noUtilisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom="

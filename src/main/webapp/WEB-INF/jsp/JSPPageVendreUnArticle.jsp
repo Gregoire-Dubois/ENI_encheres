@@ -14,40 +14,52 @@
 	<%@ include file="JSPHeader.jsp"%>
 
 	<h1>Vendre un article</h1>
+	
+	<c:if test="${!empty listeErreursAjoutArticle }">
+		<c:forEach var="code" items="${listeErreursAjoutArticle}">
+			<li>Erreur: ${LecteurMessage.getMessageErreur(code)}</li>
+		</c:forEach>
+	</c:if>
 
-	<form action="NomDelaServlet" method="post">
-		<label for="article">Article:</label> <input type="text" id="article"
-			name="article" required><br> <br> <label
-			for="description">Description:</label><br>
-		<textarea id="description" name="description" rows="4" cols="50"></textarea>
+	<form action="${pageContext.request.contextPath}/vendre" method="post">
+		<label for="article">Article:</label> 
+		<input type="text" id="article" name="article" required><br> <br> 
+		
+		<label for="description">Description:</label><br>
+		<textarea id="description" name="description" rows="4" cols="50" maxlength="300"></textarea>
 		<p>
 		<label for="categorie">Catégorie:</label>
 
 		<select name="categorie" id="categorie">
 			<!-- <option value="">Choix</option>-->
-			<c:forEach items="${listeCategorie}" var="categorie">
-				<option value="${categorie.libelle}"
-					${categorie.libelle == article.categorie.libelle ? 'selected' : ''}>${categorie.libelle}</option>
+			<c:forEach items="${listeCategorie}" var="cat">
+				<option value="${cat.id}"
+					${cat.libelle == article.cat.libelle ? 'selected' : ''}> ${cat.libelle} 
+				</option>
 			</c:forEach>
 		</select>
 		<p> 
-		<label for="photo">Photo de l'article:</label> <input
-			type="file" id="photo" name="photo"><br> <br> <label
-			for="offre">Mise à prix :</label> <input type="text" id="offre">
-		<br> </select> <br> <label for="debutenchere">Début de
-			l'enchère:</label> <input type="date" id="debutenchere" name="debutenchere"><br>
-		<br> <label for="finenchere">Fin de l'enchère:</label> <input
-			type="date" id="finenchere" name="finenchere"><br> <br>
+		<label for="photo">Photo de l'article:</label> 
+		<input type="file" id="photo" name="photo"><br> <br> 
+			
+		<label for="prixDepart">Mise à prix :</label> 
+		<input type="number" id="prixDepart" name="prixDepart">
+		
+		<br> 
+		<label for="debutEnchere">Début de l'enchère:</label> 
+		<input type="date" id="debutEnchere" name="debutEnchere"><br>
+		<br> 
+		<label for="finEnchere">Fin de l'enchère:</label> 
+		<input type="date" id="finEnchere" name="finEnchere"><br> <br>
 
 		<fieldset>
 
 			<legend>Adresse de retrait</legend>
 
-			<label for="rue">Rue :</label> <input type="text" id="rue"> <br>
+			<label for="rue">Rue :</label> <input type="text" id="rue" name="rue" value="${userConnected.rue}"> <br>
 
-			<label for="CP">Code postal :</label> <input type="text" id="CP">
-			<br> <label for="ville">Ville :</label> <input type="text"
-				id="ville"> <br>
+			<label for="codePostal">Code postal :</label> <input type="text" id="codePostal" name="codePostal" pattern="[0-9]{5}" value="${userConnected.codePostal}">
+			<br> <label for="ville">Ville :</label> <input type="text" id="ville" name="ville" value="${userConnected.ville}"> <br>
 
 		</fieldset>
 

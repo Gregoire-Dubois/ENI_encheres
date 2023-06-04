@@ -67,9 +67,40 @@ public class UtilisateurManager {
 		return utilisateur;
 	}
 	
-	public void modifierUtilisateur(Utilisateur utilisateurConnecte) throws BusinessException {
-		//VERIFICATION A FAIRE
-		utilisateurDAO.updateUtilisateur(utilisateurConnecte);
+	public void modifierUtilisateur(Utilisateur utilisateur) throws BusinessException {
+		BusinessException businessException = new BusinessException();
+		this.checkPseudo(utilisateur.getPseudo(), businessException);
+		this.checkNom(utilisateur.getNom(), businessException);
+		this.checkPrenom(utilisateur.getPrenom(), businessException);
+		System.out.println(utilisateur.getEmail());
+		this.checkEmail(utilisateur.getEmail(), businessException);
+		if (!utilisateur.getTelephone().trim().isEmpty()) {
+			this.checkTelephone(utilisateur.getTelephone(), businessException);
+		}else {
+			utilisateur.setTelephone(null);
+		}
+		this.checkRue(utilisateur.getRue(), businessException);
+		this.checkCodePostal(utilisateur.getCodePostal(), businessException);
+		this.checkVille(utilisateur.getVille(), businessException);
+		this.checkMdp(utilisateur.getMotDePasse(), businessException);
+
+		// Pour les tests
+		List<Integer> listeErreurs = businessException.getListeCodesErreur();
+		if (listeErreurs != null) {
+			for (int erreurs : listeErreurs) {
+				System.out.println(erreurs);
+			}
+		} else {
+			System.out.println("Pas d'erreurs");
+		}
+
+		// Si il n'y a pas d'erreurs, on fait la modification
+		if (!businessException.hasErreur()) {
+			this.utilisateurDAO.updateUtilisateur(utilisateur);
+		} else {
+			utilisateur = null;
+			throw businessException;
+		}
 
 	}
 
@@ -184,7 +215,7 @@ public class UtilisateurManager {
 			System.out.println("Erreur sur le prenom vide");
 			businessException.ajouterErreur(CodesResultatBLL.PRENOM_VIDE_ERREUR);
 		}
-		if (!prenom.trim().matches("^[a-zA-ZÀ-ÿ\\-]+$")) {
+		if (!prenom.trim().matches("^[a-zA-ZÀ-ÿ\\s\\-]+$")) {
 			System.out.println("Erreur sur le prenom qui n'est pas alphanumérique");
 			businessException.ajouterErreur(CodesResultatBLL.PRENOM_ALPHA_ERREUR);
 		}
