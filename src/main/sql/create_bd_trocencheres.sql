@@ -12,6 +12,7 @@ CREATE TABLE CATEGORIES (
 ALTER TABLE CATEGORIES ADD constraint categorie_pk PRIMARY KEY (no_categorie)
 
 CREATE TABLE ENCHERES (
+	no_enchere  INTEGER IDENTITY(1,1) NOT NULL,
     no_utilisateur   INTEGER NOT NULL,
     no_article       INTEGER NOT NULL,
     date_enchere     datetime NOT NULL,
@@ -19,7 +20,7 @@ CREATE TABLE ENCHERES (
 
 )
 
-ALTER TABLE ENCHERES ADD constraint enchere_pk PRIMARY KEY (no_utilisateur, no_article)
+ALTER TABLE ENCHERES ADD constraint enchere_pk PRIMARY KEY (no_enchere)
 
 CREATE TABLE RETRAITS (
 	no_article         INTEGER NOT NULL,
@@ -70,6 +71,11 @@ ON DELETE NO ACTION
 ALTER TABLE ENCHERES
     ADD CONSTRAINT encheres_articles_vendus_fk FOREIGN KEY ( no_article )
         REFERENCES ARTICLES_VENDUS ( no_article )
+ON DELETE NO ACTION 
+    ON UPDATE no action 
+    
+ALTER TABLE ENCHERES
+    ADD CONSTRAINT encheres_utilisateur_fk FOREIGN KEY ( no_utilisateur ) REFERENCES UTILISATEURS ( no_utilisateur )
 ON DELETE NO ACTION 
     ON UPDATE no action 
 

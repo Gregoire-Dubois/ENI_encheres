@@ -10,6 +10,7 @@ public abstract class CodesResultatDAL {
 	public static final int SELECT_BY_ID_ECHEC = 10001;
 	public static final int SELECT_BY_PSEUDO_ECHEC=10002;
 	public static final int SELECT_BY_EMAIL_ECHEC=10003;
+	public static final int UPDATE_ECHEC = 10004;
 	public static final int SELECT_ALL_CATEGORIES_ECHEC = 11000;
 	public static final int SELECT_CATEGORIE_BY_NAME_ECHEC = 11001;
 	public static final int SELECT_CATEGORIE_BY_ID_ECHEC = 11002;
