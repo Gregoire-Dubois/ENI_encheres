@@ -23,13 +23,15 @@ public class ArticleVendu {
 	private int prixInitial;
 	private int prixVente;
 	private String etatVente;
-	//private Utilisateur utilisateur; //Différencier acquéreur et vendeur?
+	//private Utilisateur utilisateur; //Différencier acquéreur et vendeur? 
+	//CCN : pour moi non, l'article appartient à un uilisateur à un instant T. Par contre il faudra faire le changement de propriétaire à la fin de la vente. 
+	//et comment on stockerait ces valeurs ? 
 	private Utilisateur acquereur;
 	//private Utilisateur acquereur;
 	private Categorie categorie;
 	private Retrait retrait;
 	private Utilisateur vendeur;//OK
-	private List<Enchere> listeEncheres;
+	private List<Enchere> listeEncheres; //CCN : quel intérêt ? 
 	
 	
 	public ArticleVendu() {

@@ -8,7 +8,8 @@ public class Categorie {
     private int id;
     private String libelle;
     
-    private List<ArticleVendu> listeArticles; //Pour pouvoir afficher les éléments de chaque catégorie?
+    private List<ArticleVendu> listeArticles; //Pour pouvoir afficher les éléments de chaque catégorie? 
+    //CCN : toutes les listes  / filtres obtenues par sélection de critères seront gérées dans Article. Non ?  
     
     public Categorie() {
 		listeArticles=new ArrayList<>();
