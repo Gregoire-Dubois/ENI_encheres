@@ -96,4 +96,7 @@ ALTER TABLE ARTICLES_VENDUS
         REFERENCES utilisateurs ( no_utilisateur )
 ON DELETE NO ACTION 
     ON UPDATE no action 
+    
+ALTER TABLE UTILISATEURS ADD constraint utilisateur_pseudo_unique UNIQUE (pseudo);
+ALTER TABLE UTILISATEURS ADD constraint utilisateur_email_unique UNIQUE (email);
 
