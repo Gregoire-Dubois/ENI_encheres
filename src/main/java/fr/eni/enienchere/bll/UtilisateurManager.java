@@ -67,13 +67,13 @@ public class UtilisateurManager {
 		return utilisateur;
 	}
 	
-	public void modifierUtilisateur(Utilisateur utilisateur) throws BusinessException {
+	public void modifierUtilisateur(Utilisateur utilisateur, Utilisateur userConnected) throws BusinessException {
 		BusinessException businessException = new BusinessException();
-		this.checkPseudo(utilisateur.getPseudo(), businessException);
+		this.checkPseudoModif(utilisateur.getPseudo(), userConnected, businessException);
 		this.checkNom(utilisateur.getNom(), businessException);
 		this.checkPrenom(utilisateur.getPrenom(), businessException);
 		System.out.println(utilisateur.getEmail());
-		this.checkEmail(utilisateur.getEmail(), businessException);
+		this.checkEmailModif(utilisateur.getEmail(), userConnected, businessException);
 		if (!utilisateur.getTelephone().trim().isEmpty()) {
 			this.checkTelephone(utilisateur.getTelephone(), businessException);
 		}else {
@@ -196,6 +196,21 @@ public class UtilisateurManager {
 			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_DOUBLON_ERREUR);
 		}
 	}
+	public void checkPseudoModif(String pseudo, Utilisateur userConnected, BusinessException businessException) throws BusinessException {
+
+		if (pseudo.trim().isEmpty()) {
+			System.out.println("Erreur sur le pseudo vide");
+			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_VIDE_ERREUR);
+		}
+		if (!pseudo.trim().matches("^[a-zA-ZÀ-ÿ0-9]+$")) {
+			System.out.println("Erreur sur le pseudo qui n'est pas alphanumérique");
+			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_ALPHA_NUM_ERREUR);
+		}
+		
+		if (this.utilisateurDAO.selectByPseudo(pseudo) != null && this.utilisateurDAO.selectByPseudo(pseudo) == userConnected) {
+			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_DOUBLON_ERREUR);
+		}
+	}
 
 	public void checkNom(String nom, BusinessException businessException) {
 
@@ -267,6 +282,13 @@ public class UtilisateurManager {
 	public void checkEmail(String email, BusinessException businessException) throws BusinessException {
 		System.out.println(this.utilisateurDAO.selectByEmail(email));
 		if (this.utilisateurDAO.selectByEmail(email) != null) {
+			businessException.ajouterErreur(CodesResultatBLL.EMAIL_DOUBLON_ERREUR);
+		}
+	}
+	
+	public void checkEmailModif(String email, Utilisateur userConnected,BusinessException businessException) throws BusinessException {
+		System.out.println(this.utilisateurDAO.selectByEmail(email));
+		if (this.utilisateurDAO.selectByEmail(email) != null && this.utilisateurDAO.selectByEmail(email) == userConnected) {
 			businessException.ajouterErreur(CodesResultatBLL.EMAIL_DOUBLON_ERREUR);
 		}
 	}
