@@ -1,27 +1,26 @@
 @charset "UTF-8";
-<<<<<<< HEAD
 
 
-=======
 *{
 	background-color: pink;
-}
+}*
+
 html{
->>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
-	
+
 background-color: pink;
 
-header{
+}
 
-	display : flex; 
-	justify-content : space-between;
+header {
 
-	}
+	display: flex;
+	justify-content: space-between;
+}
 
-.entreprise{
+/*.entreprise{
 
 
-	}
+	}*/
 	
 .grilleNonConnecte{
 	

@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="../../../css/style.css" />
+<!-- <link rel="stylesheet" href="../../../css/style.css" /> -->
+<link rel="stylesheet" href="css/style.css" />
 <title>Accueil</title>
 </head>
 <body>
@@ -33,7 +34,7 @@
 			<form>
 	
 				<input type="text" name="search" placeholder="Le nom de l'article contient"> 
-				</br>
+				<br>
 				<label for="categorie">Catégorie:</label>
 					<select name="categorie" id="categorie">
 						<!-- <option value="">Choix</option>-->
@@ -45,7 +46,7 @@
 					<option value="categorie1" >Catégorie 1</option>
 					<option value="categorie2" >Catégorie 2</option>
 					<option value="categorie3" >Catégorie 3</option>
-				</select>--> </br>
+				</select>--> <br>
 				<input type="submit" value="Rechercher">
 			</form>
 	
