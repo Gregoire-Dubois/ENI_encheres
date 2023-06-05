@@ -3,6 +3,9 @@ package fr.eni.enienchere.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.enienchere.BusinessException;
+import fr.eni.enienchere.dal.DAOFactory;
+
 public class Categorie {
 
     private int id;
@@ -12,12 +15,12 @@ public class Categorie {
     //CCN : toutes les listes  / filtres obtenues par sélection de critères seront gérées dans Article. Non ?  
     
     public Categorie() {
-		listeArticles=new ArrayList<>();
+		//listeArticles=new ArrayList<>();
 	}
 
     public Categorie(String libelle) {
         this.libelle = libelle;
-        listeArticles=new ArrayList<>();
+       // listeArticles=new ArrayList<>();
     }
 //    
 //    public Categorie() {}
@@ -47,7 +50,10 @@ public class Categorie {
         this.libelle = libelle;
     }
     
-    public List<ArticleVendu> getListeArticles() {
+    public List<ArticleVendu> getListeArticles() throws BusinessException {
+    	if(listeArticles==null) {
+    		listeArticles=DAOFactory.getArticleDAO().selectAllArticlesByNoCategorie(id);
+    	}
 		return listeArticles;
 	}
     

@@ -132,5 +132,18 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	//A faire
+	@Override
+	public List<ArticleVendu> selectAllArticlesByNoCategorie(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ArticleVendu> selectAllArticlesByNoUtilisateur(int noUtilisateur) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

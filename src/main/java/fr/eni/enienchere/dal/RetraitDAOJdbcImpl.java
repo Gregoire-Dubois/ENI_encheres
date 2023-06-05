@@ -14,7 +14,7 @@ public class RetraitDAOJdbcImpl implements RetraitDAO{
 	
 	@Override
 	public Retrait insert(ArticleVendu article) throws BusinessException {
-Connection cnt;
+		Connection cnt;
 		
 		try {
 			cnt=ConnectionProvider.getConnection();

@@ -12,6 +12,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.enienchere.BusinessException;
+import fr.eni.enienchere.dal.DAOFactory;
+
 public class Utilisateur {
 	
 	/* Bout de code inutile ici ? 
@@ -30,7 +33,7 @@ public class Utilisateur {
 	private int credit; 
 	private boolean administrateur;
 	
-	private List<ArticleVendu> listeAchats;
+//	private List<ArticleVendu> listeAchats;
 	private List<ArticleVendu> listeVentes; // = new ArrayList<>();
 	private List<Enchere> listeEncheres;
 	//CCN : commentaire idem que sur catégorie : ces listes sont des select qu'on gèrera dans l'objet Article. Mais elle ne définissent pas l'objet Utilisateur. 
@@ -39,7 +42,7 @@ public class Utilisateur {
 	
 	public Utilisateur() {
 		super();
-		listeVentes = new ArrayList<>();
+		//listeVentes = new ArrayList<>();
 	}
 	
 	// constructeur sans le numéro utilisateur
@@ -81,27 +84,7 @@ public class Utilisateur {
 	}
 
 	
-	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur,
-			List<ArticleVendu> listeAchats, List<ArticleVendu> listeVentes, List<Enchere> listeEncheres) {
-		super();
-		this.noUtilisateur = noUtilisateur;
-		this.pseudo = pseudo;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.email = email;
-		this.telephone = telephone;
-		this.rue = rue;
-		this.codePostal = codePostal;
-		this.ville = ville;
-		this.motDePasse = motDePasse;
-		this.credit = credit;
-		this.administrateur = administrateur;
-		
-		this.listeAchats = listeAchats;
-		this.listeVentes = listeVentes;
-		this.listeEncheres = listeEncheres;
-	}
+	
 	public String getPseudo() {
 		return pseudo;
 	}
@@ -213,16 +196,16 @@ public class Utilisateur {
 		}
 	}
 	
-	public void ajouterArticleAchat(ArticleVendu article) {
-		if(article.getAcquereur().equals(this) && !listeAchats.contains(article)){
-			this.listeAchats.add(article);
-		}
-		else
-		{
-			//Message d'erreurs?
-			System.out.println("ajout impossible");
-		}
-	}
+//	public void ajouterArticleAchat(ArticleVendu article) {
+//		if(article.getAcquereur().equals(this) && !listeAchats.contains(article)){
+//			this.listeAchats.add(article);
+//		}
+//		else
+//		{
+//			//Message d'erreurs?
+//			System.out.println("ajout impossible");
+//		}
+//	}
 //	public void ajouterArticleVente(ArticleVendu article) {
 //		if(article.getVendeur().equals(this) && (!listeVentes.contains(article))){
 //			this.listeVentes.add(article);
@@ -252,15 +235,21 @@ public class Utilisateur {
 		}
 	}
 
-	public List<ArticleVendu> getListeAchats() {
-		return listeAchats;
-	}
+//	public List<ArticleVendu> getListeAchats() {
+//		return listeAchats;
+//	}
 
-	public List<ArticleVendu> getListeVentes() {
+	public List<ArticleVendu> getListeVentes() throws BusinessException {
+		if(listeVentes==null) {
+			listeVentes=DAOFactory.getArticleDAO().selectAllArticlesByNoUtilisateur(noUtilisateur);
+		}
 		return listeVentes;
 	}
 
 	public List<Enchere> getListeEncheres() {
+		if(listeEncheres==null) {
+			listeEncheres=DAOFactory.getEnchereDAO().selectAllEnchereByNoUtilisateur(noUtilisateur);
+		}
 		return listeEncheres;
 	}
 	@Override
