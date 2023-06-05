@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Filtres Articles</title>
-<link rel="stylesheet" href="../../css/styletest.css">
+<link rel="stylesheet" href="../css/styletest.css">
 </head>
 <body>
 

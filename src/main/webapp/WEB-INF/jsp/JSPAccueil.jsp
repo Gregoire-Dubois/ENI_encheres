@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <!-- <link rel="stylesheet" href="../../../css/style.css" /> -->
 <title>Accueil</title>
-<link rel="stylesheet" <%@ include file="../../css/styletest.css" %>>
+<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
