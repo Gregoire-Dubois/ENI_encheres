@@ -22,7 +22,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	
 	private static final String INSERT_ARTICLE="INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,no_utilisateur,no_categorie) VALUES(?,?,?,?,?,?,?)";
 	private static final String SELECT_ARTICLE_BY_ID = "SELECT * FROM ("
-														+ "AV.nomArticle, AV.description, C.libelle AS categorie, E.montant_enchere, UE.pseudo AS pseudo_encherisseur, AV.prix_initial, AV.date_fin_encheres,"
+														+ "AV.nomArticle, AV.description, C.libelle AS categorie, E.montant_enchere, UE.pseudo AS acquereur, AV.prix_initial, AV.date_fin_encheres,"
 														+ "R.rue AS rue_retrait, R.code_postal AS code_postal_retrait, R.ville AS ville_retrait, UV.pseudo AS pseudo_vendeur, "
 														+ "ROW_NUMBER() OVER (ORDER BY E.montant_enchere DESC) AS row_number"
 														+ "FROM ARTICLES_VENDUS AV"
@@ -43,63 +43,70 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	public ArticleVendu selectArticleById(int articleId) throws BusinessException {
 		ArticleVendu article = null;
 		Connection cnx = null;
-		
-		try {
-			cnx = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ARTICLE_BY_ID);
-			
-			pstmt.setInt(1, articleId);
-			
-			ResultSet rs = pstmt.executeQuery();
-			
-			if(rs.next()) {	
-				article = new ArticleVendu();
-				article.setNoArticle(rs.getInt(articleId));
-				article.setNomArticle(rs.getString("nom_article"));
-				article.setDescription(rs.getString("description"));
-            
-				// Récupération du libellé de la catégorie article
-				String libelleCategorie = rs.getString("categorie");
-				Categorie categorie = new Categorie(libelleCategorie);
-				article.setCategorie(categorie);
-            
-				article.setPrixVente(rs.getInt("montant_enchere"));
-            
-				// Récupération du pseudo de l'encherisseur
-				String pseudoEncherisseur = rs.getString("pseudo_encherisseur");
-				Utilisateur encherisseur = UtilisateurDAO.selectByPseudo(rs.getString("pseudo_encherisseur"));
-				encherisseur.setPseudo(pseudoEncherisseur);
-				encherisseur.setVendeur(encherisseur);
-            ;
-            article.setPseudoEncherisseur(rs.getString("pseudo_encherisseur"));
-            article.setPrixInitial(rs.getInt("prix_initial"));
-            article.setDateFinEncheres(rs.getDate("date_fin_encheres"));
-            article.setRueRetrait(rs.getString("rue_retrait"));
-            article.setCodePostalRetrait(rs.getString("code_postal_retrait"));
-            article.setVilleRetrait(rs.getString("ville_retrait"));
-            article.setPseudoVendeur(rs.getString("pseudo_vendeur"));
-			}
-			
-		} catch (SQLException e) {
+		PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+
+	    try {
+    		cnx = ConnectionProvider.getConnection();
+    		pstmt = cnx.prepareStatement(SELECT_ARTICLE_BY_ID);
+
+    		pstmt.setInt(1, articleId);
+    		
+    		rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	        	String nomArticle = rs.getString("nomArticle");
+                String description = rs.getString("description");
+                String categorie = rs.getString("categorie");
+                int prixVente = rs.getInt("montant_enchere");
+                String pseudoAcquereur = rs.getString("pseudo_acquereur");
+                int prixInitial = rs.getInt("prix_initial");
+                LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
+                String rueRetrait = rs.getString("rue_retrait");
+                String codePostalRetrait = rs.getString("code_postal_retrait");
+                String villeRetrait = rs.getString("ville_retrait");
+                String pseudoVendeur = rs.getString("pseudo_vendeur");
+
+                // Récupérer les objets Utilisateur correspondants aux pseudos
+                Utilisateur acquereur = UtilisateurDAO.selectByPseudo(pseudoAcquereur);
+                Utilisateur vendeur = UtilisateurDAO.selectByPseudo(pseudoVendeur);
+
+                // Créer l'objet Retrait
+                Retrait retrait = new Retrait(rueRetrait, codePostalRetrait, villeRetrait);
+
+                // Créer l'objet Categorie
+                Categorie categorieArt = new Categorie();
+                categorieArt.setLibelle(categorie);
+
+                // Créer l'objet ArticleVendu
+                article = new ArticleVendu(nomArticle, description, categorieArt, prixVente, acquereur,
+	                        prixInitial, dateFinEncheres, retrait, vendeur);
+	            }
+	    } catch (SQLException e) {
 			e.printStackTrace();
-			BusinessException businessException = new BusinessException();
-			businessException.ajouterErreur(CodesResultatDAL.SELECT_BY_ID_ECHEC);
-		}finally {
-			if(cnx !=null) {
-				try {
+	    } finally {
+	    	if (rs != null) {
+	    		try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}		
+	    	}if (pstmt != null) {
+	        	try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+	    	}if (cnx != null) {
+	        	try {
 					cnx.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					BusinessException businessException = new BusinessException();
-					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
-				}
+				}}	
 			}
-			
-		}
-		
-		
-		return utilisateur;
-	}
+	    return article;
+	    }
+
 
 	@Override
 	public List<ArticleVendu> selectAllArticles() throws BusinessException {

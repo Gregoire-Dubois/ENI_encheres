@@ -104,8 +104,9 @@ public class ArticleVendu {
 	}
 	
 	//TJ : Constructeur pour Détail Vente
-	public ArticleVendu(String nomArticle, String description, Categorie categorie, int prixVente, Utilisateur acquereur,
-			int prixInitial, LocalDate dateFinEncheres, Retrait retrait, Utilisateur vendeur){
+	public ArticleVendu(String nomArticle, String description, Categorie categorie, int prixVente,
+			Utilisateur acquereur, int prixInitial, LocalDate dateFinEncheres, Retrait retrait,
+			Utilisateur vendeur) {
 		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -184,6 +185,9 @@ public class ArticleVendu {
 
 
 
+
+
+	
 
 
 	/*
