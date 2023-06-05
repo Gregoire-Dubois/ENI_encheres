@@ -13,7 +13,8 @@ public class Enchere {
 
 	//private static final long serialVersionUID = 1L;
 	
-	//private int id; //??? Déjà présent dans ArticleVendu non?
+	//private int id; //??? Déjà présent dans ArticleVendu non? 
+	//CCN : en fait ici on revient sur un point non tranché. En base enchere n'a pas d'ID ce que je trouve très très chiant. 
 	private ArticleVendu article;
 	private Utilisateur utilisateur;
 	private LocalDateTime dateEnchere;

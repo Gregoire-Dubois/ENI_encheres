@@ -1,0 +1,12 @@
+CREATE TRIGGER TR_etat_vente
+ON ARTICLES_VENDUS
+AFTER INSERT
+AS
+BEGIN
+    UPDATE ARTICLES_VENDUS
+    SET etat_vente = CASE
+        WHEN date_debut_encheres > GETDATE() THEN 'NC'
+        ELSE 'EC'
+    END
+    WHERE no_article IN (SELECT no_article FROM inserted);
+END;

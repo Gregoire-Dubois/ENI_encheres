@@ -76,6 +76,7 @@ public class ServletAffichageModifierProfile extends HttpServlet {
         Utilisateur utilisateur;
         
         int id = ((Utilisateur) session.getAttribute("userConnected")).getNoUtilisateur();
+        Utilisateur userConnected = (Utilisateur) session.getAttribute("userConnected");
         
         try {
         	 //On vérifie d'abord si le mot de passe correspond à l'utilisateur.
@@ -89,7 +90,7 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 					//dans le cas où les deux mots de passe correspondent.
 					
 					Utilisateur utilisateurModif = new Utilisateur(utilisateur.getNoUtilisateur(), pseudo, nom, prenom, email, telephone, rue, codePostal, ville, nouveauMdp, utilisateur.getCredit(), utilisateur.getAdministrateur());
-					utilisateurManager.modifierUtilisateur(utilisateurModif);
+					utilisateurManager.modifierUtilisateur(utilisateurModif, userConnected);
 					request.setAttribute("utilisateur", utilisateurModif);
 					session.setAttribute("userConnected",utilisateurModif);
 					//System.out.println(utilisateurModif);
@@ -101,7 +102,7 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 				//On doit maintenant insérer sans modifier les crédits et le role.
 				
 				Utilisateur utilisateurModif = new Utilisateur(utilisateur.getNoUtilisateur(), pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, utilisateur.getCredit(), utilisateur.getAdministrateur());
-				utilisateurManager.modifierUtilisateur(utilisateurModif);
+				utilisateurManager.modifierUtilisateur(utilisateurModif, userConnected);
 				request.setAttribute("utilisateur", utilisateurModif);
 				session.setAttribute("userConnected",utilisateurModif);
 				//System.out.println(utilisateurModif);

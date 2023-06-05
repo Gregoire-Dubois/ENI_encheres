@@ -33,6 +33,8 @@ public class Utilisateur {
 	private List<ArticleVendu> listeAchats;
 	private List<ArticleVendu> listeVentes; // = new ArrayList<>();
 	private List<Enchere> listeEncheres;
+	//CCN : commentaire idem que sur catégorie : ces listes sont des select qu'on gèrera dans l'objet Article. Mais elle ne définissent pas l'objet Utilisateur. 
+	//Il faut coller au diagramme de classe mais je me trompe peut-ête. 
 	
 	
 	public Utilisateur() {

@@ -43,7 +43,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			cnx = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL_ARTICLE);
 			ResultSet rst = pstmt.executeQuery();
-			
 			while (rst.next()) {
 				articlesVendus = new ArticleVendu(
 						rst.getInt(1), //noArticle
@@ -53,16 +52,15 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 						rst.getDate(5).toLocalDate(), //datefin
 						rst.getInt(6), //prix
 						rst.getInt(7), // prix 
-						rst.getString(8), // état vente 
-						(Categorie)rst.getObject(9),
-						(Utilisateur)rst.getObject(10)	);
-				
-				
-			//n' pas fonctionné pour le cast java.time.LocalDate.class
-								
+						rst.getString(10) // état vente 
+						//(Categorie)rst.getObject(9)
+
+						);
+												
 				listeArticlesEnVente.add(articlesVendus);
-				System.out.println("-------->"+listeArticlesEnVente);
 			}
+			System.out.println("-------->"+listeArticlesEnVente);
+
 			
 			
 		} catch (SQLException e) {

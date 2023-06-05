@@ -5,10 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<<<<<<< HEAD
 
 <link rel="stylesheet" href="/css/style.css" />
 
+=======
+<!-- <link rel="stylesheet" href="../../../css/style.css" /> -->
+>>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
 <title>Accueil</title>
+<link rel="stylesheet" <%@ include file="../../css/styletest.css" %>>
 </head>
 <body>
 
@@ -16,6 +21,8 @@
 
 
 <%@ include file="JSPHeaderConnexion.jsp" %>
+
+<%@ include file="tests/FiltreArticles.jsp" %>
 
 
 <section>
@@ -30,16 +37,16 @@
 		<!-- </div> -->
 	
 		<!-- <div class="filtresNonConnecte"> -->
-		<div>
+		<!--<div>
 			<h3>Filtre</h3>
 	
 			<form>
 	
 				<input type="text" name="search" placeholder="Le nom de l'article contient"> 
-				</br>
+				<br>
 				<label for="categorie">Catégorie:</label>
 					<select name="categorie" id="categorie">
-						<!-- <option value="">Choix</option>-->
+						<!-- <option value="">Choix</option>
 				<c:forEach items="${listeCategorie}" var="categorie">
 					<option value="${categorie.libelle}"${categorie.libelle == article.categorie.libelle ? 'selected' : ''}>${categorie.libelle}</option>
 				</c:forEach>
@@ -48,12 +55,12 @@
 					<option value="categorie1" >Catégorie 1</option>
 					<option value="categorie2" >Catégorie 2</option>
 					<option value="categorie3" >Catégorie 3</option>
-				</select>--> </br>
+				</select> <br>
 				<input type="submit" value="Rechercher">
 			</form>
 	
 	
-		</div> <!-- OK POUR TOUT LE MONDE JUSQU'ICI-->
+		</div> --> <!-- OK POUR TOUT LE MONDE JUSQU'ICI-->
 		
 		<!-- Il faut dynamiser -->
 		

@@ -23,13 +23,15 @@ public class ArticleVendu {
 	private int prixInitial;
 	private int prixVente;
 	private String etatVente;
-	//private Utilisateur utilisateur; //Différencier acquéreur et vendeur?
+	//private Utilisateur utilisateur; //Différencier acquéreur et vendeur? 
+	//CCN : pour moi non, l'article appartient à un uilisateur à un instant T. Par contre il faudra faire le changement de propriétaire à la fin de la vente. 
+	//et comment on stockerait ces valeurs ? 
 	private Utilisateur acquereur;
 	//private Utilisateur acquereur;
 	private Categorie categorie;
 	private Retrait retrait;
 	private Utilisateur vendeur;//OK
-	private List<Enchere> listeEncheres;
+	private List<Enchere> listeEncheres; //CCN : quel intérêt ? 
 	
 	
 	public ArticleVendu() {
@@ -39,8 +41,7 @@ public class ArticleVendu {
 	
 	
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int prixInitial, int prixVente, String etatVente, Categorie categorie,
-			Utilisateur vendeur) {
+			LocalDate dateFinEncheres, int prixInitial, int prixVente, String etatVente) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -50,26 +51,9 @@ public class ArticleVendu {
 		this.prixInitial = prixInitial;
 		this.prixVente = prixVente;
 		this.etatVente = etatVente;
-		this.categorie = categorie;
-		this.vendeur = vendeur;
+		
 	}
 
-
-	/*
-	 * 
-	 *    rst.getInt(1), // int num article
-					    rst.getString(2), // str description 
-					    rst.getDate(3).toLocalDate(), // date début enchère
-					    rst.getDate(4).toLocalDate(), // date fin enchère Conversion de java.sql.Date en java.time.LocalDate
-					    rst.getInt(6), // int  prixInitial
-					    rst.getInt(7), // int prixVente
-					    rst.getInt(8), // str etatVente
-					    rst.getString(9),
-					    (Categorie)rst.getObject(10),
-					    (Utilisateur)rst.getObject(11)
-	 * 
-	 */
-	
 	
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
 			LocalDate dateFinEncheres, int prixInitial, int prixVente, Utilisateur acquereur, Categorie categorie,
