@@ -13,6 +13,7 @@ import java.util.List;
 
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.dal.DAOFactory;
+import fr.eni.enienchere.dal.EnchereDAO;
 
 public class ArticleVendu {
 	
@@ -256,9 +257,9 @@ public class ArticleVendu {
 	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
 
-		if(categorie!=null) {
-			categorie.ajouterArticle(this);
-		}
+//		if(categorie!=null) {
+//			categorie.ajouterArticle(this);
+//		}
 	}
 
 	public Retrait getRetrait() {
@@ -277,28 +278,29 @@ public class ArticleVendu {
 	public void setVendeur(Utilisateur vendeur) {
 		this.vendeur = vendeur;
 		
-		if(vendeur!=null) {
-			vendeur.ajouterArticleVente(this);
-		}
+//		if(vendeur!=null) {
+//			vendeur.ajouterArticleVente(this);
+//		}
 	}
 
 	public List<Enchere> getListeEncheres() throws BusinessException {
 		if(listeEncheres==null) {
+			
 			listeEncheres=DAOFactory.getEnchereDAO().selectAllEnchereByNoArticle(noArticle);
 		}
 		return listeEncheres;
 	}
 
-	public void ajouterEnchere(Enchere enchere) {
-		if(enchere.getArticle().equals(this) && !listeEncheres.contains(enchere))
-		{
-			this.listeEncheres.add(enchere);
-		}
-		else
-		{
-			System.out.println("ajout impossible");
-		}
-	}
+//	public void ajouterEnchere(Enchere enchere) {
+//		if(enchere.getArticle().equals(this) && !listeEncheres.contains(enchere))
+//		{
+//			this.listeEncheres.add(enchere);
+//		}
+//		else
+//		{
+//			System.out.println("ajout impossible");
+//		}
+//	}
 	public String getEtatVente() {
 		return etatVente;
 	}

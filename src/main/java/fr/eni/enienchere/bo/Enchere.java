@@ -99,9 +99,9 @@ public class Enchere {
 
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
-		if(utilisateur!=null) {
-			utilisateur.ajouterEnchere(this);
-		}
+//		if(utilisateur!=null) {
+//			utilisateur.ajouterEnchere(this);
+//		}
 	}
 	
 	@Override

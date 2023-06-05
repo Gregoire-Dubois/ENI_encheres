@@ -185,16 +185,16 @@ public class Utilisateur {
 		this.administrateur = administrateur;
 	}
 	
-	public void ajouterEnchere(Enchere enchere) {
-		if(enchere.getUtilisateur().equals(this) && !listeEncheres.contains(enchere)){
-			this.listeEncheres.add(enchere);
-		}
-		else
-		{
-			//Message d'erreurs?
-			System.out.println("ajout impossible");
-		}
-	}
+//	public void ajouterEnchere(Enchere enchere) {
+//		if(enchere.getUtilisateur().equals(this) && !listeEncheres.contains(enchere)){
+//			this.listeEncheres.add(enchere);
+//		}
+//		else
+//		{
+//			//Message d'erreurs?
+//			System.out.println("ajout impossible");
+//		}
+//	}
 	
 //	public void ajouterArticleAchat(ArticleVendu article) {
 //		if(article.getAcquereur().equals(this) && !listeAchats.contains(article)){
@@ -217,23 +217,23 @@ public class Utilisateur {
 //		}
 //	}
 	
-	public void ajouterArticleVente(ArticleVendu article) {
-		if(article.getVendeur().equals(this)) {
-			if(listeVentes!=null && (!listeVentes.contains(article))){
-				this.listeVentes.add(article);
-			}
-			if(listeVentes==null) {
-				listeVentes = new ArrayList<>();
-				this.listeVentes.add(article);
-			}
-			
-		}
-		else
-		{
-			//Message d'erreurs?
-			System.out.println("ajout impossible");
-		}
-	}
+//	public void ajouterArticleVente(ArticleVendu article) {
+//		if(article.getVendeur().equals(this)) {
+//			if(listeVentes!=null && (!listeVentes.contains(article))){
+//				this.listeVentes.add(article);
+//			}
+//			if(listeVentes==null) {
+//				listeVentes = new ArrayList<>();
+//				this.listeVentes.add(article);
+//			}
+//			
+//		}
+//		else
+//		{
+//			//Message d'erreurs?
+//			System.out.println("ajout impossible");
+//		}
+//	}
 
 //	public List<ArticleVendu> getListeAchats() {
 //		return listeAchats;

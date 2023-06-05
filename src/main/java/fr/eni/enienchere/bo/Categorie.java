@@ -57,16 +57,16 @@ public class Categorie {
 		return listeArticles;
 	}
     
-    public void ajouterArticle(ArticleVendu article) {
-    	if(article.getCategorie().equals(this) && !listeArticles.contains(article))
-		{
-			this.listeArticles.add(article);
-		}
-		else
-		{
-			System.out.println("ajout impossible");
-		}
-    }
+//    public void ajouterArticle(ArticleVendu article) {
+//    	if(article.getCategorie().equals(this) && !listeArticles.contains(article))
+//		{
+//			this.listeArticles.add(article);
+//		}
+//		else
+//		{
+//			System.out.println("ajout impossible");
+//		}
+//    }
     @Override
     public String toString() {
         return "Categorie{" +
