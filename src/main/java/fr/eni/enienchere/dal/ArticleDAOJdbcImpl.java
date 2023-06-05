@@ -53,6 +53,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			if(rs.next()) {
 				article.setNoArticle(rs.getInt(1));
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -31,11 +31,11 @@ public abstract class CodesResultatBLL {
 	public static final int DATE_FIN_ENCHERE_INFERIEURE_EGALE_DATE_DEBUT_ERREUR=20103;
 	public static final int PRIX_VENTE_INFERIEUR_EGAL_A_0_ERREUR=20104;
 	public static final int PRIX_DE_VENTE_VIDE_ERREUR=20105;
-	public static final int CATEGORIE_ARTICLE_NON_AUTORISEE_ERREUR=20106;
-	public static final int CATEGORIE_ARTICLE_VIDE_ERREUR=20107;
-	public static final int PSEUDO_VENDEUR_INTROUVABLE_ERREUR=20107;
-	public static final int PSEUDO_VENDEUR_VIDE_ERREUR=20107;
-	public static final int NOM_ARTICLE_ALPHA_ERREUR=20110;
-	public static final int DESCRIPTION_ARTICLE_ALPHA_ERREUR=20111;
+//	public static final int CATEGORIE_ARTICLE_NON_AUTORISEE_ERREUR=20106;
+//	public static final int CATEGORIE_ARTICLE_VIDE_ERREUR=20107;
+//	public static final int PSEUDO_VENDEUR_INTROUVABLE_ERREUR=20108;
+//	public static final int PSEUDO_VENDEUR_VIDE_ERREUR=20109;
+//	public static final int NOM_ARTICLE_ALPHA_ERREUR=20110;
+//	public static final int DESCRIPTION_ARTICLE_ALPHA_ERREUR=20111;
 
 }
