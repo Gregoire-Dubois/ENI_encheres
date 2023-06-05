@@ -65,8 +65,8 @@
 		</fieldset>
 
 
-		<input type="submit" value="Enregistrer"> <input type="reset"
-			value="Annuler">
+		<input type="submit" value="Enregistrer"> 
+		<a href="${pageContext.request.contextPath}/accueil"><input type="button" value="Annuler"></a>
 	</form>
 
 	<%@ include file="JSPFooter.jsp"%>
