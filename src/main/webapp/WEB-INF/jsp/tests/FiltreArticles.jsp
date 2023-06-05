@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Filtres Articles</title>
+<link rel="stylesheet" href="../../css/styletest.css">
 </head>
 <body>
 
@@ -26,8 +27,12 @@
     </form>
 
     <br>
+    
+   <c:choose>
+		<c:when test="${userConnected != null}"><!-- Si l'utilisateur est connecte -->
+			<p>
 
-    <form action="/filtre" method="post"></form>
+    <form action="/filtre" method="post">
         
         <input type="radio" name="achats_ventes" value="Achats" id="achats">
         <label for="achats">Achats</label>
@@ -65,5 +70,7 @@
         <label for="VentesTerminees">Ventes terminées</label>
         </fieldset>
     </form>
+    </c:when>
+    </c:choose>
 </body>
 </html>
