@@ -1,6 +1,8 @@
 package fr.eni.enienchere.test;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bll.UtilisateurManager;
+import fr.eni.enienchere.bo.ArticleVendu;
+import fr.eni.enienchere.bo.Enchere;
 import fr.eni.enienchere.bo.Utilisateur;
 
 /**
@@ -42,6 +46,20 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		e.printStackTrace();
 	}
 	
+	// Test du  List<Enchere> selectAllEnchereByNoArticle(int noArticle);
+		try {
+			ArticleVendu article = new ArticleVendu();
+			article.setNoArticle(9);
+			List<Enchere> listeEncheres;
+			listeEncheres = article.getListeEncheres();
+			for(Enchere enchere : listeEncheres) {
+				System.out.println(enchere);
+			}
+			
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 }
 
 /**
@@ -67,5 +85,5 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 //J'ai faim
 
 // grave la dale 
-//menage!!!
+//menage!!!!!!!!!!
 //grrrrr

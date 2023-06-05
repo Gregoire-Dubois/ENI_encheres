@@ -5,9 +5,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- <link rel="stylesheet" href="../../../css/style.css" /> -->
+
 <title>Accueil</title>
+<<<<<<< HEAD
 <link rel="stylesheet" href="../css/style.css">
+=======
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" >
+>>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
 </head>
 <body>
 
@@ -30,7 +34,7 @@
 		<!-- </div> -->
 	
 		<!-- <div class="filtresNonConnecte"> -->
-		<!--<div>
+		<div>
 			<h3>Filtre</h3>
 	
 			<form>
@@ -39,7 +43,7 @@
 				<br>
 				<label for="categorie">Catégorie:</label>
 					<select name="categorie" id="categorie">
-						<!-- <option value="">Choix</option>
+						<!-- <option value="">Choix</option>-->
 				<c:forEach items="${listeCategorie}" var="categorie">
 					<option value="${categorie.libelle}"${categorie.libelle == article.categorie.libelle ? 'selected' : ''}>${categorie.libelle}</option>
 				</c:forEach>
@@ -48,12 +52,12 @@
 					<option value="categorie1" >Catégorie 1</option>
 					<option value="categorie2" >Catégorie 2</option>
 					<option value="categorie3" >Catégorie 3</option>
-				</select> <br>
+				</select>--> <br>
 				<input type="submit" value="Rechercher">
 			</form>
 	
 	
-		</div> --> <!-- OK POUR TOUT LE MONDE JUSQU'ICI-->
+		</div> <!-- OK POUR TOUT LE MONDE JUSQU'ICI-->
 		
 		<!-- Il faut dynamiser -->
 		

@@ -21,6 +21,7 @@ import fr.eni.enienchere.bo.Utilisateur;
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bll.ArticleManager;
 import fr.eni.enienchere.bll.CategorieManager;
+import fr.eni.enienchere.bll.RetraitManager;
 import fr.eni.enienchere.bll.UtilisateurManager;
 
 
@@ -91,6 +92,7 @@ public class ServletPageVendreUnArticle extends HttpServlet {
 		LocalDate dateFinEncheres = LocalDate.parse(request.getParameter("finEnchere"), dtf);
 		System.out.println(dateFinEncheres);
 		int prixInitial = Integer.parseInt(request.getParameter("prixDepart"));
+		
 		System.out.println(prixInitial);
 		String rueRetrait = request.getParameter("rue");
 		
@@ -105,19 +107,24 @@ public class ServletPageVendreUnArticle extends HttpServlet {
 		Retrait retrait = new Retrait(rueRetrait, codePostalRetrait, villeRetrait);
 		System.out.println(retrait);
 		
-		//On fait appel à la méthode ajouter de ArticleManager pour effectuer une vérification des données (à faire) avant entrée en bdd
+		//On fait appel à la méthode ajouter de ArticleManager pour effectuer une vérification des données avant entrée en bdd
 		ArticleManager articleManager = new ArticleManager();
+		//On fait appel à la méthode ajouter de RetraitManager pour effectuer une vérification des données avant entrée en bdd
+		RetraitManager retraitManager = new RetraitManager();
 		
 		try {
+			//On essaie l'insertion de l'article
 			ArticleVendu article = articleManager.ajouter(nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, categorie, retrait, vendeur);
 			System.out.println(article);
 			//Test
-			List<ArticleVendu> test = vendeur.getListeVentes();
-			if(test!=null) {
-				for(ArticleVendu a:test) {
-					System.out.println("test" + a);
-				}
-			}
+//			List<ArticleVendu> test = vendeur.getListeVentes();
+//			if(test!=null) {
+//				for(ArticleVendu a:test) {
+//					System.out.println("test" + a);
+//				}
+//			}
+			//Puis on essaie l'insertion du point de retrait
+			retrait = retraitManager.ajouter(article, vendeur);
 			
 			response.sendRedirect(request.getContextPath()+"/accueil");
 		} catch (BusinessException e) {

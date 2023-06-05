@@ -4,19 +4,25 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bll.UtilisateurManager;
 import fr.eni.enienchere.bo.ArticleVendu;
 import fr.eni.enienchere.bo.Categorie;
+
+import fr.eni.enienchere.bo.Retrait;
 import fr.eni.enienchere.bo.Utilisateur;
+
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 	
 	private static final String INSERT_ARTICLE="INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,no_utilisateur,no_categorie) VALUES(?,?,?,?,?,?,?)";
 	private static final String SELECT_ARTICLE_BY_ID = "SELECT * FROM ("
-														+ "SELECT AV.no_article, AV.nom_article, AV.description, AV.date_debut_encheres, AV.date_fin_encheres, AV.prix_initial, E.montant_enchere, UE.pseudo AS pseudo_encherisseur, C.libelle AS categorie, "
+														+ "AV.nomArticle, AV.description, C.libelle AS categorie, E.montant_enchere, UE.pseudo AS pseudo_encherisseur, AV.prix_initial, AV.date_fin_encheres,"
 														+ "R.rue AS rue_retrait, R.code_postal AS code_postal_retrait, R.ville AS ville_retrait, UV.pseudo AS pseudo_vendeur, "
 														+ "ROW_NUMBER() OVER (ORDER BY E.montant_enchere DESC) AS row_number"
 														+ "FROM ARTICLES_VENDUS AV"
@@ -27,6 +33,11 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 														+ "LEFT JOIN RETRAITS R ON AV.no_article = R.no_article"
 														+ "WHERE AV.no_article = ?)"
 														+ "AS subquery WHERE row_number = 1;";
+
+
+	
+	private static final String SELECT_ALL_ARTICLE = "SELECT * FROM articles_vendus;";
+	
 
 	@Override
 	public ArticleVendu selectArticleById(int articleId) throws BusinessException {
@@ -56,9 +67,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             
 				// Récupération du pseudo de l'encherisseur
 				String pseudoEncherisseur = rs.getString("pseudo_encherisseur");
-				Utilisateur encherisseur = UtilisateurDAOJdbcImpl.selectByPseudo(rs.getString("no_utilisateur"));
-				enchereur.setPseudo(pseudoEncherisseur);
-				encherisseur.setAcquereur(enchereur);
+				Utilisateur encherisseur = UtilisateurDAO.selectByPseudo(rs.getString("pseudo_encherisseur"));
+				encherisseur.setPseudo(pseudoEncherisseur);
+				encherisseur.setVendeur(encherisseur);
             ;
             article.setPseudoEncherisseur(rs.getString("pseudo_encherisseur"));
             article.setPrixInitial(rs.getInt("prix_initial"));
@@ -92,9 +103,58 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	@Override
 	public List<ArticleVendu> selectAllArticles() throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+
+		// code Greg 
+		
+		ArrayList<ArticleVendu> listeArticlesEnVente = new ArrayList<>(); 
+			
+		ArticleVendu articlesVendus= null; 
+		Connection cnx = null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL_ARTICLE);
+			ResultSet rst = pstmt.executeQuery();
+			while (rst.next()) {
+				articlesVendus = new ArticleVendu(
+						rst.getInt(1), //noArticle
+						rst.getString(2), //nom article
+						rst.getString(3), // description
+						rst.getDate(4).toLocalDate(), // datedebut
+						rst.getDate(5).toLocalDate(), //datefin
+						rst.getInt(6), //prix
+						rst.getInt(7), // prix 
+						rst.getString(10) // état vente 
+						//(Categorie)rst.getObject(9)
+
+						);
+												
+				listeArticlesEnVente.add(articlesVendus);
+			}
+			System.out.println("-------->"+listeArticlesEnVente);
+
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		return listeArticlesEnVente;
+
 	}
+		
+
 
 	@Override
 	public List<ArticleVendu> selectAllArticlesByUtilisateur(Utilisateur utilisateur) throws BusinessException {
@@ -129,6 +189,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			if(rs.next()) {
 				article.setNoArticle(rs.getInt(1));
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -148,6 +209,19 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	public void deleteArticleById(ArticleVendu article) throws BusinessException {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	//A faire
+	@Override
+	public List<ArticleVendu> selectAllArticlesByNoCategorie(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ArticleVendu> selectAllArticlesByNoUtilisateur(int noUtilisateur) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -1,13 +1,22 @@
 @charset "UTF-8";
 
 
+
+
+h1{
+	
+	color : red;
+	
+}
+
 *{
 	background-color: pink;
-}*
+}
 
 html{
 
 background-color: pink;
+
 
 }
 
@@ -17,15 +26,20 @@ header {
 	justify-content: space-between;
 }
 
+
 h3 {
 	color : red;
 }
 
 /*.entreprise{
+>>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
 
+<<<<<<< HEAD
+=======
 
 	}*/
 	
+
 .grilleNonConnecte{
 	
 	display : grid; 

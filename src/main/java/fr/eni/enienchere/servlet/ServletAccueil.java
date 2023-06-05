@@ -21,7 +21,7 @@ import fr.eni.enienchere.bo.Utilisateur;
 /**
  * Servlet implementation class ServletAccueil
  */
-@WebServlet("/")
+@WebServlet("/accueil")
 public class ServletAccueil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     CategorieManager categorieManager = null;
@@ -55,6 +55,12 @@ public class ServletAccueil extends HttpServlet {
 			e.printStackTrace();
 		}
        	session.setAttribute("listeCategorie",listeCategorie);
+       	
+       	       	
+
+       	
+       	
+       	
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPAccueil.jsp");
 		rd.forward(request, response);
 	}

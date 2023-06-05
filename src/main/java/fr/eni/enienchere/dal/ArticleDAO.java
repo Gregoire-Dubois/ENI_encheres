@@ -22,4 +22,9 @@ public interface ArticleDAO {
     
     public void deleteArticleById(ArticleVendu article) throws BusinessException;
 
+    //A faire
+	public List<ArticleVendu> selectAllArticlesByNoCategorie(int id) throws BusinessException;
+
+	public List<ArticleVendu> selectAllArticlesByNoUtilisateur(int noUtilisateur) throws BusinessException;
+
 }
