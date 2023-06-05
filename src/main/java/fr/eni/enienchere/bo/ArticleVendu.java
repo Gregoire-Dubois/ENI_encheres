@@ -36,7 +36,41 @@ public class ArticleVendu {
 		super();
 		listeEncheres =new ArrayList<>();
 	}
+	
+	
+	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int prixInitial, int prixVente, String etatVente, Categorie categorie,
+			Utilisateur vendeur) {
+		super();
+		this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.prixVente = prixVente;
+		this.etatVente = etatVente;
+		this.categorie = categorie;
+		this.vendeur = vendeur;
+	}
 
+
+	/*
+	 * 
+	 *    rst.getInt(1), // int num article
+					    rst.getString(2), // str description 
+					    rst.getDate(3).toLocalDate(), // date début enchère
+					    rst.getDate(4).toLocalDate(), // date fin enchère Conversion de java.sql.Date en java.time.LocalDate
+					    rst.getInt(6), // int  prixInitial
+					    rst.getInt(7), // int prixVente
+					    rst.getInt(8), // str etatVente
+					    rst.getString(9),
+					    (Categorie)rst.getObject(10),
+					    (Utilisateur)rst.getObject(11)
+	 * 
+	 */
+	
+	
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
 			LocalDate dateFinEncheres, int prixInitial, int prixVente, Utilisateur acquereur, Categorie categorie,
 			Retrait retrait, String etatVente, Utilisateur vendeur, List<Enchere> listeEncheres) {
@@ -68,6 +102,8 @@ public class ArticleVendu {
 		this.setRetrait(retrait);
 		this.setVendeur(vendeur);
 	}
+	
+
 
 //	public ArticleVendu() {
 //		super();
@@ -131,7 +167,13 @@ public class ArticleVendu {
 //	}
 
 
-/*
+
+
+
+
+
+
+	/*
  * Comment CCN 02/06/2023
  * 
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDatedateDebutEncheres,

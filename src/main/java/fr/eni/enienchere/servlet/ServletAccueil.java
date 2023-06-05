@@ -55,6 +55,12 @@ public class ServletAccueil extends HttpServlet {
 			e.printStackTrace();
 		}
        	session.setAttribute("listeCategorie",listeCategorie);
+       	
+       	       	
+
+       	
+       	
+       	
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPAccueil.jsp");
 		rd.forward(request, response);
 	}
