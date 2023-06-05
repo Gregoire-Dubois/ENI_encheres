@@ -5,7 +5,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<<<<<<< HEAD
+
+<link rel="stylesheet" href="/css/style.css" />
+
+=======
 <!-- <link rel="stylesheet" href="../../../css/style.css" /> -->
+>>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
 <title>Accueil</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" >
 </head>
@@ -26,6 +32,7 @@
 <!-- la première carte est à supprimer elle sert de modèle de présentation -->
 	<!-- <div class="grilleNonConnecte">
 		<div class="titreNonConnecte"> -->
+		
 			<h1>Liste des enchères</h1>
 		<!-- </div> -->
 	
@@ -57,27 +64,8 @@
 		
 		<!-- Il faut dynamiser -->
 		
-		<c:choose>
-		<c:when test="${userConnected != null}"><!-- Si l'utilisateur est connecte -->
-		<div class="resultatsNonConnecte">
+		<!-- Exemple si non connecté -->
 	
-			<div class="card">
-				<img
-					src="https://static.fnac-static.com/multimedia/Images/FR/MDM/24/35/1f/18822436/1540-1/tsp20230519135127/The-Legend-of-Zelda-Tears-Of-The-Kingdom-Nintendo-Switch.jpg"
-					alt="Image de la card">
-				<div class="card-content">
-					<h2><a href="">${article.nomArticle}</a></h2> <!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
-					
-					<p>Prix :${article.prixVente}</p> <!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
-					<p>Fin de l'enchère :${article.dateFinEncheres}</p> <!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
-					<p><a href="${pageContext.request.contextPath}/profil?idVendeur=${article.utilisateur.getNoUtilisateur}">Vendeur : ${article.utilisateur.getPseudo}</a></p> <!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
-					<!-- <p><a href="${pageContext.request.contextPath}/profil?idVendeur=1">Vendeur : ${article.utilisateur.getPseudo}</a></p> --> <!-- Pour l'exemple -->
-				</div>
-			</div>
-	
-		</div>
-		</c:when>
-		<c:otherwise><!-- Si l'utilisateur n'est pas connecte -->
 		<div class="resultatsNonConnecte">
 	
 			<div class="card">
@@ -94,11 +82,24 @@
 			</div>
 	
 		</div>
-		</c:otherwise>
-
-
-	</c:choose>
+		
+		<!-- Exemple si connecté -->
+		<div class="resultatsNonConnecte">
 	
+			<div class="card">
+				<img
+					src="https://static.fnac-static.com/multimedia/Images/FR/MDM/24/35/1f/18822436/1540-1/tsp20230519135127/The-Legend-of-Zelda-Tears-Of-The-Kingdom-Nintendo-Switch.jpg"
+					alt="Image de la card">
+				<div class="card-content">
+					<h2><a href="">${article.nomArticle}</a></h2> <!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
+					
+					<p>Prix :${article.prixVente}</p> <!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
+					<p>Fin de l'enchère :${article.dateFinEncheres}</p> <!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
+					<p><a href="${pageContext.request.contextPath}/profil?idVendeur=1">Vendeur : ${article.utilisateur.getPseudo}</a></p> <!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
+				</div>
+			</div>
+	
+		</div>
 	
 	
 	

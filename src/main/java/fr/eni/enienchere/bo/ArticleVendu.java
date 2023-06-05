@@ -38,7 +38,23 @@ public class ArticleVendu {
 		super();
 		listeEncheres =new ArrayList<>();
 	}
+	
+	
+	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int prixInitial, int prixVente, String etatVente) {
+		super();
+		this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.prixVente = prixVente;
+		this.etatVente = etatVente;
+		
+	}
 
+	
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
 			LocalDate dateFinEncheres, int prixInitial, int prixVente, Utilisateur acquereur, Categorie categorie,
 			Retrait retrait, String etatVente, Utilisateur vendeur, List<Enchere> listeEncheres) {
@@ -70,6 +86,8 @@ public class ArticleVendu {
 		this.setRetrait(retrait);
 		this.setVendeur(vendeur);
 	}
+	
+
 
 //	public ArticleVendu() {
 //		super();
@@ -133,7 +151,13 @@ public class ArticleVendu {
 //	}
 
 
-/*
+
+
+
+
+
+
+	/*
  * Comment CCN 02/06/2023
  * 
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDatedateDebutEncheres,
