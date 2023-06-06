@@ -25,6 +25,7 @@ public interface ArticleDAO {
     
     public void deleteArticleById(ArticleVendu article) throws BusinessException;
     
+<<<<<<< HEAD
     // Liste des articles actuellement en vente filtré par une catégorie
     public List<ArticleVendu> selectAllVentesEnCoursByNoCategorie(int id) throws BusinessException;
     
@@ -39,6 +40,9 @@ public interface ArticleDAO {
     
     // Liste de toutes les enchères en cours.
     public List<ArticleVendu> selectAllEncheresEnCours() throws BusinessException;
+=======
+    public List<ArticleVendu> selectionnerArticlesFiltres(String categorie, String mot, String etatVente);
+>>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
 
     //A faire
 	public List<ArticleVendu> selectAllArticlesByNoCategorie(int id) throws BusinessException;

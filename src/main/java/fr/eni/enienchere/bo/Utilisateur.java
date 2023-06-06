@@ -53,6 +53,11 @@ public class Utilisateur {
 		//listeVentes = new ArrayList<>();
 	}
 	
+	public Utilisateur(int noUtilisateur, String pseudo) {
+		this.noUtilisateur = noUtilisateur;
+		this.pseudo = pseudo;
+	}
+	
 	// constructeur sans le numéro utilisateur
 
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
@@ -91,7 +96,12 @@ public class Utilisateur {
 		this.administrateur = administrateur;
 	}
 
-	
+	//Constructeur utilisé dans le cadre des enchères pour mettre à jour le crédit
+	public Utilisateur (int noUtilisateur, int credit) {
+		super();
+		this.noUtilisateur = noUtilisateur;
+		this.credit = credit;
+	}
 	
 	public String getPseudo() {
 		return pseudo;

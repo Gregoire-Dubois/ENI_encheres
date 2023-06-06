@@ -14,9 +14,15 @@ public interface UtilisateurDAO {
 	public Utilisateur selectByPseudoMdp(String pseudo, String mdp) throws BusinessException;
 	public Utilisateur insert(Utilisateur utilisateur) throws BusinessException;
 	public Utilisateur selectByEmail(String email) throws BusinessException;
+<<<<<<< HEAD
 	public static Utilisateur selectByPseudo(String pseudo) throws BusinessException {
 		return null;}
+=======
+	public Utilisateur selectByPseudo(String pseudo) throws BusinessException;
+
+>>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
 	public Utilisateur selectByIdMdp(int id, String mdp) throws BusinessException;
+	public void updateUtilisateurApresEnchere(Utilisateur utilisateur) throws  BusinessException;
 	
 }
 

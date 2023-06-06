@@ -29,9 +29,7 @@ public class UtilisateurManager {
 	}
 
 	public Utilisateur selectionner(int id) throws BusinessException {
-
 		Utilisateur utilisateur = this.utilisateurDAO.selectById(id);
-
 		return utilisateur;
 	}
 	

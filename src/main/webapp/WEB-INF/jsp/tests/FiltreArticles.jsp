@@ -12,7 +12,7 @@
 
 <h3>Filtre</h3>
 	
-    <form>
+    <form method="post" action="${pageContext.request.contextPath}/accueil">
 	
         <input type="text" name="rechercher" placeholder="Le nom de l'article contient"> 
         <br>

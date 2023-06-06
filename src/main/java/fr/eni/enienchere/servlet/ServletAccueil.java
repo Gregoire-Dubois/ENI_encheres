@@ -90,7 +90,38 @@ public class ServletAccueil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		String mot = request.getParameter("rechercher");
+		System.out.println(mot);
+		String categorie = request.getParameter("categorie");
 		
+		
+		try {
+			List<ArticleVendu> listeArticles = new ArrayList<>();
+			ArticleManager articleManager = new ArticleManager();
+			listeArticles=articleManager.selectionnerArticlesFiltres("EC", mot, categorie);
+			
+			if(!listeArticles.isEmpty()) {
+				for(ArticleVendu a : listeArticles) {
+					System.out.println(a);
+				}
+				request.setAttribute("articles", listeArticles);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPAccueil.jsp");
+				rd.forward(request, response);
+			}else {
+				System.out.println("Liste null");
+				BusinessException businessException = new BusinessException();
+				businessException.ajouterErreur(CodesResultatServlet.PAS_D_ARTICLES_ERREUR);
+				throw businessException;
+			}
+			
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			List<Integer> listeErreurs = e.getListeCodesErreur();
+			request.setAttribute("listeErreurs", listeErreurs);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPAccueil.jsp");
+			rd.forward(request, response);
+		}
 		
 		
 	}
