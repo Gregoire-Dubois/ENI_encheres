@@ -21,6 +21,18 @@ public interface ArticleDAO {
     public void updateArticle(ArticleVendu updateArticle) throws  BusinessException;
     
     public void deleteArticleById(ArticleVendu article) throws BusinessException;
+    
+    // Liste des articles actuellement en vente filtré par une catégorie
+    public List<ArticleVendu> selectAllVentesEnCoursByNoCategorie(int id) throws BusinessException;
+    
+    // Liste des ventes non commencées et qui ont pour vendeur l'utilisateur connecté 
+    public List<ArticleVendu> selectAllVentesNonCommenceesByNoUtilisateur(int id) throws BusinessException;
+    
+    // Liste des ventes en cours et qui ont pour vendeur l'utilisateur connecté 
+    public List<ArticleVendu> selectAllVentesEnCoursByNoUtilisateur(int id) throws BusinessException;
+    
+ // Liste des ventes terminées et qui ont pour vendeur l'utilisateur connecté 
+    public List<ArticleVendu> selectAllVentesTermineesByNoUtilisateur(int id) throws BusinessException;
 
     //A faire
 	public List<ArticleVendu> selectAllArticlesByNoCategorie(int id) throws BusinessException;

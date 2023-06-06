@@ -119,6 +119,17 @@ public class ArticleVendu {
 		this.setVendeur(vendeur);	
 	}
 	
+	//TJ : Constructeur pour la liste des articles sur la page d'acceuil
+	public ArticleVendu(int no_article, String nomArticle, int prixVente, LocalDate dateFinEncheres,Utilisateur vendeur) {
+		super();
+		this.noArticle = no_article;
+		this.nomArticle = nomArticle;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixVente = prixVente;
+		this.setCategorie(categorie);
+		this.setVendeur(vendeur);
+	}
+	
 //	public ArticleVendu() {
 //		super();
 //	}
@@ -185,6 +196,9 @@ public class ArticleVendu {
 
 
 
+
+
+	
 
 
 	

@@ -1,9 +1,7 @@
 package fr.eni.enienchere.bll;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bo.ArticleVendu;
 import fr.eni.enienchere.bo.Categorie;
@@ -51,6 +49,22 @@ private ArticleDAO articleDAO;
 
 		return articleVendu;
 	}
+	
+	public List<ArticleVendu> getAllVentesEnCoursByNoCategorie(int id) throws BusinessException {
+        return articleDAO.selectAllVentesEnCoursByNoCategorie(id);
+    }
+	
+	public List<ArticleVendu> selectAllVentesNonCommenceesByNoUtilisateur(int id) throws BusinessException {
+        return articleDAO.selectAllVentesNonCommenceesByNoUtilisateur(id);
+    }
+	
+	public List<ArticleVendu> selectAllVentesEnCoursByNoUtilisateur(int id) throws BusinessException {
+        return articleDAO.selectAllVentesEnCoursByNoUtilisateur(id);
+    }
+	
+	public List<ArticleVendu> selectAllVentesTermineesByNoUtilisateur(int id) throws BusinessException {
+        return articleDAO.selectAllVentesTermineesByNoUtilisateur(id);
+    }
 
 	private void checkDateFin(LocalDate dateFinEncheres, LocalDate dateDebutEncheres, BusinessException businessException) {
 		

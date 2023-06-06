@@ -7,11 +7,11 @@
 <meta charset="UTF-8">
 
 <title>Accueil</title>
-<<<<<<< HEAD
+
 <link rel="stylesheet" href="../css/style.css">
-=======
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" >
->>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
+
 </head>
 <body>
 
