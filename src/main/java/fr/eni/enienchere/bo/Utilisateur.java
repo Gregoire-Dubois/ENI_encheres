@@ -91,7 +91,12 @@ public class Utilisateur {
 		this.administrateur = administrateur;
 	}
 
-	
+	//Constructeur utilisé dans le cadre des enchères pour mettre à jour le crédit
+	public Utilisateur (int noUtilisateur, int credit) {
+		super();
+		this.noUtilisateur = noUtilisateur;
+		this.credit = credit;
+	}
 	
 	public String getPseudo() {
 		return pseudo;

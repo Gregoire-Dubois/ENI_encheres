@@ -32,5 +32,5 @@ public interface EnchereDAO {
 	public Enchere insertNewEnchere(Utilisateur acheteur, int noArticle, int montantEnchere) throws BusinessException;
     
 	//Sélection d'une enchère selon id
-	
+	public Enchere selectEnchereByNoEnchere(int noEnchere) throws BusinessException;
 }

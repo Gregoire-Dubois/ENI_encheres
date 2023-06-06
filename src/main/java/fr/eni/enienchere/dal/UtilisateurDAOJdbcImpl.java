@@ -23,6 +23,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	private static final String SELECT_BY_PSEUDO="SELECT * FROM UTILISATEURS WHERE pseudo=?";
 	private static final String SELECT_BY_EMAIL="SELECT * FROM UTILISATEURS WHERE email=?";
 	private static final String SELECT_BY_ID_MDP="SELECT * FROM UTILISATEURS WHERE no_utilisateur=? AND mot_de_passe = ?"; //AJOUT
+	private static final String UPDATE_CREDIT_APRES_ENCHERE="UPDATE UTILSATEURS SET CREDIT = ? WHERE no_utilisateur = ?";
 	
 	@Override
 	public Utilisateur selectById(int id) throws BusinessException {
@@ -380,6 +381,26 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			return utilisateur;
 		}
 
+		@Override
+		public void updateUtilisateurApresEnchere(Utilisateur utilisateur) throws BusinessException {
+			// TODO Auto-generated method stub
+			Connection cnx = null;
+			
+			try {
+				cnx = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = cnx.prepareStatement(UPDATE_CREDIT_APRES_ENCHERE);
+				pstmt.setInt(1, utilisateur.getCredit());
+				pstmt.setInt(2, utilisateur.getNoUtilisateur());
+				pstmt.executeLargeUpdate();
+				pstmt.close(); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.UPDATE_CREDIT_APRES_ENCHERE_ECHEC);
+		}
+}
+		
+		
 }
 
 
