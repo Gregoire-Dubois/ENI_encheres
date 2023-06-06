@@ -1,14 +1,21 @@
 package fr.eni.enienchere.servlets.tests;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import fr.eni.enienchere.BusinessException;
-import fr.eni.enienchere.dal.ArticleDAOJdbcImpl;
+import fr.eni.enienchere.bll.ArticleManager;
+import fr.eni.enienchere.bo.ArticleVendu;
 
 /**
  * Servlet implementation class ServletTEstAffichageListeArticles
@@ -21,17 +28,28 @@ public class ServletTEstAffichageListeArticles extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
 
-		ArticleDAOJdbcImpl articles = new ArticleDAOJdbcImpl();
+		ArticleManager tousArticles = new ArticleManager();		
+		ArrayList<ArticleVendu> xArrayList  = new ArrayList<>();
+		
 		try {
-			articles.selectAllArticles();
+			xArrayList = tousArticles.selectionnerArticles();
+
+			
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			List<Integer> listeErreurs = e.getListeCodesErreur();
+			request.setAttribute("listeErreurs", listeErreurs);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPAccueil.jsp");
+
 		}
 		
+		HttpSession session = request.getSession();
+		session.setAttribute("articles", xArrayList);
+		getServletContext().getRequestDispatcher("/WEB-INF/jsp/JSPAccueil.jsp").forward(request, response);	
 
+		
 	}
 
 	/**

@@ -14,6 +14,8 @@ import fr.eni.enienchere.bo.Categorie;
  */
 public interface CategorieDAO {
 	List<Categorie> selectAllCategorie() throws BusinessException;
-    Categorie selectCategorieById(int CategorieId) throws BusinessException;
+    static Categorie selectCategorieById(int CategorieId) throws BusinessException {
+		return null;
+	}
     Categorie selectByName(String nomCategorie) throws BusinessException;
 }

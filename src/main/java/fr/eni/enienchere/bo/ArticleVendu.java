@@ -41,22 +41,21 @@ public class ArticleVendu {
 		//listeEncheres =new ArrayList<>();
 	}
 	
+
+	// constructeur pour l'affichage de la liste des ventes en cours sur la page accueil en mode déconnecté
 	
-	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int prixInitial, int prixVente, String etatVente) {
+	public ArticleVendu(int noArticle, String nomArticle, LocalDate dateFinEncheres, int prixVente,
+			Utilisateur vendeur) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
-		this.description = description;
-		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
-		this.prixInitial = prixInitial;
 		this.prixVente = prixVente;
-		this.etatVente = etatVente;
-		
+		this.vendeur = vendeur;
 	}
 
-	
+
+
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
 			LocalDate dateFinEncheres, int prixInitial, int prixVente, Utilisateur acquereur, Categorie categorie,
 			Retrait retrait, String etatVente, Utilisateur vendeur) {

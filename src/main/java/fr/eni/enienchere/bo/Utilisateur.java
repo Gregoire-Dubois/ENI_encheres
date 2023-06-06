@@ -17,6 +17,14 @@ import fr.eni.enienchere.dal.DAOFactory;
 
 public class Utilisateur {
 	
+	
+	// class Utilisateur pour la construction du SelectALL de l'article DAOJdbcImpl
+	public Utilisateur(String pseudo) {
+		super();
+		this.pseudo = pseudo;
+	}
+
+
 	/* Bout de code inutile ici ? 
 	private static final long serialVersionUID = 1L;
 	*/

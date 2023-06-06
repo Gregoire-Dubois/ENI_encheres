@@ -5,7 +5,8 @@ import fr.eni.enienchere.bo.Utilisateur;
 
 public interface UtilisateurDAO {
 	
-	public Utilisateur selectById(int id) throws BusinessException;
+	public static Utilisateur selectById(int id) throws BusinessException {
+		return null;}
 	public Utilisateur selectByEmailMdp(String email, String mdp) throws BusinessException;
 	public void updateUtilisateur(Utilisateur utilisateurConnecte) throws BusinessException;
 	public void deleteById(int id) throws BusinessException;
@@ -14,9 +15,7 @@ public interface UtilisateurDAO {
 	public Utilisateur insert(Utilisateur utilisateur) throws BusinessException;
 	public Utilisateur selectByEmail(String email) throws BusinessException;
 	public static Utilisateur selectByPseudo(String pseudo) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		return null;}
 	public Utilisateur selectByIdMdp(int id, String mdp) throws BusinessException;
 	
 }

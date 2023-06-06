@@ -24,7 +24,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	private static final String SELECT_BY_EMAIL="SELECT * FROM UTILISATEURS WHERE email=?";
 	private static final String SELECT_BY_ID_MDP="SELECT * FROM UTILISATEURS WHERE no_utilisateur=? AND mot_de_passe = ?"; //AJOUT
 	
-	@Override
 	public Utilisateur selectById(int id) throws BusinessException {
 		Utilisateur utilisateur = null;
 		Connection cnx = null;
@@ -57,8 +56,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			}
 			
 		}
-		
-		
+			
 		return utilisateur;
 		
 	}
@@ -66,8 +64,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	//Permet une selection par l'email et le mot de passe
 	/*
 	 * Ajout hashpwd CCN 01/06/23
-	 */
-	
+	 */	
 	@Override
 	public Utilisateur selectByEmailMdp(String email, String mdp) throws BusinessException {
 		Utilisateur utilisateur = null;
@@ -101,8 +98,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			}
 			
 		}
-		
-		
+				
 		return utilisateur;
 	}
 	

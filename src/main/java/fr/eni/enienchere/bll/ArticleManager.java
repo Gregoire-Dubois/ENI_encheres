@@ -8,6 +8,7 @@ import fr.eni.enienchere.bo.Categorie;
 import fr.eni.enienchere.bo.Retrait;
 import fr.eni.enienchere.bo.Utilisateur;
 import fr.eni.enienchere.dal.ArticleDAO;
+import fr.eni.enienchere.dal.ArticleDAOJdbcImpl;
 import fr.eni.enienchere.dal.DAOFactory;
 
 public class ArticleManager {
@@ -16,6 +17,21 @@ private ArticleDAO articleDAO;
 	public ArticleManager() {
 		this.articleDAO=DAOFactory.getArticleDAO();
 	}
+	
+	// Methode pour afficher article dans page accueil non connecté
+	
+	public ArrayList<ArticleVendu> selectionnerArticles() throws BusinessException {
+		
+		//BusinessException businessException = new BusinessException();
+
+		ArrayList<ArticleVendu> articles = new ArrayList<>();
+			
+		articles = (ArrayList<ArticleVendu>) articleDAO.selectAllArticles();
+	
+		return articles;
+		
+	}
+	
 	
 	//Avant d'ajouter, on doit vérifier les champs
 	//nomArticle, description, dateDebutEncheres, dateFinEncheres,  prixInitial, (categorie, retrait, vendeur pas nécéssaire)

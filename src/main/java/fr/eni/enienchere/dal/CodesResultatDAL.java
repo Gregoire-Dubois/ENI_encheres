@@ -18,8 +18,11 @@ public abstract class CodesResultatDAL {
 	public static final int SELECT_CATEGORIE_BY_NAME_ECHEC = 11001;
 	public static final int SELECT_CATEGORIE_BY_ID_ECHEC = 11002;
 	
+	// erreur sur base de données pour articles
+	public static final int SELECT_ECHEC = 13000; 
 	//Enchere
 	public static final int SELECT_BY_NO_ARTICLE_ECHEC =12000 ;
+
 	
 	//Articles Vendus
 	public static final int DECONNEXION_RESULTSET_ECHEC = 13000;
@@ -28,4 +31,5 @@ public abstract class CodesResultatDAL {
 	public static final int SELECT_ALL_VENTE_NC_BY_UTILISATEUR_ID_ECHEC = 13003;
 	public static final int SELECT_ALL_VENTE_EC_BY_UTILISATEUR_ID_ECHEC = 13004;
 	public static final int SELECT_ALL_VENTE_VE_BY_UTILISATEUR_ID_ECHEC = 13005;
+
 }
