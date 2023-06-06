@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import fr.eni.enienchere.BusinessException;
@@ -36,7 +37,10 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 
 	
-	private static final String SELECT_ALL_ARTICLE = "SELECT * FROM articles_vendus;";
+	private static final String SELECT_ALL_ARTICLE = "SELECT no_article, nom_article, date_fin_encheres, prix_vente, pseudo\n"
+														+ "FROM ARTICLES_VENDUS\n"
+														+ "INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur\n"
+														+ "WHERE etat_vente = 'EC';"; 
 	
 
 	@Override
@@ -122,29 +126,30 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			cnx = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL_ARTICLE);
 			ResultSet rst = pstmt.executeQuery();
+			
 			while (rst.next()) {
-				articlesVendus = new ArticleVendu(
-						rst.getInt(1), //noArticle
-						rst.getString(2), //nom article
-						rst.getString(3), // description
-						rst.getDate(4).toLocalDate(), // datedebut
-						rst.getDate(5).toLocalDate(), //datefin
-						rst.getInt(6), //prix
-						rst.getInt(7), // prix 
-						rst.getString(10) // état vente 
-						//(Categorie)rst.getObject(9)
+				
+				String pseudo = rst.getString("pseudo"); 
 
+				Utilisateur utilisateur = new Utilisateur(pseudo); 
+				
+				articlesVendus = new ArticleVendu(
+						
+						rst.getInt("no_article"),
+						rst.getString("nom_article"),
+						rst.getDate("date_fin_encheres").toLocalDate(), 
+						rst.getInt("prix_vente"),
+						utilisateur								
 						);
 												
 				listeArticlesEnVente.add(articlesVendus);
-			}
-			System.out.println("-------->"+listeArticlesEnVente);
-
-			
+			}	
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_ECHEC);
 		}finally {
 			if(cnx !=null) {
 				try {
@@ -161,7 +166,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	}
 		
-
 
 	@Override
 	public List<ArticleVendu> selectAllArticlesByUtilisateur(Utilisateur utilisateur) throws BusinessException {

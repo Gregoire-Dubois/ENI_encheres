@@ -1,38 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="fr.eni.enienchere.messages.LecteurMessage"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 
 <title>Accueil</title>
-<<<<<<< HEAD
-<link rel="stylesheet" href="../css/style.css">
-=======
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" >
->>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
+
 </head>
 <body>
 
-<%@ include file="JSPHeader.jsp" %>
+	<%@ include file="JSPHeader.jsp"%>
+
+	<%@ include file="JSPHeaderConnexion.jsp"%>
+
+	<%@ include file="tests/FiltreArticles.jsp"%>
 
 
-<%@ include file="JSPHeaderConnexion.jsp" %>
+	<section>
 
-<%@ include file="tests/FiltreArticles.jsp" %>
+		<!-- A terminer avec les éléments articles et catégories  selon connecte ou pas-->
 
-
-<section>
-
-<!-- A terminer avec les éléments articles et catégories  selon connecte ou pas-->
-
-<!-- la première carte est à supprimer elle sert de modèle de présentation -->
-	<!-- <div class="grilleNonConnecte">
+		<!-- la première carte est à supprimer elle sert de modèle de présentation -->
+		<!-- <div class="grilleNonConnecte">
 		<div class="titreNonConnecte"> -->
+
+
+
 			<h1>Liste des enchères</h1>
+
 		<!-- </div> -->
-	
+
 		<!-- <div class="filtresNonConnecte"> -->
 		<div>
 			<h3>Filtre</h3>
@@ -57,9 +60,14 @@
 			</form>
 	
 	
-		</div> <!-- OK POUR TOUT LE MONDE JUSQU'ICI-->
-		
+
+		</div> 
+		<!-- OK POUR TOUT LE MONDE JUSQU'ICI-->		
+
 		<!-- Il faut dynamiser -->
+
+
+		<!-- Exemple si non connecté -->
 		
 		<c:choose>
 		<c:when test="${userConnected != null}"><!-- Si l'utilisateur est connecte -->
@@ -82,54 +90,49 @@
 		</div>
 		</c:when>
 		<c:otherwise><!-- Si l'utilisateur n'est pas connecte -->
-		<div class="resultatsNonConnecte">
-	
-			<div class="card">
-				<img
-					src="https://static.fnac-static.com/multimedia/Images/FR/MDM/24/35/1f/18822436/1540-1/tsp20230519135127/The-Legend-of-Zelda-Tears-Of-The-Kingdom-Nintendo-Switch.jpg"
-					alt="Image de la card">
-				<div class="card-content">
-					<h2>Zelda: Tears Of The Kingdom</h2>
+
+		<c:choose>
+
+			<c:when test="${empty listeErreurs}">
+				<div class="resultatsNonConnecte">
+
 					
-					<p>Prix :</p>
-					<p>Fin de l'enchère :</p>
-					<p>Vendeur :</p>
+						<c:forEach var="v" items="${articles}">
+					<div class="card">
+							<img src="#" alt="Image de la card">
+							<div class="card-content">
+								<h2>${v.nomArticle}</h2>
+								<p>Prix : ${v.prixVente}</p>
+								<p>Fin de l'enchère : ${v.dateFinEncheres}</p>
+								<p>Vendeur : ${v.vendeur.pseudo}</p>
+
+							</div>
+					</div>
+						</c:forEach>
+					
 				</div>
-			</div>
-	
-		</div>
-		</c:otherwise>
 
+			</c:when>
 
-	</c:choose>
-	
-	
-	
-	
-	
-	<div class="resultatsNonConnecte">
+			<c:otherwise>
 
-		<div class="card">
-			<c:forEach var="v" items="${produit}">
+				<c:forEach var="e" items="${listeErreurs}">
+					<p>${LecteurMessage.getMessageErreur(e)}</p>
+				</c:forEach>
 			
-				<img
-					src=""
-					alt="Image de la card">
-				<div class="card-content">
-					<h2>${v.nomArticle}</h2>
-					<p>Prix : ${v.montantEnchere}</p>
-					<p>Fin de l'enchère : ${v.dateFinEnchere}</p>
-					<p>Vendeur : ${v.nom}</p>
-				</div>
-			</c:forEach>		
-				
-		</div>
+			</c:otherwise>
 
-	</div>
-	
-</section>
-	
-<%@ include file="JSPFooter.jsp" %>	
+		</c:choose>
+		
+		</c:otherwise>
+		
+		</c:choose>
+
+
+
+	</section>
+
+	<%@ include file="JSPFooter.jsp"%>
 
 
 
