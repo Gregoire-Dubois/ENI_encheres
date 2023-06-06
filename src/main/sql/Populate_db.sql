@@ -67,3 +67,16 @@ VALUES
   ('Mklryn','Lopez','Addison','sapien@hotmail.com','02 12 74 26 19','30 plj gwqfxnlivy','31831','Abbeville','MQI32HRY0XT',307,'1'),
   ('Luxoqx','Mcconnell','Jaden','interdum.curabitur@google.org','08 35 23 03 87','26 ddw oplhcmcyqd','78914','Angers','EBJ81RYF6OI',173,'0');
   
+  /*Ajouts d'articles*/
+  INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie)
+VALUES
+    ('HP Pavillon', 'La rolls des PC avec plein de RAM et un processeur qui déchire', GETDATE() + 1, GETDATE() + 10, 100, NULL, 80, 2),
+    ('Trek Emonda', 'Un vélo qui grimpe les montagnes tout seul', GETDATE(), GETDATE() + 15, 200, NULL, 78, 3),
+    ('Perceuse', 'Des trous dans tous les murs comme un pro', GETDATE() + 3, GETDATE() + 20, 150, NULL, 72, 5),
+    ('Défonceuse', 'Pour ceux qui aiment les plinthes', GETDATE(), GETDATE() + 12, 120, NULL, 72, 5),
+    ('Tomb Raider', 'la GOAT des aventurières virtuelle', GETDATE() + 5, GETDATE() + 25, 180, NULL, 80, 8),
+    ('GIT', 'NFT du code source de GIT ', GETDATE() + 6, GETDATE() + 18, 250, NULL, 80, 2),
+    ('Déambulateur', 'Grimpez des montagnes hautes comme des marches, aucun risque avec ses patins anti-glisse', GETDATE(), GETDATE() + 11, 140, NULL, 72, 9),
+    ('Lunettes', 'triple foyer, grosse monture, chaîne perles', GETDATE() + 1, GETDATE() + 22, 170, NULL, 78, 9),
+    ('Tchoupi fait du GIT', 'Apprendre les bonnes méthodes GIT dès le plus jeune âge', GETDATE() + 1, GETDATE() + 14, 190, NULL, 80, 6),
+    ('Autobronzant', 'Idéal pour ceux qui ne sortent plus de chez eux', GETDATE() + 1, GETDATE() + 30, 220, NULL, 78, 10);

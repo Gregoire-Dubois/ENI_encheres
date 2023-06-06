@@ -13,7 +13,7 @@ import fr.eni.enienchere.bo.Categorie;
  *
  */
 public interface CategorieDAO {
-	List<Categorie> selectAllCategorie() throws BusinessException;
-    Categorie selectCategorieById(int CategorieId) throws BusinessException;
-    Categorie selectByName(String nomCategorie) throws BusinessException;
+	public List<Categorie> selectAllCategorie() throws BusinessException;
+    public Categorie selectCategorieById(int CategorieId) throws BusinessException;
+    public Categorie selectByName(String nomCategorie) throws BusinessException;
 }

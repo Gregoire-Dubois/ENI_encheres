@@ -29,12 +29,14 @@ public class UtilisateurManager {
 	}
 
 	public Utilisateur selectionner(int id) throws BusinessException {
-
 		Utilisateur utilisateur = this.utilisateurDAO.selectById(id);
-
 		return utilisateur;
 	}
 	
+	public Utilisateur selectionnerPseudo(String pseudo) throws BusinessException {
+		Utilisateur utilisateur = this.utilisateurDAO.selectByPseudo(pseudo);
+		return utilisateur;
+	}
 	//Utiliser dans la servlet de modification du profil
 	public Utilisateur selectionnerParIdMdp(int id, String mdp) throws BusinessException {
 		BusinessException businessException = new BusinessException();	

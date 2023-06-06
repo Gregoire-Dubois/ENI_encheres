@@ -12,9 +12,9 @@
 
 <h3>Filtre</h3>
 	
-    <form>
+    <form method="post" action="${pageContext.request.contextPath}/accueil">
 	
-        <input type="text" name="rechercher" placeholder="Le nom de l'article contient"> 
+        <input type="text" name="rechercher" minlength="2" placeholder="Le nom de l'article contient"> 
         <br>
         <label for="categorie">Catégorie:</label>
         <select name="categorie" id="categorie">

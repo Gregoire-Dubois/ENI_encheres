@@ -3,7 +3,6 @@ package fr.eni.enienchere.bll;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bo.ArticleVendu;
 import fr.eni.enienchere.bo.Categorie;
@@ -20,6 +19,11 @@ private ArticleDAO articleDAO;
 		this.articleDAO=DAOFactory.getArticleDAO();
 	}
 	
+	public ArticleVendu selectArticleById(int id) throws BusinessException {
+		ArticleVendu article = this.articleDAO.selectArticleById(id);
+		return 	article;
+	}
+	
 	// Methode pour afficher article dans page accueil non connecté
 	
 	public ArrayList<ArticleVendu> selectionnerArticles() throws BusinessException {
@@ -34,6 +38,30 @@ private ArticleDAO articleDAO;
 		
 	}
 	
+	public List<ArticleVendu> selectionnerArticlesFiltres(String etatVente, String mot, String categorie) throws BusinessException{
+		List<ArticleVendu> articles = null;
+		BusinessException businessException = new BusinessException();
+		if(!(etatVente.equals("EC")||etatVente.equals("VE")||etatVente.equals("NC"))) {
+			businessException.ajouterErreur(CodesResultatBLL.ETAT_VENTE_ERREUR);
+		}
+		
+		if (!businessException.hasErreur()) {
+			
+				
+					articles=this.articleDAO.selectionnerArticlesFiltres(categorie, mot, etatVente);
+//					if(articles==null) {
+//						businessException.ajouterErreur(CodesResultatServlet.PAS_D_ARTICLES_ERREUR);
+//						throw businessException;
+//					}
+		} else {
+			
+			
+			throw businessException;
+		}
+		
+		
+		return articles;
+	}
 	
 	//Avant d'ajouter, on doit vérifier les champs
 	//nomArticle, description, dateDebutEncheres, dateFinEncheres,  prixInitial, (categorie, retrait, vendeur pas nécéssaire)
@@ -67,6 +95,23 @@ private ArticleDAO articleDAO;
 
 		return articleVendu;
 	}
+	
+	
+	public List<ArticleVendu> getAllVentesEnCoursByNoCategorie(int id) throws BusinessException {
+        return articleDAO.selectAllVentesEnCoursByNoCategorie(id);
+    }
+	
+	public List<ArticleVendu> selectAllVentesNonCommenceesByNoUtilisateur(int id) throws BusinessException {
+        return articleDAO.selectAllVentesNonCommenceesByNoUtilisateur(id);
+    }
+	
+	public List<ArticleVendu> selectAllVentesEnCoursByNoUtilisateur(int id) throws BusinessException {
+        return articleDAO.selectAllVentesEnCoursByNoUtilisateur(id);
+    }
+	
+	public List<ArticleVendu> selectAllVentesTermineesByNoUtilisateur(int id) throws BusinessException {
+        return articleDAO.selectAllVentesTermineesByNoUtilisateur(id);
+    }
 
 	private void checkDateFin(LocalDate dateFinEncheres, LocalDate dateDebutEncheres, BusinessException businessException) {
 		
