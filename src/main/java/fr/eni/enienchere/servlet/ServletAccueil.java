@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.enienchere.BusinessException;
+import fr.eni.enienchere.bll.ArticleManager;
 import fr.eni.enienchere.bll.CategorieManager;
 import fr.eni.enienchere.bll.UtilisateurManager;
+import fr.eni.enienchere.bo.ArticleVendu;
 import fr.eni.enienchere.bo.Categorie;
 import fr.eni.enienchere.bo.Utilisateur;
 
@@ -43,6 +45,25 @@ public class ServletAccueil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
+		// affichage des articles en vente lors d'une ouverture sans indentification
+		
+		ArticleManager tousArticles = new ArticleManager();		
+		ArrayList<ArticleVendu> xArrayList  = new ArrayList<>();
+		
+		try {
+			xArrayList = tousArticles.selectionnerArticles();
+
+			
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			List<Integer> listeErreurs = e.getListeCodesErreur();
+			request.setAttribute("listeErreurs", listeErreurs);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPAccueil.jsp");
+
+		}	
+		
+		
 		//Affiche de la liste des catégories
 		List<Categorie> listeCategorie = new ArrayList<>();
         HttpSession session = request.getSession();
@@ -56,8 +77,9 @@ public class ServletAccueil extends HttpServlet {
 		}
        	session.setAttribute("listeCategorie",listeCategorie);
        	
-       	       	
-
+       	// affichage de liste des articles sans identification de l'utilisateur       	
+		session.setAttribute("articles", xArrayList);
+		//getServletContext().getRequestDispatcher("/WEB-INF/jsp/JSPAccueil.jsp").forward(request, response);	
        	
        	
        	
