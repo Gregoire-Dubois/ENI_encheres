@@ -14,10 +14,17 @@ public interface ArticleDAO {
 
     public List<ArticleVendu> selectAllArticlesByUtilisateur(Utilisateur utilisateur) throws BusinessException;
 
+    public List<ArticleVendu> selectAllArticlesByCategorie(Utilisateur utilisateur) throws BusinessException;
+
     public ArticleVendu insertArticle(ArticleVendu article) throws BusinessException;
 
     public void updateArticle(ArticleVendu updateArticle) throws  BusinessException;
     
     public void deleteArticleById(ArticleVendu article) throws BusinessException;
+
+    //A faire
+	public List<ArticleVendu> selectAllArticlesByNoCategorie(int id) throws BusinessException;
+
+	public List<ArticleVendu> selectAllArticlesByNoUtilisateur(int noUtilisateur) throws BusinessException;
 
 }

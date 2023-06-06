@@ -36,7 +36,7 @@ private ArticleDAO articleDAO;
 	
 	
 	//Avant d'ajouter, on doit vérifier les champs
-	//nomArticle, description, dateDebutEncheres, dateFinEncheres,  prixInitial, categorie, retrait, vendeur
+	//nomArticle, description, dateDebutEncheres, dateFinEncheres,  prixInitial, (categorie, retrait, vendeur pas nécéssaire)
 	public ArticleVendu ajouter(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int prixInitial, Categorie categorie, Retrait retrait, Utilisateur vendeur) throws BusinessException {
 		BusinessException businessException = new BusinessException();
 		ArticleVendu article;
@@ -47,9 +47,10 @@ private ArticleDAO articleDAO;
 		this.checkDateDebut(dateDebutEncheres, businessException);
 		this.checkDateFin(dateFinEncheres, dateDebutEncheres, businessException);
 		this.checkPrixInitial(prixInitial, businessException);
-		this.checkCategorie(categorie, businessException);
-		this.checkRetrait(retrait, businessException);
-		this.checkVendeur(vendeur, businessException);
+		//this.checkCategorie(categorie, businessException); 
+		//this.checkRetrait(retrait, businessException); est-ce utile car le check se fait quand on va essayer d'insérer dans la table retrait
+		//this.checkVendeur(vendeur, businessException); est-ce utile?
+				
 		
 		
 		// Si il n'y a pas d'erreurs, on fait l'insertion, l'inscription dans la base de
@@ -74,53 +75,53 @@ private ArticleDAO articleDAO;
 		}
 	}
 
-	private void checkVendeur(Utilisateur vendeur, BusinessException businessException) {
-
-		List<Utilisateur> listeVendeur = new ArrayList<>();
-		
-		if (!listeVendeur.contains(vendeur)) {
-			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_VENDEUR_INTROUVABLE_ERREUR);
-		}
-		
-		if (String.valueOf(vendeur).isEmpty()) {
-	        businessException.ajouterErreur(CodesResultatBLL.PSEUDO_VENDEUR_VIDE_ERREUR);
-		}
-		
-	}
-
-	private void checkRetrait(Retrait retrait, BusinessException businessException) {
-
-	        if (retrait.getRue().isEmpty()) {
-	            businessException.ajouterErreur(CodesResultatBLL.RUE_VIDE_ERREUR);
-	        }
-	        
-	        if (retrait.getCodePostal().isEmpty()) {
-	            businessException.ajouterErreur(CodesResultatBLL.CODEPOSTAL_VIDE_ERREUR);
-	        }
-	        
-	        if (retrait.getVille().isEmpty()) {
-	            businessException.ajouterErreur(CodesResultatBLL.VILLE_VIDE_ERREUR);
-	        }
-	        		
-	}
-
-	/*
-	 * Pas sûr que ce contrôle soit utile car l'utilisateur n'a accès qu'à une liste déroulante prédéfinie dans la JSP (JSPPageVendreArticle.jsp).
-	 * Il est selon moi impossible de saisir une autre catégorie ou de laisser le champ vide.
-	 */
-	private void checkCategorie(Categorie categorie, BusinessException businessException) {
-		
-		List<Categorie> listeCategorie = new ArrayList<>();
-		
-		if (!listeCategorie.contains(categorie)) {
-			businessException.ajouterErreur(CodesResultatBLL.CATEGORIE_ARTICLE_NON_AUTORISEE_ERREUR);
-		}
-		
-		if (String.valueOf(categorie).isEmpty()) {
-	        businessException.ajouterErreur(CodesResultatBLL.CATEGORIE_ARTICLE_VIDE_ERREUR);
-	    }
-		
-	}
+//	private void checkVendeur(Utilisateur vendeur, BusinessException businessException) {
+//
+//		List<Utilisateur> listeVendeur = new ArrayList<>();
+//		
+//		if (!listeVendeur.contains(vendeur)) {
+//			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_VENDEUR_INTROUVABLE_ERREUR);
+//		}
+//		
+//		if (String.valueOf(vendeur).isEmpty()) {
+//	        businessException.ajouterErreur(CodesResultatBLL.PSEUDO_VENDEUR_VIDE_ERREUR);
+//		}
+//		
+//	}
+//
+//	private void checkRetrait(Retrait retrait, BusinessException businessException) {
+//
+//	        if (retrait.getRue().isEmpty()) {
+//	            businessException.ajouterErreur(CodesResultatBLL.RUE_VIDE_ERREUR);
+//	        }
+//	        
+//	        if (retrait.getCodePostal().isEmpty()) {
+//	            businessException.ajouterErreur(CodesResultatBLL.CODEPOSTAL_VIDE_ERREUR);
+//	        }
+//	        
+//	        if (retrait.getVille().isEmpty()) {
+//	            businessException.ajouterErreur(CodesResultatBLL.VILLE_VIDE_ERREUR);
+//	        }
+//	        		
+//	}
+//
+//	/*
+//	 * Pas sûr que ce contrôle soit utile car l'utilisateur n'a accès qu'à une liste déroulante prédéfinie dans la JSP (JSPPageVendreArticle.jsp).
+//	 * Il est selon moi impossible de saisir une autre catégorie ou de laisser le champ vide.
+//	 */
+//	private void checkCategorie(Categorie categorie, BusinessException businessException) {
+//		
+//		List<Categorie> listeCategorie = new ArrayList<>();
+//		
+//		if (!listeCategorie.contains(categorie)) {
+//			businessException.ajouterErreur(CodesResultatBLL.CATEGORIE_ARTICLE_NON_AUTORISEE_ERREUR);
+//		}
+//		
+//		if (String.valueOf(categorie).isEmpty()) {
+//	        businessException.ajouterErreur(CodesResultatBLL.CATEGORIE_ARTICLE_VIDE_ERREUR);
+//	    }
+//		
+//	}
 
 	private void checkPrixInitial(int prixInitial, BusinessException businessException) {
 
@@ -149,10 +150,11 @@ private ArticleDAO articleDAO;
 			System.out.println("Erreur sur le nom de l'article vide");
 			businessException.ajouterErreur(CodesResultatBLL.DESCRIPTION_ARTICLE_VIDE_ERREUR);
 		}
-		if (!description.trim().matches("^[a-zA-ZÀ-ÿ\\-]+$")) {
-			System.out.println("Erreur sur le nom de la'rticle qui n'est pas alphanumérique");
-			businessException.ajouterErreur(CodesResultatBLL.DESCRIPTION_ARTICLE_ALPHA_ERREUR);
-		}
+		//On peut mettre ce qu'on veut dans la description
+//		if (!description.trim().matches("^[a-zA-ZÀ-ÿ\\-]+$")) {
+//			System.out.println("Erreur sur le nom de la'rticle qui n'est pas alphanumérique");
+//			businessException.ajouterErreur(CodesResultatBLL.DESCRIPTION_ARTICLE_ALPHA_ERREUR);
+//		}
 		
 	}
 
@@ -162,10 +164,11 @@ private ArticleDAO articleDAO;
 			System.out.println("Erreur sur le nom de l'article vide");
 			businessException.ajouterErreur(CodesResultatBLL.NOM_ARTICLE_VIDE_ERREUR);
 		}
-		if (!nomArticle.trim().matches("^[a-zA-ZÀ-ÿ\\-]+$")) {
-			System.out.println("Erreur sur le nom de la'rticle qui n'est pas alphanumérique");
-			businessException.ajouterErreur(CodesResultatBLL.NOM_ARTICLE_ALPHA_ERREUR);
-		}
+		//Utile? on peut mettre ce qu'on veut comme nom d'article
+//		if (!nomArticle.trim().matches("^[a-zA-ZÀ-ÿ\\-]+$")) {
+//			System.out.println("Erreur sur le nom de la'rticle qui n'est pas alphanumérique");
+//			businessException.ajouterErreur(CodesResultatBLL.NOM_ARTICLE_ALPHA_ERREUR);
+//		}
 		
 	}
 }

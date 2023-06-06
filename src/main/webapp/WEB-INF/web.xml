@@ -7,11 +7,9 @@
   </session-config>
 
   <!--Mapping défini dans la servlet ServletAccueil-->
-  <welcome-file-list>
-    <welcome-file>/</welcome-file>
+ <welcome-file-list>
+    <welcome-file>accueil</welcome-file>
   </welcome-file-list>
-
-
 
 
 </web-app>

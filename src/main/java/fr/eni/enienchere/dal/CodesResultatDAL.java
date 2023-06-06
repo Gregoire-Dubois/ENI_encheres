@@ -11,10 +11,16 @@ public abstract class CodesResultatDAL {
 	public static final int SELECT_BY_PSEUDO_ECHEC=10002;
 	public static final int SELECT_BY_EMAIL_ECHEC=10003;
 	public static final int UPDATE_ECHEC = 10004;
+	
+
+	//Catégorie
 	public static final int SELECT_ALL_CATEGORIES_ECHEC = 11000;
 	public static final int SELECT_CATEGORIE_BY_NAME_ECHEC = 11001;
 	public static final int SELECT_CATEGORIE_BY_ID_ECHEC = 11002;
 	
 	// erreur sur base de données pour articles
-	public static final int SELECT_ECHEC = 12000; 
+	public static final int SELECT_ECHEC = 13000; 
+	//Enchere
+	public static final int SELECT_BY_NO_ARTICLE_ECHEC =12000 ;
+
 }

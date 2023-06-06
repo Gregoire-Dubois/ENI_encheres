@@ -1,7 +1,9 @@
 package fr.eni.enienchere.bo;
 
 public class Retrait {
-	 private int id;
+	 	
+
+		private int noArticle;
 	    private String rue;
 	    private String codePostal;
 	    private String ville;
@@ -14,20 +16,20 @@ public class Retrait {
 	        this.ville = ville;
 	    }
 
-	    public Retrait(int id, String rue, String codePostal, String ville) {
-	        this.id = id;
+	    public Retrait(int noArticle, String rue, String codePostal, String ville) {
+	        this.noArticle = noArticle;
 	        this.rue = rue;
 	        this.codePostal = codePostal;
 	        this.ville = ville;
 	    }
 
-	    public int getId() {
-	        return id;
-	    }
+	    public int getNoArticle() {
+			return noArticle;
+		}
 
-	    public void setId(int id) {
-	        this.id = id;
-	    }
+		public void setNoArticle(int noArticle) {
+			this.noArticle = noArticle;
+		}
 
 	    public String getRue() {
 	        return rue;
@@ -54,12 +56,8 @@ public class Retrait {
 	    }
 
 	    @Override
-	    public String toString() {
-	        return "Retrait{" +
-	                "id=" + id +
-	                ", rue='" + rue + '\'' +
-	                ", codePostal='" + codePostal + '\'' +
-	                ", ville='" + ville + '\'' +
-	                '}';
-	    }
+		public String toString() {
+			return "Retrait [noArticle=" + noArticle + ", rue=" + rue + ", codePostal=" + codePostal + ", ville="
+					+ ville + "]";
+		}
 }

@@ -7,9 +7,9 @@
 package fr.eni.enienchere.bo;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import fr.eni.enienchere.BusinessException;
+import fr.eni.enienchere.dal.DAOFactory;
 
 public class ArticleVendu {
 	
@@ -26,17 +26,19 @@ public class ArticleVendu {
 	//private Utilisateur utilisateur; //Différencier acquéreur et vendeur? 
 	//CCN : pour moi non, l'article appartient à un uilisateur à un instant T. Par contre il faudra faire le changement de propriétaire à la fin de la vente. 
 	//et comment on stockerait ces valeurs ? 
-	private Utilisateur acquereur;
+	//private Utilisateur acquereur;
 	//private Utilisateur acquereur;
 	private Categorie categorie;
 	private Retrait retrait;
 	private Utilisateur vendeur;//OK
+	
+	
 	private List<Enchere> listeEncheres; //CCN : quel intérêt ? 
 	
 	
 	public ArticleVendu() {
 		super();
-		listeEncheres =new ArrayList<>();
+		//listeEncheres =new ArrayList<>();
 	}
 	
 
@@ -56,7 +58,7 @@ public class ArticleVendu {
 
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
 			LocalDate dateFinEncheres, int prixInitial, int prixVente, Utilisateur acquereur, Categorie categorie,
-			Retrait retrait, String etatVente, Utilisateur vendeur, List<Enchere> listeEncheres) {
+			Retrait retrait, String etatVente, Utilisateur vendeur) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -66,11 +68,10 @@ public class ArticleVendu {
 		this.prixInitial = prixInitial;
 		this.prixVente = prixVente;
 		this.etatVente = etatVente;
-		this.setAcquereur(acquereur);
+		//this.setAcquereur(acquereur);
 		this.setCategorie(categorie);
 		this.setRetrait(retrait);
 		this.setVendeur(vendeur);
-		this.listeEncheres = listeEncheres;
 	}
 	
 	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int prixInitial,
@@ -87,7 +88,36 @@ public class ArticleVendu {
 	}
 	
 
-
+	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int prixInitial, int prixVente, String etatVente, Categorie categorie) {
+		super();
+		this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.prixVente = prixVente;
+		this.etatVente = etatVente;
+		this.setCategorie(categorie);
+	}
+	
+	//TJ : Constructeur pour Détail Vente
+	public ArticleVendu(String nomArticle, String description, Categorie categorie, int prixVente,
+			Utilisateur acquereur, int prixInitial, LocalDate dateFinEncheres, Retrait retrait,
+			Utilisateur vendeur) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.setCategorie(categorie);
+		this.prixVente = prixVente;
+		this.setVendeur(acquereur);
+		this.prixInitial = prixInitial;
+		this.dateFinEncheres = dateFinEncheres;
+		this.setRetrait(retrait);
+		this.setVendeur(vendeur);	
+	}
+	
 //	public ArticleVendu() {
 //		super();
 //	}
@@ -154,6 +184,9 @@ public class ArticleVendu {
 
 
 
+
+
+	
 
 
 	/*
@@ -231,18 +264,18 @@ public class ArticleVendu {
 	}
 	
 	
-	public Utilisateur getAcquereur() {
-		return acquereur;
-	}
-
-	public void setAcquereur(Utilisateur acquereur) {
-
-		this.acquereur=acquereur;
-		
-		if(acquereur!=null) {
-			acquereur.ajouterArticleAchat(this);
-		}
-	}
+//	public Utilisateur getAcquereur() {
+//		return acquereur;
+//	}
+//
+//	public void setAcquereur(Utilisateur acquereur) {
+//
+//		this.acquereur=acquereur;
+//		
+//		if(acquereur!=null) {
+//			acquereur.ajouterArticleAchat(this);
+//		}
+//	}
 
 	public Categorie getCategorie() {
 		return categorie;
@@ -251,9 +284,9 @@ public class ArticleVendu {
 	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
 
-		if(categorie!=null) {
-			categorie.ajouterArticle(this);
-		}
+//		if(categorie!=null) {
+//			categorie.ajouterArticle(this);
+//		}
 	}
 
 	public Retrait getRetrait() {
@@ -272,25 +305,29 @@ public class ArticleVendu {
 	public void setVendeur(Utilisateur vendeur) {
 		this.vendeur = vendeur;
 		
-		if(vendeur!=null) {
-			vendeur.ajouterArticleVente(this);
-		}
+//		if(vendeur!=null) {
+//			vendeur.ajouterArticleVente(this);
+//		}
 	}
 
-	public List<Enchere> getListeEncheres() {
+	public List<Enchere> getListeEncheres() throws BusinessException {
+		if(listeEncheres==null) {
+			
+			listeEncheres=DAOFactory.getEnchereDAO().selectAllEnchereByNoArticle(noArticle);
+		}
 		return listeEncheres;
 	}
 
-	public void ajouterEnchere(Enchere enchere) {
-		if(enchere.getArticle().equals(this) && !listeEncheres.contains(enchere))
-		{
-			this.listeEncheres.add(enchere);
-		}
-		else
-		{
-			System.out.println("ajout impossible");
-		}
-	}
+//	public void ajouterEnchere(Enchere enchere) {
+//		if(enchere.getArticle().equals(this) && !listeEncheres.contains(enchere))
+//		{
+//			this.listeEncheres.add(enchere);
+//		}
+//		else
+//		{
+//			System.out.println("ajout impossible");
+//		}
+//	}
 	public String getEtatVente() {
 		return etatVente;
 	}
@@ -303,9 +340,7 @@ public class ArticleVendu {
 	public String toString() {
 		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
 				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", prixInitial="
-				+ prixInitial + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", acquereur=" + acquereur
-				+ ", categorie=" + categorie + ", retrait=" + retrait + ", vendeur=" + vendeur + ", listeEncheres="
-				+ listeEncheres + "]";
+				+ prixInitial + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", categorie=" + categorie + ", retrait=" + retrait + ", vendeur=" + vendeur +"]";
 	}
 
 }

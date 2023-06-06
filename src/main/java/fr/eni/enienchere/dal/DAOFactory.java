@@ -17,5 +17,9 @@ public abstract class DAOFactory {
 	public static ArticleDAO getArticleDAO() {
 		return new ArticleDAOJdbcImpl();
 	}
+	
+	public static RetraitDAO getRetraitDAO() {
+		return new RetraitDAOJdbcImpl();
+	}
 
 }

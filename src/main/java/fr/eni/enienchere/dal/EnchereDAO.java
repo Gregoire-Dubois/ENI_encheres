@@ -8,6 +8,13 @@ import fr.eni.enienchere.bo.Enchere;
 public interface EnchereDAO {
 	//Liste de toutes les enchères
 	List<Enchere> selectAllEnchere() throws BusinessException;
+
+	//A faire
+	List<Enchere> selectAllEnchereByNoArticle(int noArticle) throws BusinessException;
+	
+	
+
+	List<Enchere> selectAllEnchereByNoUtilisateur(int noUtilisateur);
 	
 	//Liste des enchères d'un utilisateur
 	

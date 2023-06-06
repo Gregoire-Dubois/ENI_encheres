@@ -8,10 +8,10 @@
 <head>
 <meta charset="UTF-8">
 
-<link rel="stylesheet" href="/css/style.css" />
-
 <title>Accueil</title>
-<link rel="stylesheet" <%@ include file="../../css/styletest.css" %>>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" >
+
 </head>
 <body>
 
@@ -30,11 +30,14 @@
 		<!-- <div class="grilleNonConnecte">
 		<div class="titreNonConnecte"> -->
 
-		<h1>Liste des enchères</h1>
+
+
+			<h1>Liste des enchères</h1>
+
 		<!-- </div> -->
 
 		<!-- <div class="filtresNonConnecte"> -->
-		<!--<div>
+		<div>
 			<h3>Filtre</h3>
 	
 			<form>
@@ -43,7 +46,7 @@
 				<br>
 				<label for="categorie">Catégorie:</label>
 					<select name="categorie" id="categorie">
-						<!-- <option value="">Choix</option>
+						<!-- <option value="">Choix</option>-->
 				<c:forEach items="${listeCategorie}" var="categorie">
 					<option value="${categorie.libelle}"${categorie.libelle == article.categorie.libelle ? 'selected' : ''}>${categorie.libelle}</option>
 				</c:forEach>
@@ -52,70 +55,50 @@
 					<option value="categorie1" >Catégorie 1</option>
 					<option value="categorie2" >Catégorie 2</option>
 					<option value="categorie3" >Catégorie 3</option>
-				</select> <br>
+				</select>--> <br>
 				<input type="submit" value="Rechercher">
 			</form>
 	
 	
-		</div> -->
-		<!-- OK POUR TOUT LE MONDE JUSQU'ICI-->
+
+		</div> 
+		<!-- OK POUR TOUT LE MONDE JUSQU'ICI-->		
 
 		<!-- Il faut dynamiser -->
 
+
 		<!-- Exemple si non connecté -->
-
+		
+		<c:choose>
+		<c:when test="${userConnected != null}"><!-- Si l'utilisateur est connecte -->
 		<div class="resultatsNonConnecte">
-
+	
 			<div class="card">
 				<img
 					src="https://static.fnac-static.com/multimedia/Images/FR/MDM/24/35/1f/18822436/1540-1/tsp20230519135127/The-Legend-of-Zelda-Tears-Of-The-Kingdom-Nintendo-Switch.jpg"
 					alt="Image de la card">
 				<div class="card-content">
-					<h2>Zelda: Tears Of The Kingdom</h2>
-
-					<p>Prix :</p>
-					<p>Fin de l'enchère :</p>
-					<p>Vendeur :</p>
+					<h2><a href="">${article.nomArticle}</a></h2> <!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
+					
+					<p>Prix :${article.prixVente}</p> <!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
+					<p>Fin de l'enchère :${article.dateFinEncheres}</p> <!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
+					<p><a href="${pageContext.request.contextPath}/profil?idVendeur=${article.utilisateur.getNoUtilisateur}">Vendeur : ${article.utilisateur.getPseudo}</a></p> <!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
+					<!-- <p><a href="${pageContext.request.contextPath}/profil?idVendeur=1">Vendeur : ${article.utilisateur.getPseudo}</a></p> --> <!-- Pour l'exemple -->
 				</div>
 			</div>
+	
 		</div>
-
-		<!-- Exemple si connecté -->
-		<div class="resultatsNonConnecte">
-
-			<div class="card">
-				<img
-					src="https://static.fnac-static.com/multimedia/Images/FR/MDM/24/35/1f/18822436/1540-1/tsp20230519135127/The-Legend-of-Zelda-Tears-Of-The-Kingdom-Nintendo-Switch.jpg"
-					alt="Image de la card">
-				<div class="card-content">
-					<h2>
-						<a href="">${article.nomArticle}</a>
-					</h2>
-					<!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
-
-					<p>Prix :${article.prixVente}</p>
-					<!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
-					<p>Fin de l'enchère :${article.dateFinEncheres}</p>
-					<!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
-					<p>
-						<a href="${pageContext.request.contextPath}/profil?idVendeur=1">Vendeur
-							: ${article.utilisateur.getPseudo}</a>
-					</p>
-					<!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
-				</div>
-			</div>
-
-		</div>
-
+		</c:when>
+		<c:otherwise><!-- Si l'utilisateur n'est pas connecte -->
 
 		<c:choose>
 
 			<c:when test="${empty listeErreurs}">
 				<div class="resultatsNonConnecte">
 
-					<div class="card">
+					
 						<c:forEach var="v" items="${articles}">
-
+					<div class="card">
 							<img src="#" alt="Image de la card">
 							<div class="card-content">
 								<h2>${v.nomArticle}</h2>
@@ -124,8 +107,9 @@
 								<p>Vendeur : ${v.vendeur.pseudo}</p>
 
 							</div>
-						</c:forEach>
 					</div>
+						</c:forEach>
+					
 				</div>
 
 			</c:when>
@@ -138,6 +122,10 @@
 			
 			</c:otherwise>
 
+		</c:choose>
+		
+		</c:otherwise>
+		
 		</c:choose>
 
 
