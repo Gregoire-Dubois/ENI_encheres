@@ -20,6 +20,7 @@ public abstract class CodesResultatDAL {
 	
 	// erreur sur base de données pour articles
 	public static final int SELECT_ECHEC = 13000; 
+	public static final int SELECT_BY_ETAT_MOT_CATEGORIE_ECHEC=13003;
 	//Enchere
 	public static final int SELECT_BY_NO_ARTICLE_ECHEC =12000 ;
 	public static final int SELECT_ENCHERE_MAX_BY_ARTICLE_ECHEC = 12001;

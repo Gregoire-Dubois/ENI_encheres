@@ -64,7 +64,7 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 		try {
 			cnx = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_CATEGORIE_BY_ID);
-			pstmt.setString(1, categorieID);
+			pstmt.setInt(1, categorieId);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				categorie = new Categorie(rs.getInt(1), rs.getString(2));

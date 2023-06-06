@@ -37,5 +37,5 @@ public abstract class CodesResultatBLL {
 //	public static final int PSEUDO_VENDEUR_VIDE_ERREUR=20109;
 //	public static final int NOM_ARTICLE_ALPHA_ERREUR=20110;
 //	public static final int DESCRIPTION_ARTICLE_ALPHA_ERREUR=20111;
-
+	public static final int ETAT_VENTE_ERREUR=20112;
 }

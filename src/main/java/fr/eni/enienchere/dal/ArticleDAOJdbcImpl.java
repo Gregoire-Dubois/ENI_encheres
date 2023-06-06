@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,6 +43,10 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 														+ "INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur\n"
 														+ "WHERE etat_vente = 'EC';"; 
 	
+	private static final String SELECT_ALL_ARTICLES_ETAT_MOT_CATEGORIE = "SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS as u on a.no_utilisateur=u.no_utilisateur \r\n"
+			+ "							  INNER JOIN CATEGORIES as c on c.no_categorie=a.no_categorie\r\n"
+			+ "			where etat_vente=? and LOWER(nom_article) like ? and ((c.libelle = ?) or (? IS NULL))";
 
 	@Override
 	public ArticleVendu selectArticleById(int articleId) throws BusinessException {
@@ -233,6 +238,57 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	public List<ArticleVendu> selectAllArticlesByNoUtilisateur(int noUtilisateur) throws BusinessException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public List<ArticleVendu> selectionnerArticlesFiltres(String categorie, String mot, String etatVente) {
+		List<ArticleVendu> articles = new ArrayList<>();
+		Connection cnx = null;
+		
+		try {
+			cnx=ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL_ARTICLES_ETAT_MOT_CATEGORIE);
+			pstmt.setString(1, etatVente);
+			pstmt.setString(2, "%"+mot+"%");
+			if(categorie.equals("Toutes")) {
+				pstmt.setNull(3, Types.VARCHAR);
+				pstmt.setNull(4, Types.VARCHAR);
+			}else {
+				pstmt.setString(3, categorie);
+				pstmt.setString(4, categorie);
+			}
+			
+			
+			ResultSet rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
+				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
+				
+				articles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_BY_ETAT_MOT_CATEGORIE_ECHEC);
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		return articles;
+		
 	}
 
 }
