@@ -23,27 +23,13 @@
 
 	<%@ include file="JSPHeaderConnexion.jsp"%>
 
-	
-
 
 	<section>
-
-		<!-- A terminer avec les éléments articles et catégories  selon connecte ou pas-->
-
-		<!-- la première carte est à supprimer elle sert de modèle de présentation -->
-		<!-- <div class="grilleNonConnecte">
-		<div class="titreNonConnecte"> -->
-
 
 
 			<h1>Liste des enchères</h1>
 			<%@ include file="tests/FiltreArticles.jsp"%>
-		<!-- </div> -->
 
-	
-
-		<!-- Exemple si non connecté -->
-		
 		<c:choose>
 		<c:when test="${userConnected != null}"><!-- Si l'utilisateur est connecte -->
 		<div class="resultatsNonConnecte">

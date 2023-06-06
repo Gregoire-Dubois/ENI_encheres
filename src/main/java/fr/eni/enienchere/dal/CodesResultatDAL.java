@@ -28,11 +28,11 @@ public abstract class CodesResultatDAL {
 
 	
 	//Articles Vendus
-	public static final int DECONNEXION_RESULTSET_ECHEC = 13000;
-	public static final int DECONNEXION_PREPAREDSTATEMENT_ECHEC = 13001;
-	public static final int SELECT_ALL_VENTE_EC_BY_CATEGORIE_ID_ECHEC = 13002;
-	public static final int SELECT_ALL_VENTE_NC_BY_UTILISATEUR_ID_ECHEC = 13003;
-	public static final int SELECT_ALL_VENTE_EC_BY_UTILISATEUR_ID_ECHEC = 13004;
-	public static final int SELECT_ALL_VENTE_VE_BY_UTILISATEUR_ID_ECHEC = 13005;
+	public static final int DECONNEXION_RESULTSET_ECHEC = 14000;
+	public static final int DECONNEXION_PREPAREDSTATEMENT_ECHEC = 14001;
+	public static final int SELECT_ALL_VENTE_EC_BY_CATEGORIE_ID_ECHEC = 14002;
+	public static final int SELECT_ALL_VENTE_NC_BY_UTILISATEUR_ID_ECHEC = 14003;
+	public static final int SELECT_ALL_VENTE_EC_BY_UTILISATEUR_ID_ECHEC = 14004;
+	public static final int SELECT_ALL_VENTE_VE_BY_UTILISATEUR_ID_ECHEC = 14005;
 
 }
