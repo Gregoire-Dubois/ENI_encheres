@@ -10,16 +10,12 @@
 
 <title>Accueil</title>
 
-<<<<<<< HEAD
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css">
-=======
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 
 <link rel="stylesheet" href="../css/style.css">
 
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" >
->>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
 
 </head>
 <body>
@@ -32,14 +28,11 @@
 	<section>
 
 
-<<<<<<< HEAD
 		<h1>Liste des enchères</h1>
-=======
 			<h1>Liste des enchères</h1>
 			<%@ include file="tests/FiltreArticles.jsp"%>
->>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
 
-<<<<<<< HEAD
+
 		<!-- </div> -->
 
 		<!-- <div class="filtresNonConnecte"> -->
@@ -106,7 +99,7 @@
 			<c:when test="${userConnected != null}">
 				<!-- Si l'utilisateur est connecte -->
 
-				<a href="${pageContext.request.contextPath}/nomServlet">
+				<a href="ServletTestEncherirAcquisitionDetailMAventeFinEnchere">
 					<div class="resultatsNonConnecte">
 						<div class="card">
 							<img
