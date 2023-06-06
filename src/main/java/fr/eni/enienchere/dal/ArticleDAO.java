@@ -11,6 +11,7 @@ public interface ArticleDAO {
     public ArticleVendu selectArticleById(int articleId) throws BusinessException;
 
     public List<ArticleVendu> selectAllArticles() throws BusinessException;
+    
 
     public List<ArticleVendu> selectAllArticlesByUtilisateur(Utilisateur utilisateur) throws BusinessException;
 
