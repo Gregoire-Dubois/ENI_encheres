@@ -20,4 +20,5 @@ public abstract class CodesResultatDAL {
 	
 	//Enchere
 	public static final int SELECT_BY_NO_ARTICLE_ECHEC =12000 ;
+	public static final int SELECT_ENCHERE_MAX_BY_ARTICLE_ECHEC = 12001;
 }

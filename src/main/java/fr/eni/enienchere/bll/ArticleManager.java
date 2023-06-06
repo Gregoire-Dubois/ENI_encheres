@@ -19,6 +19,11 @@ private ArticleDAO articleDAO;
 		this.articleDAO=DAOFactory.getArticleDAO();
 	}
 	
+	public ArticleVendu selectArticleById(int id) throws BusinessException {
+		ArticleVendu article = this.articleDAO.selectArticleById(id);
+		return 	article;
+	}
+	
 	//Avant d'ajouter, on doit vérifier les champs
 	//nomArticle, description, dateDebutEncheres, dateFinEncheres,  prixInitial, (categorie, retrait, vendeur pas nécéssaire)
 	public ArticleVendu ajouter(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int prixInitial, Categorie categorie, Retrait retrait, Utilisateur vendeur) throws BusinessException {
