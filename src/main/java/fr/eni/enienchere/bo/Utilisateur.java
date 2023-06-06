@@ -53,6 +53,11 @@ public class Utilisateur {
 		//listeVentes = new ArrayList<>();
 	}
 	
+	public Utilisateur(int noUtilisateur, String pseudo) {
+		this.noUtilisateur = noUtilisateur;
+		this.pseudo = pseudo;
+	}
+	
 	// constructeur sans le numéro utilisateur
 
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,

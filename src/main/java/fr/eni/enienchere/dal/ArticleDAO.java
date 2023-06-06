@@ -21,6 +21,8 @@ public interface ArticleDAO {
     public void updateArticle(ArticleVendu updateArticle) throws  BusinessException;
     
     public void deleteArticleById(ArticleVendu article) throws BusinessException;
+    
+    public List<ArticleVendu> selectionnerArticlesFiltres(String categorie, String mot, String etatVente);
 
     //A faire
 	public List<ArticleVendu> selectAllArticlesByNoCategorie(int id) throws BusinessException;

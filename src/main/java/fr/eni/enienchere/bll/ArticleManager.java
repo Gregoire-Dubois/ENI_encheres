@@ -34,6 +34,30 @@ private ArticleDAO articleDAO;
 		
 	}
 	
+	public List<ArticleVendu> selectionnerArticlesFiltres(String etatVente, String mot, String categorie) throws BusinessException{
+		List<ArticleVendu> articles = null;
+		BusinessException businessException = new BusinessException();
+		if(!(etatVente.equals("EC")||etatVente.equals("VE")||etatVente.equals("NC"))) {
+			businessException.ajouterErreur(CodesResultatBLL.ETAT_VENTE_ERREUR);
+		}
+		
+		if (!businessException.hasErreur()) {
+			
+				
+					articles=this.articleDAO.selectionnerArticlesFiltres(categorie, mot, etatVente);
+//					if(articles==null) {
+//						businessException.ajouterErreur(CodesResultatServlet.PAS_D_ARTICLES_ERREUR);
+//						throw businessException;
+//					}
+		} else {
+			
+			
+			throw businessException;
+		}
+		
+		
+		return articles;
+	}
 	
 	//Avant d'ajouter, on doit vérifier les champs
 	//nomArticle, description, dateDebutEncheres, dateFinEncheres,  prixInitial, (categorie, retrait, vendeur pas nécéssaire)

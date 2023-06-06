@@ -19,7 +19,7 @@
 
 	<%@ include file="JSPHeaderConnexion.jsp"%>
 
-	<%@ include file="tests/FiltreArticles.jsp"%>
+	
 
 
 	<section>
@@ -33,39 +33,10 @@
 
 
 			<h1>Liste des enchères</h1>
-
+			<%@ include file="tests/FiltreArticles.jsp"%>
 		<!-- </div> -->
 
-		<!-- <div class="filtresNonConnecte"> -->
-		<div>
-			<h3>Filtre</h3>
 	
-			<form>
-	
-				<input type="text" name="search" placeholder="Le nom de l'article contient"> 
-				<br>
-				<label for="categorie">Catégorie:</label>
-					<select name="categorie" id="categorie">
-						<!-- <option value="">Choix</option>-->
-				<c:forEach items="${listeCategorie}" var="categorie">
-					<option value="${categorie.libelle}"${categorie.libelle == article.categorie.libelle ? 'selected' : ''}>${categorie.libelle}</option>
-				</c:forEach>
-		</select>
-				<!-- <select name="categorie" id="categorie">
-					<option value="categorie1" >Catégorie 1</option>
-					<option value="categorie2" >Catégorie 2</option>
-					<option value="categorie3" >Catégorie 3</option>
-				</select>--> <br>
-				<input type="submit" value="Rechercher">
-			</form>
-	
-	
-
-		</div> 
-		<!-- OK POUR TOUT LE MONDE JUSQU'ICI-->		
-
-		<!-- Il faut dynamiser -->
-
 
 		<!-- Exemple si non connecté -->
 		
