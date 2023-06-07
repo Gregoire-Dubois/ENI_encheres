@@ -7,10 +7,15 @@
 */
 package fr.eni.enienchere.bo;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Enchere {
+public class Enchere implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//private static final long serialVersionUID = 1L;
 	
 	

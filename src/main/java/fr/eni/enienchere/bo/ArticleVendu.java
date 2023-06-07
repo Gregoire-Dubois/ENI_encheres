@@ -6,15 +6,20 @@
 
 package fr.eni.enienchere.bo;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.dal.DAOFactory;
 
-public class ArticleVendu {
+public class ArticleVendu implements Serializable{
 	
-	//private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 
+	 */
+	
 	private int noArticle;
 	private String nomArticle;
 	private String description;
