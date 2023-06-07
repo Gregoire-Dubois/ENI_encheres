@@ -33,6 +33,7 @@
 
 		<%@ include file="JSPDetailVenteTerminee.jsp"%>
 
+
   </c:when>
 
 </c:choose>

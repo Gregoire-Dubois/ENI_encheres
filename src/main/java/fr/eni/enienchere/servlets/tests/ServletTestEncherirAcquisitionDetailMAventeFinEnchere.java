@@ -52,7 +52,6 @@ public class ServletTestEncherirAcquisitionDetailMAventeFinEnchere extends HttpS
 		session.setAttribute("details", details);
 		
 		
-		
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPPageEncherirAcquisitionDetailMaVente.jsp");
 		rd.forward(request, response); 
 		 

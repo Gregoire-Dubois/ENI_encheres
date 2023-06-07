@@ -27,7 +27,6 @@
 				<h1>détail de ma vente à jojo (à dynamiser)</h1>
 			</div>
 
-
 			<div class="titreProduit3">
 				<p>Titre du produit : ${details.getNomArticle()}</p>
 			</div>
