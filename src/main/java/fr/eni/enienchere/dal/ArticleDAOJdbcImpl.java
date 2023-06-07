@@ -20,115 +20,118 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	
 	private static final String INSERT_ARTICLE="INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,no_utilisateur,no_categorie) VALUES(?,?,?,?,?,?,?)";
 	
-	private static final String SELECT_ALL_ARTICLE = "SELECT * FROM articles_vendus;";
+	private static final String SELECT_ALL_ARTICLE = "SELECT no_article, nom_article, date_fin_encheres, prix_vente, pseudo\n"
+			+ "FROM ARTICLES_VENDUS\n"
+			+ "INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur\n"
+			+ "WHERE etat_vente = 'EC';";
 	
-	private static final String SELECT_ARTICLE_BY_ID = 					"SELECT"
-																		+ "a.nomArticle, a.description, c.libelle AS categorie, e.montant_enchere, ua.pseudo AS acquereur, a.prix_initial, "
-																		+ "a.date_fin_encheres, r.rue AS rue_retrait, r.code_postal AS code_postal_retrait, r.ville AS ville_retrait, "
-																		+ "UV.pseudo AS pseudo_vendeur, "
-																		+ "ROW_NUMBER() OVER (ORDER BY e.montant_enchere DESC) AS row_number"
-																		+ "FROM"
-																		+ "ARTICLES_VENDUS a INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
-																		+ "LEFT JOIN ENCHERES e ON a.no_article = e.no_article"
-																		+ "LEFT JOIN UTILISATEURS ua ON e.no_utilisateur = ua.no_utilisateur"
-																		+ "LEFT JOIN UTILISATEURS uv ON a.no_utilisateur = uv.no_utilisateur"
-																		+ "LEFT JOIN RETRAITS r ON a.no_article = r.no_article"
-																		+ "WHERE"
-																		+ "AV.no_article = ?) AS subquery WHERE row_number = 1;";
+private static final String SELECT_ARTICLE_BY_ID = "SELECT"
+			+ "a.nomArticle, a.description, c.libelle AS categorie, e.montant_enchere, ua.pseudo AS acquereur, a.prix_initial, "
+			+ "a.date_fin_encheres, r.rue AS rue_retrait, r.code_postal AS code_postal_retrait, r.ville AS ville_retrait, "
+			+ "UV.pseudo AS pseudo_vendeur, "
+			+ "ROW_NUMBER() OVER (ORDER BY e.montant_enchere DESC) AS row_number"
+			+ "FROM"
+			+ "ARTICLES_VENDUS a INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
+			+ "LEFT JOIN ENCHERES e ON a.no_article = e.no_article"
+			+ "LEFT JOIN UTILISATEURS ua ON e.no_utilisateur = ua.no_utilisateur"
+			+ "LEFT JOIN UTILISATEURS uv ON a.no_utilisateur = uv.no_utilisateur"
+			+ "LEFT JOIN RETRAITS r ON a.no_article = r.no_article"
+			+ "WHERE"
+			+ "AV.no_article = ?) AS subquery WHERE row_number = 1;";
 	
-	private static final String SELECT_ALL_VENTE_EC = 					"SELECT "
-																		+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur, vendeur.pseudo as vendeur, a.no_categorie as id_categorie, "
-																		+ "c.libelle as categorie_libelle, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, "
-																		+ "e.no_enchere as id_enchere_max, e.no_article as ench_idArticle, e.no_utilisateur as id_meilleur_encherisseur, "
-																		+ "encherisseur.pseudo as pseudo_encherisseur, date_enchere, montant_enchere, etat_vente"
-																		+ "FROM "
-																		+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON  a.no_article =  e.no_article AND "
-																		+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article = e.no_article)"
-																		+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
-																		+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
-																		+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
-																		+ "WHERE "
-																		+ " a.etat_vente = 'EC';";
+	private static final String SELECT_ALL_VENTE_EC = "SELECT"
+			+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur, vendeur.pseudo as vendeur, a.no_categorie as id_categorie, "
+			+ "c.libelle as categorie_libelle, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, "
+			+ "e.no_enchere as id_enchere_max, e.no_article as ench_idArticle, e.no_utilisateur as id_meilleur_encherisseur, "
+			+ "encherisseur.pseudo as pseudo_encherisseur, date_enchere, montant_enchere, etat_vente"
+			+ "FROM "
+			+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON  a.no_article =  e.no_article AND "
+			+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article = e.no_article)"
+			+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
+			+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
+			+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
+			+ "WHERE "
+			+ " a.etat_vente = 'EC';";
 	
-	private static final String SELECT_ALL_VENTE_EC_BY_CATEGORIE_ID = 	"SELECT "
-																		+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur, vendeur.pseudo as vendeur,"
-																		+ "a.no_categorie as id_categorie, c.libelle as categorie_libelle, nom_article, description,"
-																		+ "date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, e.no_enchere as id_enchere_max,"
-																		+ "e.no_article as ench_idArticle, e.no_utilisateur as id_meilleur_encherisseur, encherisseur.pseudo as pseudo_encherisseur,"
-																		+ "date_enchere, montant_enchere, etat_vente"
-																		+ "FROM"
-																		+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON a.no_article = e.no_article AND "
-																		+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article =  e.no_article)"
-																		+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
-																		+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
-																		+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
-																		+ "WHERE "
-																		+ "a.etat_vente = 'EC' AND a.no_categorie  = ?;";
+	private static final String SELECT_ALL_VENTE_EC_BY_CATEGORIE_ID = "SELECT"
+			+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur, vendeur.pseudo as vendeur,"
+			+ "a.no_categorie as id_categorie, c.libelle as categorie_libelle, nom_article, description,"
+			+ "date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, e.no_enchere as id_enchere_max,"
+			+ "e.no_article as ench_idArticle, e.no_utilisateur as id_meilleur_encherisseur, encherisseur.pseudo as pseudo_encherisseur,"
+			+ "date_enchere, montant_enchere, etat_vente"
+			+ "FROM"
+			+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON a.no_article = e.no_article AND "
+			+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article =  e.no_article)"
+			+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
+			+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
+			+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
+			+ "WHERE "
+			+ "a.etat_vente = 'EC' AND a.no_categorie  = ?;";
 	
-	private static final String SELECT_ALL_VENTE_EC_BY_NOM_ART = 		"SELECT "
-																		+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur, vendeur.pseudo as vendeur, a.no_categorie as id_categorie, "
-																		+ "c.libelle as categorie_libelle, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, "
-																		+ "e.no_enchere as id_enchere_max, e.no_article as ench_idArticle, e.no_utilisateur as id_meilleur_encherisseur,"
-																		+ "encherisseur.pseudo as pseudo_encherisseur, date_enchere, montant_enchere, etat_vente "
-																		+ "FROM "
-																		+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON  a.no_article =  e.no_article AND "
-																		+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article =  e.no_article)"
-																		+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
-																		+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
-																		+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
-																		+ "WHERE "
-																		+ "a.etat_vente = 'EC' AND lower(a.nom_article) LIKE '%?%';";
+	private static final String SELECT_ALL_VENTE_EC_BY_NOM_ART = "SELECT"
+			+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur, vendeur.pseudo as vendeur, a.no_categorie as id_categorie, "
+			+ "c.libelle as categorie_libelle, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, "
+			+ "e.no_enchere as id_enchere_max, e.no_article as ench_idArticle, e.no_utilisateur as id_meilleur_encherisseur,"
+			+ "encherisseur.pseudo as pseudo_encherisseur, date_enchere, montant_enchere, etat_vente "
+			+ "FROM "
+			+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON  a.no_article =  e.no_article AND "
+			+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article =  e.no_article)"
+			+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
+			+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
+			+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
+			+ "WHERE "
+			+ "a.etat_vente = 'EC' AND lower(a.nom_article) LIKE '%?%';";
 
-	private static final String SELECT_ALL_VENTE_NC_BY_UTILISATEUR_ID = "SELECT "
-																		+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur,vendeur.pseudo as vendeur,a.no_categorie as id_categorie, "
-																		+ "c.libelle as categorie_libelle, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, "
-																		+ "prix_vente, e.no_enchere as id_enchere_max, e.no_article as ench_idArticle,e.no_utilisateur as id_meilleur_encherisseur, "
-																		+ "encherisseur.pseudo as pseudo_encherisseur, date_enchere, montant_enchere, etat_vente"
-																		+ "FROM "
-																		+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON  a.no_article =  e.no_article AND "
-																		+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article =  e.no_article)"
-																		+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
-																		+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
-																		+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
-																		+ "WHERE "
-																		+ "a.etat_vente = 'NC' AND vendeur.no_utilisateur = ?;";
+	private static final String SELECT_ALL_VENTE_NC_BY_UTILISATEUR_ID = "SELECT"
+			+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur,vendeur.pseudo as vendeur,a.no_categorie as id_categorie, "
+			+ "c.libelle as categorie_libelle, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, "
+			+ "prix_vente, e.no_enchere as id_enchere_max, e.no_article as ench_idArticle,e.no_utilisateur as id_meilleur_encherisseur, "
+			+ "encherisseur.pseudo as pseudo_encherisseur, date_enchere, montant_enchere, etat_vente"
+			+ "FROM "
+			+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON  a.no_article =  e.no_article AND "
+			+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article =  e.no_article)"
+			+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
+			+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
+			+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
+			+ "WHERE "
+			+ "a.etat_vente = 'NC' AND vendeur.no_utilisateur = ?;";
 	
-	private static final String SELECT_ALL_VENTE_EC_BY_UTILISATEUR_ID = "SELECT "
-																		+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur,vendeur.pseudo as vendeur,a.no_categorie as id_categorie, "
-																		+ "c.libelle as categorie_libelle, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, "
-																		+ "prix_vente, e.no_enchere as id_enchere_max, e.no_article as ench_idArticle,e.no_utilisateur as id_meilleur_encherisseur, "
-																		+ "encherisseur.pseudo as pseudo_encherisseur, date_enchere, montant_enchere, etat_vente"
-																		+ "FROM "
-																		+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON  a.no_article =  e.no_article AND "
-																		+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article =  e.no_article)"
-																		+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
-																		+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
-																		+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
-																		+ "WHERE "
-																		+ "a.etat_vente = 'EC' AND vendeur.no_utilisateur = ?;";
+	private static final String SELECT_ALL_VENTE_EC_BY_UTILISATEUR_ID = "SELECT"
+			+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur,vendeur.pseudo as vendeur,a.no_categorie as id_categorie, "
+			+ "c.libelle as categorie_libelle, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, "
+			+ "prix_vente, e.no_enchere as id_enchere_max, e.no_article as ench_idArticle,e.no_utilisateur as id_meilleur_encherisseur, "
+			+ "encherisseur.pseudo as pseudo_encherisseur, date_enchere, montant_enchere, etat_vente"
+			+ "FROM "
+			+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON  a.no_article =  e.no_article AND "
+			+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article =  e.no_article)"
+			+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
+			+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
+			+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
+			+ "WHERE "
+			+ "a.etat_vente = 'EC' AND vendeur.no_utilisateur = ?;";
 	
-	private static final String SELECT_ALL_VENTE_VE_BY_UTILISATEUR_ID = "SELECT "
-																		+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur,vendeur.pseudo as vendeur,a.no_categorie as id_categorie, "
-																		+ "c.libelle as categorie_libelle, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, "
-																		+ "prix_vente, e.no_enchere as id_enchere_max, e.no_article as ench_idArticle,e.no_utilisateur as id_meilleur_encherisseur, "
-																		+ "encherisseur.pseudo as pseudo_encherisseur, date_enchere, montant_enchere, etat_vente"
-																		+ "FROM "
-																		+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON  a.no_article =  e.no_article AND "
-																		+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article =  e.no_article)"
-																		+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
-																		+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
-																		+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
-																		+ "WHERE "
-																		+ "a.etat_vente = 'VE' AND vendeur.no_utilisateur = ?;";
+	private static final String SELECT_ALL_VENTE_VE_BY_UTILISATEUR_ID = "SELECT"
+			+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur,vendeur.pseudo as vendeur,a.no_categorie as id_categorie, "
+			+ "c.libelle as categorie_libelle, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, "
+			+ "prix_vente, e.no_enchere as id_enchere_max, e.no_article as ench_idArticle,e.no_utilisateur as id_meilleur_encherisseur, "
+			+ "encherisseur.pseudo as pseudo_encherisseur, date_enchere, montant_enchere, etat_vente"
+			+ "FROM "
+			+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON  a.no_article =  e.no_article AND "
+			+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article =  e.no_article)"
+			+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
+			+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
+			+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
+			+ "WHERE "
+			+ "a.etat_vente = 'VE' AND vendeur.no_utilisateur = ?;";
 	
-	private static final String SELECT_ALL_ENCHERES_EC_BY_UTILISATEUR_ID = "SELECT "
-															            + "a.no_article, a.nom_article, a.date_fin_encheres, a.prix_vente, u.no_utilisateur, u.pseudo"
-															            + "FROM "
-															            + "ARTICLES_VENDUS a "
-															            + "INNER JOIN ENCHERES e ON a.no_article = e.no_article "
-															            + "INNER JOIN UTILISATEURS u ON a.no_utilisateur = u.no_utilisateur "
-															            + "WHERE "
-															            + "a.etat_vente = 'EC' AND e.no_utilisateur = ?;";
+	private static final String SELECT_ALL_ENCHERES_EC_BY_UTILISATEUR_ID = "SELECT"
+            + "a.no_article, a.nom_article, a.date_fin_encheres, a.prix_vente, u.no_utilisateur, u.pseudo"
+            + "FROM "
+            + "ARTICLES_VENDUS a "
+            + "INNER JOIN ENCHERES e ON a.no_article = e.no_article "
+            + "INNER JOIN UTILISATEURS u ON a.no_utilisateur = u.no_utilisateur "
+            + "WHERE "
+            + "a.etat_vente = 'EC' AND e.no_utilisateur = ?;";
 
 	
 	private static final String SELECT_ALL_ARTICLES_ETAT_MOT_CATEGORIE = "SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
@@ -165,8 +168,11 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
                 String pseudoVendeur = rs.getString("pseudo_vendeur");
 
                 // Récupérer les objets Utilisateur correspondants aux pseudos
-                Utilisateur acquereur = UtilisateurDAO.selectByPseudo(pseudoAcquereur);
-                Utilisateur vendeur = UtilisateurDAO.selectByPseudo(pseudoVendeur);
+                UtilisateurManager utilisateurManager = new UtilisateurManager();
+                Utilisateur acquereur = utilisateurManager.selectionnerPseudo(pseudoAcquereur); 
+                Utilisateur vendeur = utilisateurManager.selectionnerPseudo(pseudoVendeur);
+//                Utilisateur acquereur = UtilisateurDAO.selectByPseudo(pseudoAcquereur);
+//                Utilisateur vendeur = UtilisateurDAO.selectByPseudo(pseudoVendeur);
 
                 // Créer l'objet Retrait
                 Retrait retrait = new Retrait(rueRetrait, codePostalRetrait, villeRetrait);
@@ -202,29 +208,30 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			cnx = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL_ARTICLE);
 			ResultSet rst = pstmt.executeQuery();
+			
 			while (rst.next()) {
-				articlesVendus = new ArticleVendu(
-						rst.getInt(1), //noArticle
-						rst.getString(2), //nom article
-						rst.getString(3), // description
-						rst.getDate(4).toLocalDate(), // datedebut
-						rst.getDate(5).toLocalDate(), //datefin
-						rst.getInt(6), //prix
-						rst.getInt(7), // prix 
-						rst.getString(10) // état vente 
-						//(Categorie)rst.getObject(9)
+				
+				String pseudo = rst.getString("pseudo"); 
 
+				Utilisateur utilisateur = new Utilisateur(pseudo); 
+				
+				articlesVendus = new ArticleVendu(
+						
+						rst.getInt("no_article"),
+						rst.getString("nom_article"),
+						rst.getDate("date_fin_encheres").toLocalDate(), 
+						rst.getInt("prix_vente"),
+						utilisateur								
 						);
 												
 				listeArticlesEnVente.add(articlesVendus);
-			}
-			System.out.println("-------->"+listeArticlesEnVente);
-
-			
+			}	
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_ECHEC);
 		}finally {
 			if(cnx !=null) {
 				try {
@@ -319,7 +326,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	    PreparedStatement pstmt = null;
 	    ResultSet rs = null;
 
-<<<<<<< HEAD
+
 	    try {
 	        cnx = ConnectionProvider.getConnection();
 	        pstmt = cnx.prepareStatement(SELECT_ALL_VENTE_EC_BY_CATEGORIE_ID);
@@ -500,7 +507,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	    
 	 // Récupérer l'utilisateur (vendeur) à partir de la base de données
 	    int noUtilisateur = rs.getInt("no_utilisateur");
-	    Utilisateur vendeur = UtilisateurDAO.selectById(noUtilisateur);
+	    UtilisateurManager utilisateurManager = new UtilisateurManager();
+	    Utilisateur vendeur = utilisateurManager.selectionner(noUtilisateur);
+	    //Utilisateur vendeur =UtilisateurDAO.selectById(noUtilisateur);
 	    article.setVendeur(vendeur);
 
 	    return article;
@@ -537,7 +546,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	        }
 	    }
 	}
-=======
+
 
 	@Override
 	public List<ArticleVendu> selectionnerArticlesFiltres(String categorie, String mot, String etatVente) {
@@ -589,5 +598,5 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		
 	}
 
->>>>>>> branch 'master' of git@bitbucket.org:ccrepin/eni_encheres.git
+
 }

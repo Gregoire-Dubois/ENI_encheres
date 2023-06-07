@@ -1,6 +1,7 @@
 package fr.eni.enienchere.bll;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bo.ArticleVendu;
@@ -94,6 +95,7 @@ private ArticleDAO articleDAO;
 
 		return articleVendu;
 	}
+	
 	
 	public List<ArticleVendu> getAllVentesEnCoursByNoCategorie(int id) throws BusinessException {
         return articleDAO.selectAllVentesEnCoursByNoCategorie(id);
