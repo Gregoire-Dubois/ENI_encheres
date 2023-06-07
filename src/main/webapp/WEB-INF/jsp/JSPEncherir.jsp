@@ -30,7 +30,7 @@
 					<div class="titreProduit">
 						<p>Titre du produit :</p>
 					</div>
-		
+	
 		
 					<div class="descriptionProduit">
 						<p>Description :</p>

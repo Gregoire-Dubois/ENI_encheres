@@ -28,7 +28,6 @@
 
 		<%@ include file="JSPEncherir.jsp"%>
 		
-
   </c:when>
   <c:when test="${etatVente == 'NC'}">
 

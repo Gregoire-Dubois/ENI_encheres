@@ -26,7 +26,6 @@
 						<h1>Vous avez remporté la vente (A dyamiser)</h1>
 					</div>
 		
-		
 					<div class="titreProduit2">
 						<p>Titre du produit :</p>
 					</div>
