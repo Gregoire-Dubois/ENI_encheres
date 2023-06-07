@@ -43,7 +43,6 @@
 						<p>Categorie :${details.getCategorie()}</p>
 					</div>
 		
-		
 					<div class="miseAPrixProduit">
 						<p>Mise à prix : ${details.getPrixVente()}</p>
 					</div>

@@ -50,9 +50,6 @@ public class ServletTestEncherirAcquisitionDetailMAventeFinEnchere extends HttpS
 			e.printStackTrace();
 		}
 		session.setAttribute("details", details);
-
-		
-		
 		
 		
 		
