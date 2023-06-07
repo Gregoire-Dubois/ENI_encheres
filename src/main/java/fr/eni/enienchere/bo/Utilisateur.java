@@ -7,6 +7,7 @@
 
 package fr.eni.enienchere.bo;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -15,9 +16,13 @@ import java.util.List;
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.dal.DAOFactory;
 
-public class Utilisateur {
+public class Utilisateur  implements Serializable{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// class Utilisateur pour la construction du SelectALL de l'article DAOJdbcImpl
 	public Utilisateur(String pseudo) {
 		super();

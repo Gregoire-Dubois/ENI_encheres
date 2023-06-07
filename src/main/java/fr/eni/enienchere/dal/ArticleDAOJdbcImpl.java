@@ -20,9 +20,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	
 	private static final String INSERT_ARTICLE="INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,no_utilisateur,no_categorie) VALUES(?,?,?,?,?,?,?)";
 	
-	private static final String SELECT_ALL_ARTICLE = "SELECT no_article, nom_article, date_fin_encheres, prix_vente, pseudo\n"
-			+ "FROM ARTICLES_VENDUS\n"
-			+ "INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur\n"
+	private static final String SELECT_ALL_ARTICLE = "SELECT no_article, a.no_utilisateur, nom_article, date_fin_encheres, prix_vente, pseudo\n"
+			+ "FROM ARTICLES_VENDUS as a\n"
+			+ "INNER JOIN UTILISATEURS as u ON a.no_utilisateur = u.no_utilisateur\n"
 			+ "WHERE etat_vente = 'EC';";
 	
 private static final String SELECT_ARTICLE_BY_ID = "SELECT"
@@ -212,8 +212,8 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT"
 			while (rst.next()) {
 				
 				String pseudo = rst.getString("pseudo"); 
-
-				Utilisateur utilisateur = new Utilisateur(pseudo); 
+				int noUtilisateur = rst.getInt("no_utilisateur");
+				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo); 
 				
 				articlesVendus = new ArticleVendu(
 						

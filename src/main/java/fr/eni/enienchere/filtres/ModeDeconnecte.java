@@ -20,8 +20,8 @@ import javax.servlet.http.HttpSession;
 @WebFilter(dispatcherTypes = {
 				DispatcherType.REQUEST, 
 				DispatcherType.FORWARD, 
-				DispatcherType.INCLUDE, 
-				DispatcherType.ERROR
+				//DispatcherType.INCLUDE, 
+				//DispatcherType.ERROR
 		}
 					, urlPatterns = { "/*" })
 public class ModeDeconnecte implements Filter {
@@ -49,15 +49,20 @@ public class ModeDeconnecte implements Filter {
 			if(session.getAttribute("userConnected")!=null) {
 				chain.doFilter(request, response);
 			}else {
-				if (!(httpRequest.getServletPath().toLowerCase().contains("accueil")||httpRequest.getServletPath().toLowerCase().contains("connexion")||httpRequest.getServletPath().toLowerCase().contains("inscription"))){
+				if ((httpRequest.getServletPath().toLowerCase().contains("modification")||
+					 httpRequest.getServletPath().toLowerCase().contains("profil")||
+					 httpRequest.getServletPath().toLowerCase().contains("deconnexion")||
+					 httpRequest.getServletPath().toLowerCase().contains("supprimermoncompte")||
+					 httpRequest.getServletPath().toLowerCase().contains("vendre"))){
 					//System.out.println(httpRequest.getServletPath().toLowerCase());
 					HttpServletResponse httpResponse = (HttpServletResponse) response;
 					httpResponse.sendRedirect(httpRequest.getContextPath()+"/accueil");	
-					
 					return;
+				}else {
+					chain.doFilter(request, response);
 				}
 			}
-			chain.doFilter(request, response);
+		
 		}
 
 	/**

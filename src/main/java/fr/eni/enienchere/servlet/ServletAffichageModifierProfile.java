@@ -95,8 +95,8 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 					session.setAttribute("userConnected",utilisateurModif);
 					//System.out.println(utilisateurModif);
 
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
-					rd.forward(request, response);
+//					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
+//					rd.forward(request, response);
 				}
 			}else { 
 				//On doit maintenant insérer sans modifier les crédits et le role.
@@ -107,8 +107,8 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 				session.setAttribute("userConnected",utilisateurModif);
 				//System.out.println(utilisateurModif);
 
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
-				rd.forward(request, response);
+//				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
+//				rd.forward(request, response);
 			}
 			
 			
@@ -117,35 +117,12 @@ public class ServletAffichageModifierProfile extends HttpServlet {
 			List<Integer> listeErreursModification = e.getListeCodesErreur();
 			request.setAttribute("listeErreursInscription", listeErreursModification);
 			//On envoie à la JSP
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPModifierMonProfile.jsp");
-			rd.forward(request, response);
+//			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPModifierMonProfile.jsp");
+//			rd.forward(request, response);
 		}
-        
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPModifierMonProfile.jsp");
+		rd.forward(request, response);
 	}
-	/*	request.setCharacterEncoding("utf-8");
-		
-		String pseudo = request.getParameter("pseudo");
-		String prenom = request.getParameter("prenom");
-		String telephone = request.getParameter("telephone"); 
-		String codePostal = request.getParameter("codepostal"); 
-		String motDePass = request.getParameter("password");
-		String nouveauMotDePass = request.getParameter("newPassword");
-		String confirmationNouveauMotDePass = request.getParameter("confirmNewPassword");
-		String nom = request.getParameter("nom");
-		String email = request.getParameter("email"); 
-		String rue = request.getParameter("rue"); 
-		String ville = request.getParameter("ville");
-		
-		System.out.println(pseudo);
-		System.out.println(prenom);
-		System.out.println(telephone);
-		System.out.println(codePostal);
-		System.out.println(motDePass);
-		System.out.println(nouveauMotDePass);
-		System.out.println(confirmationNouveauMotDePass);
-		System.out.println(nom);
-		System.out.println(email);	
-		 
-*/
+	
 	
 }

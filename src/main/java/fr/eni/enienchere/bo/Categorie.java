@@ -1,14 +1,19 @@
 package fr.eni.enienchere.bo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.dal.DAOFactory;
 
-public class Categorie {
+public class Categorie implements Serializable{
 
-    private int id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int id;
     private String libelle;
     
     private List<ArticleVendu> listeArticles; //Pour pouvoir afficher les éléments de chaque catégorie? 

@@ -28,13 +28,17 @@ public class ServletAffichageMonProfile extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		int noVendeur = 0; //Partie à vérifier
 		int noUtilisateur = 0;
 		Utilisateur utilisateur = null;
-
+		Utilisateur utilisateur2=null;
+		utilisateur2 = (Utilisateur) session.getAttribute("userConnected");
+		int noUtilisateur2 = utilisateur2.getNoUtilisateur();
+		//noUtilisateur = utilisateur.getNoUtilisateur();
 		//System.out.println(request.getParameter("pseudo"));// 1
 
-		HttpSession session = request.getSession();
+		
 		
 		//Si on a cliqué sur Mon Profil et pas le lien vers un autre profil
 		if (request.getParameter("idVendeur") == null) { //Pour le moment on est dans ce cas, le reste est à vérifier
@@ -42,20 +46,21 @@ public class ServletAffichageMonProfile extends HttpServlet {
 			//On récupère l'utilisateur actuellement connecté
 			utilisateur = (Utilisateur) session.getAttribute("userConnected");
 			
-			noUtilisateur = utilisateur.getNoUtilisateur();//A vérifier si c'est utile mais je ne touche pas pour le moment
+			//noUtilisateur = utilisateur.getNoUtilisateur();//A vérifier si c'est utile mais je ne touche pas pour le moment
 			
 			//On met en attribut de session l'utilisateur connecté dans "utilisateur"
 			session.setAttribute("utilisateur", utilisateur);
 			
 			//On redirige vers la JSP qui affiche le profil
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
-			rd.forward(request, response);
+//			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
+//			rd.forward(request, response);
 		} else {
 			noVendeur = Integer.parseInt(request.getParameter("idVendeur"));
 			System.out.println(noVendeur);
-			if (noUtilisateur == noVendeur) {
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
-				rd.forward(request, response);
+			if (noUtilisateur2 == noVendeur) {
+				request.setAttribute("utilisateur", utilisateur2);
+//				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
+//				rd.forward(request, response);
 			} else {
 
 				try {
@@ -64,51 +69,23 @@ public class ServletAffichageMonProfile extends HttpServlet {
 					Utilisateur vendeur = utilisateurManager.selectionner(noVendeur);
 					request.setAttribute("utilisateur", vendeur);
 
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
-					rd.forward(request, response);
+//					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
+//					rd.forward(request, response);
 				} catch (BusinessException e) {
 					e.printStackTrace();
 
 					List<Integer> listeErreursProfil = e.getListeCodesErreur();
 					request.setAttribute("listeErreursProfil", listeErreursProfil);
 
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
-					rd.forward(request, response);
+//					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
+//					rd.forward(request, response);
 
 				}
 			}
 		}
-		
-//		RequestDispatcher rd = null;
-//		UtilisateurDAOJdbcImpl userDaoJdbcImpl = new UtilisateurDAOJdbcImpl();
-//		
-//		Utilisateur user = new Utilisateur();
-//		//System.out.println(user.toString());
-///*		
-//		try {
-//			//user = userDaoJdbcImpl.selectById(4);
-////			System.out.println("----------->"+user);
-//			//request.setAttribute("user", user);	
-//			//request.getSession().setAttribute("user", user);
-//			//getServletContext().getRequestDispatcher("/WEB-INF/JSPMonProfile.jsp").forward(request, response);
-//			//getServletContext().getRequestDispatcher("/WEB-INF/JSPMonProfile.jsp").forward(request, response);
-//			
-//			//rd = request.getRequestDispatcher("WEB-INF/JSPMonProfile.jsp");
-//			//rd.forward(request, response);
-//			
-//		} catch (BusinessException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//*/
-//
-//		
-//		request.setAttribute("user", user);
-//		
-//		//request.getSession().setAttribute("user", user);
-//		rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
-//		rd.forward(request, response);	
-//	
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPMonProfile.jsp");
+		rd.forward(request, response);
+
 	}
 
 	/**
