@@ -47,6 +47,7 @@
 						<p>Mise à prix : ${details.getPrixVente()}</p>
 					</div>
 		
+		
 					<div class="meilleurOffreProduit">
 						<p>Meilleur offre produit :${details.getPrixVente()}</p>
 					</div>
