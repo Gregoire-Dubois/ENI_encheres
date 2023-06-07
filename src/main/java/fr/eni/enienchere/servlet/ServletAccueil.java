@@ -46,41 +46,33 @@ public class ServletAccueil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
 		// affichage des articles en vente lors d'une ouverture sans indentification
-		
-		ArticleManager tousArticles = new ArticleManager();		
-		ArrayList<ArticleVendu> xArrayList  = new ArrayList<>();
-		
+		 HttpSession session = request.getSession();
+		 List<Categorie> listeCategorie = new ArrayList<>();
+		 ArrayList<ArticleVendu> xArrayList  = new ArrayList<>();
 		try {
-			xArrayList = tousArticles.selectionnerArticles();
-
+			ArticleManager tousArticles = new ArticleManager();		
 			
+			xArrayList = tousArticles.selectionnerArticles();
+			
+	       
+	        Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+	       	CategorieManager categorieManager = new CategorieManager();
+	       	listeCategorie = categorieManager.selectAll();
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 			List<Integer> listeErreurs = e.getListeCodesErreur();
 			request.setAttribute("listeErreurs", listeErreurs);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPAccueil.jsp");
+			
 
 		}	
 		
 		
-		//Affiche de la liste des catégories
-		List<Categorie> listeCategorie = new ArrayList<>();
-        HttpSession session = request.getSession();
-        Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-       	categorieManager = new CategorieManager();
-       	try {
-			listeCategorie = categorieManager.selectAll();
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
        	session.setAttribute("listeCategorie",listeCategorie);
        	
-       	// affichage de liste des articles sans identification de l'utilisateur       	
-		session.setAttribute("articles", xArrayList);
-		//getServletContext().getRequestDispatcher("/WEB-INF/jsp/JSPAccueil.jsp").forward(request, response);	
        	
+		session.setAttribute("articles", xArrayList);
+		
        	
        	
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPAccueil.jsp");
@@ -94,7 +86,7 @@ public class ServletAccueil extends HttpServlet {
 		String mot = request.getParameter("rechercher");
 		System.out.println(mot);
 		String categorie = request.getParameter("categorie");
-		
+		HttpSession session = request.getSession();
 		
 		try {
 			List<ArticleVendu> listeArticles = new ArrayList<>();
@@ -105,7 +97,8 @@ public class ServletAccueil extends HttpServlet {
 				for(ArticleVendu a : listeArticles) {
 					System.out.println(a);
 				}
-				request.setAttribute("articles", listeArticles);
+				session.setAttribute("articles", listeArticles);
+				//response.sendRedirect(request.getContextPath()+"/accueil");
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPAccueil.jsp");
 				rd.forward(request, response);
 			}else {

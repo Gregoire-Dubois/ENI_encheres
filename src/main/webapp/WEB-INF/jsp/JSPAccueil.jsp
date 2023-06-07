@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="fr.eni.enienchere.messages.LecteurMessage"%>
 
@@ -11,19 +10,8 @@
 
 <title>Accueil</title>
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css">
-
-		<!--  
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css">
-
-<link rel="stylesheet" href="../css/style.css">
 
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css"> -->
 
 </head>
 <body>
@@ -36,119 +24,76 @@
 	<section>
 
 
-		<h1>Liste des enchères</h1>
-		<%@ include file="tests/FiltreArticles.jsp"%>
+			<h1>Liste des enchères</h1>
+			<%@ include file="tests/FiltreArticles.jsp"%>
 
+		<c:choose>
+		<c:when test="${userConnected != null}"><!-- Si l'utilisateur est connecte -->
+		<c:forEach var="article" items="${articles}">
+		<div class="resultatsNonConnecte">
+	
+			<div class="card">
+				<img
+					src="https://static.fnac-static.com/multimedia/Images/FR/MDM/24/35/1f/18822436/1540-1/tsp20230519135127/The-Legend-of-Zelda-Tears-Of-The-Kingdom-Nintendo-Switch.jpg"
+					alt="Image de la card">
+				<div class="card-content">
+					<h2><a href="">${article.nomArticle}</a></h2> 
+					
+					<p>Prix :${article.prixVente}</p> 
+					<p>Fin de l'enchère :${article.dateFinEncheres}</p>
+					<p><a href="${pageContext.request.contextPath}/profil?idVendeur=${article.vendeur.noUtilisateur}">Vendeur : ${article.vendeur.getPseudo()}</a></p> 
 
-		<!-- </div> -->
+				</div>
+			</div>
+	
+		</div>
+		</c:forEach>
+		</c:when>
+		<c:otherwise><!-- Si l'utilisateur n'est pas connecte -->
 
-		<!-- <div class="filtresNonConnecte"> -->
-			<h3>Filtre</h3>
+		<c:choose>
 
-			<form>
+			<c:when test="${empty listeErreurs}">
+				<div class="resultatsNonConnecte">
 
-				<input type="text" name="search"
-					placeholder="Le nom de l'article contient"> <br> <label
-					for="categorie">Catégorie:</label> <select name="categorie"
-					id="categorie">
-					<!-- <option value="">Choix</option>-->
-					<c:forEach items="${listeCategorie}" var="categorie">
-						<option value="${categorie.libelle}"
-							${categorie.libelle == article.categorie.libelle ? 'selected' : ''}>${categorie.libelle}</option>
-					</c:forEach>
-				</select>
-				<!-- <select name="categorie" id="categorie">
-					<option value="categorie1" >Catégorie 1</option>
-					<option value="categorie2" >Catégorie 2</option>
-					<option value="categorie3" >Catégorie 3</option>
-				</select>-->
-				<br> <input type="submit" value="Rechercher">
-			</form>
-
-
-
-			<c:choose>
-				<c:when test="${userConnected != null}">
-					<!-- Si l'utilisateur est connecte -->
-					<div class="resultatsNonConnecte">
-
-						<div class="card">
-							<img
-								src="https://static.fnac-static.com/multimedia/Images/FR/MDM/24/35/1f/18822436/1540-1/tsp20230519135127/The-Legend-of-Zelda-Tears-Of-The-Kingdom-Nintendo-Switch.jpg"
-								alt="Image de la card">
+					
+						<c:forEach var="article" items="${articles}">
+					<div class="card">
+							<img src="#" alt="Image de la card">
 							<div class="card-content">
-								<h2>
-									<a href="">${article.nomArticle}</a>
-								</h2>
-								<!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
+								<h2>${article.nomArticle}</h2>
+								<p>Prix : ${article.prixVente}</p>
+								<p>Fin de l'enchère : ${article.dateFinEncheres}</p>
+								<p>Vendeur : ${article.vendeur.pseudo}</p>
 
-								<p>Prix :${article.prixVente}</p>
-								<!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
-								<p>Fin de l'enchère :${article.dateFinEncheres}</p>
-								<!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
-								<p>
-									<a
-										href="${pageContext.request.contextPath}/profil?idVendeur=${article.utilisateur.getNoUtilisateur}">Vendeur
-										: ${article.utilisateur.getPseudo}</a>
-								</p>
-								<!--  Exemple pour se repérer les expressions ne correspondent à rien pour le moment -->
-								<!-- <p><a href="${pageContext.request.contextPath}/profil?idVendeur=1">Vendeur : ${article.utilisateur.getPseudo}</a></p> -->
-								<!-- Pour l'exemple -->
 							</div>
-						</div>
-
 					</div>
-				</c:when>
-				<c:otherwise>
-					<!-- Si l'utilisateur n'est pas connecte -->
+						</c:forEach>
+					
+				</div>
 
-					<c:choose>
+			</c:when>
 
-						<a href="ServletTestEncherirAcquisitionDetailMAventeFinEnchere">
-							<div class="resultatsNonConnecte">
-								<div class="card">
-									<img
-										src="https://static.fnac-static.com/multimedia/Images/FR/MDM/24/35/1f/18822436/1540-1/tsp20230519135127/The-Legend-of-Zelda-Tears-Of-The-Kingdom-Nintendo-Switch.jpg"
-										alt="Image de la card">
-									<c:when test="${empty listeErreurs}">
-										<div class="resultatsNonConnecte">
+			<c:otherwise>
+
+				<c:forEach var="erreur" items="${listeErreurs}">
+					<p>${LecteurMessage.getMessageErreur(erreur)}</p>
+				</c:forEach>
+			
+			</c:otherwise>
+
+		</c:choose>
+		
+		</c:otherwise>
+		
+		</c:choose>
 
 
-											<c:forEach var="v" items="${articles}">
-												<div class="card">
-													<img src="#" alt="Image de la card">
-													<div class="card-content">
-														<h2>${v.nomArticle}</h2>
-														<p>Prix : ${v.prixVente}</p>
-														<p>Fin de l'enchère : ${v.dateFinEncheres}</p>
-														<p>Vendeur : ${v.vendeur.pseudo}</p>
 
-													</div>
-												</div>
-											</c:forEach>
-
-										</div>
-
-									</c:when>
-								</div>
-							</div>
-						</a>
-
-						<c:otherwise>
-
-							<c:forEach var="e" items="${listeErreurs}">
-								<p>${LecteurMessage.getMessageErreur(e)}</p>
-							</c:forEach>
-
-						</c:otherwise>
-					</c:choose>
-
-				</c:otherwise>
-
-			</c:choose>
 	</section>
 
 	<%@ include file="JSPFooter.jsp"%>
+
 
 
 </body>

@@ -11,7 +11,6 @@ public interface ArticleDAO {
     public ArticleVendu selectArticleById(int articleId) throws BusinessException;
 
     public List<ArticleVendu> selectAllArticles() throws BusinessException;
-    
 
     public List<ArticleVendu> selectAllArticlesByUtilisateur(Utilisateur utilisateur) throws BusinessException;
 
@@ -26,7 +25,6 @@ public interface ArticleDAO {
     
     public void deleteArticleById(ArticleVendu article) throws BusinessException;
     
-
     // Liste des articles actuellement en vente filtré par une catégorie
     public List<ArticleVendu> selectAllVentesEnCoursByNoCategorie(int id) throws BusinessException;
     
@@ -43,7 +41,6 @@ public interface ArticleDAO {
     public List<ArticleVendu> selectAllEncheresEnCours() throws BusinessException;
 
     public List<ArticleVendu> selectionnerArticlesFiltres(String categorie, String mot, String etatVente);
-
 
     //A faire
 	public List<ArticleVendu> selectAllArticlesByNoCategorie(int id) throws BusinessException;
