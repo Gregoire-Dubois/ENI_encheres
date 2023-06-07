@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ENI enchères</title>
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/style.css">
@@ -16,7 +16,11 @@
 </head>
 <body>
 
-	<div class="mainconteneurDetail">
+
+<c:choose>
+  <c:when test="${etatVente == 'EC'}">
+
+		<div class="mainconteneurDetail">
 		<div class="photoDetails" class="fit-picture" src="#" alt="photo">
 			<img class="photo" alt="une photo"
 				src="https://www.leparisien.fr/resizer/PQ6kjwN7VTSmYq9mzk3zHvEu0LY=/932x582/cloudfront-eu-central-1.images.arcpublishing.com/lpguideshopping/A45LFCGVEVBPBNIGSRUKV3AWFM.jpg">
@@ -25,9 +29,8 @@
 
 		<div class="conteneurdetails">
 			<div class="titreDetails">
-				<h1>Détail Vente (A dynamiser)</h1>
+				<h1>Détail Vente (A dynamiser) </h1>
 			</div>
-
 
 			<div class="titreProduit">
 				<p>Titre du produit :</p>
@@ -86,12 +89,10 @@
 	</div>
 
 
+  </c:when>
+  <c:when test="${etatVente == 'VE'}">
 
-	-------------------------------------
-
-
-
-	<div class="mainconteneurDetail2">
+		<div class="mainconteneurDetail2">
 		<div class="photoDetails2" class="fit-picture" src="#" alt="photo">
 			<img class="photo2" alt="une photo"
 				src="https://www.leparisien.fr/resizer/PQ6kjwN7VTSmYq9mzk3zHvEu0LY=/932x582/cloudfront-eu-central-1.images.arcpublishing.com/lpguideshopping/A45LFCGVEVBPBNIGSRUKV3AWFM.jpg">
@@ -137,9 +138,13 @@
 		</div>
 	</div>
 
-	-------------------------------------
 
-<div class="mainconteneurDetail">
+  </c:when>
+  <c:when test="${etatVente == 'NC'}">
+
+
+
+	<div class="mainconteneurDetail">
 		<div class="photoDetails" class="fit-picture" src="#" alt="photo">
 			<img class="photo" alt="une photo"
 				src="https://www.leparisien.fr/resizer/PQ6kjwN7VTSmYq9mzk3zHvEu0LY=/932x582/cloudfront-eu-central-1.images.arcpublishing.com/lpguideshopping/A45LFCGVEVBPBNIGSRUKV3AWFM.jpg">
@@ -184,6 +189,13 @@
 
 		</div>
 	</div>
+
+
+  </c:when>
+
+</c:choose>
+
+
 
 </body>
 </html>

@@ -32,19 +32,22 @@
 		<c:forEach var="article" items="${articles}">
 		<div class="resultatsNonConnecte">
 	
-			<div class="card">
-				<img
-					src="https://static.fnac-static.com/multimedia/Images/FR/MDM/24/35/1f/18822436/1540-1/tsp20230519135127/The-Legend-of-Zelda-Tears-Of-The-Kingdom-Nintendo-Switch.jpg"
-					alt="Image de la card">
-				<div class="card-content">
-					<h2><a href="">${article.nomArticle}</a></h2> 
-					
-					<p>Prix :${article.prixVente}</p> 
-					<p>Fin de l'enchère :${article.dateFinEncheres}</p>
-					<p><a href="${pageContext.request.contextPath}/profil?idVendeur=${article.vendeur.noUtilisateur}">Vendeur : ${article.vendeur.getPseudo()}</a></p> 
-
+			
+				<div class="card">
+				<a href="${pageContext.request.contextPath}/ServletTestEncherirAcquisitionDetailMAventeFinEnchere?idArticle=${article.noArticle}">
+					<img
+						src="https://static.fnac-static.com/multimedia/Images/FR/MDM/24/35/1f/18822436/1540-1/tsp20230519135127/The-Legend-of-Zelda-Tears-Of-The-Kingdom-Nintendo-Switch.jpg"
+						alt="Image de la card"></a>
+					<div class="card-content">
+						<h2><a href="">${article.nomArticle}</a></h2> 
+						
+						<p>Prix :${article.prixVente}</p> 
+						<p>Fin de l'enchère :${article.dateFinEncheres}</p>
+						<p><a href="${pageContext.request.contextPath}/profil?idVendeur=${article.vendeur.noUtilisateur}">Vendeur : ${article.vendeur.getPseudo()}</a></p> 
+	
+					</div>
 				</div>
-			</div>
+			
 	
 		</div>
 		</c:forEach>
