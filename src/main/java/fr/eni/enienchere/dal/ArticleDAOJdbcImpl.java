@@ -145,6 +145,54 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT"
 			+ "WHERE no_article = ?;"; 
 	
 	
+	
+	private static final String DETAIL_VENTE = "SELECT\r\n"
+
+        + "a.nom_article, \r\n"
+
+        + "a.description, \r\n"
+
+        + "c.libelle as categorie_libelle, \r\n"
+
+        + "e.montant_enchere, \r\n"
+
+        + "e.no_utilisateur AS no_acquereur, \r\n"
+
+        + "encherisseur.pseudo as encherisseur,\r\n"
+
+        + "a.prix_initial, \r\n"
+
+        + "a.date_fin_encheres, \r\n"
+
+        + "r.rue , \r\n"
+
+        + "r.code_postal , \r\n"
+
+        + "r.ville , \r\n"
+
+        + "vendeur.no_utilisateur as no_vendeur,\r\n"
+
+        + "vendeur.pseudo as pseudo_vendeur\r\n"
+
+        + "FROM\r\n"
+
+        + "ARTICLES_VENDUS a INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie  \r\n"
+
+        + "LEFT JOIN ENCHERES e ON a.no_article = e.no_article and  \r\n"
+
+        + "e.no_enchere = ( select max(e.no_enchere) from ENCHERES e where a.no_article =  e.no_article)\r\n"
+
+        + "LEFT JOIN UTILISATEURS vendeur on a.no_utilisateur = vendeur.no_utilisateur\r\n"
+
+        + "LEFT JOIN UTILISATEURS encherisseur on e.no_utilisateur = encherisseur.no_utilisateur\r\n"
+
+        + "LEFT JOIN RETRAITS r ON a.no_article = r.no_article\r\n"
+
+        + "WHERE\r\n"
+
+        + "a.no_article = ?;";
+	
+	
 	public String idArticleInList(int id) {
 		String etatDeVente = ""; 
 		Connection cnx = null;
@@ -173,8 +221,96 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT"
 		}
 		
 		return etatDeVente;
+		
 	}
+	
+	// méthode en cours de réécriture
+	
+	@Override
 
+    public ArticleVendu selectArticleById(int articleId) throws BusinessException {
+
+        ArticleVendu article = null;
+        Connection cnx = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            cnx = ConnectionProvider.getConnection();
+            pstmt = cnx.prepareStatement(DETAIL_VENTE);
+            pstmt.setInt(1, articleId);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                String nomArticle = rs.getString("nom_article");
+                String description = rs.getString("description");
+                String categorie = rs.getString("categorie_libelle");
+                int prixVente = rs.getInt("montant_enchere");
+                int noAcquereur = rs.getInt("no_acquereur");
+                String pseudoAcquereur = rs.getString("encherisseur");
+                int prixInitial = rs.getInt("prix_initial");
+                LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
+                String rueRetrait = rs.getString("rue");
+                String codePostalRetrait = rs.getString("code_postal");
+                String villeRetrait = rs.getString("ville");
+                int noVendeur = rs.getInt("no_vendeur");
+                String pseudoVendeur = rs.getString("pseudo_vendeur");
+
+                // Récupérer les objets Utilisateur correspondants aux pseudos
+
+                UtilisateurManager utilisateurManager = new UtilisateurManager();
+
+                Utilisateur acquereur = utilisateurManager.selectionner(noAcquereur);
+
+                Utilisateur vendeur = utilisateurManager.selectionner(noVendeur);
+
+//                Utilisateur acquereur = UtilisateurDAO.selectByPseudo(pseudoAcquereur);
+
+//                Utilisateur vendeur = UtilisateurDAO.selectByPseudo(pseudoVendeur);
+
+                // Créer l'objet Retrait
+
+                Retrait retrait = new Retrait(rueRetrait, codePostalRetrait, villeRetrait);
+
+                // Créer l'objet Categorie
+
+                Categorie categorieArt = new Categorie();
+
+                categorieArt.setLibelle(categorie);
+
+ 
+
+                // Créer l'objet ArticleVendu
+
+                article = new ArticleVendu(nomArticle, description, categorieArt, prixVente, acquereur,
+
+                            prixInitial, dateFinEncheres, retrait, vendeur);
+                
+
+                }
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            closeResources(cnx, pstmt, rs);
+
+        }
+        System.out.println("---->" + article);
+
+        return article;
+
+        }
+	
+	
+	
+	
+	
+/*
 	@Override
 	public ArticleVendu selectArticleById(int articleId) throws BusinessException {
 		ArticleVendu article = null;
@@ -184,11 +320,12 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT"
 
 	    try {
     		cnx = ConnectionProvider.getConnection();
-    		pstmt = cnx.prepareStatement(SELECT_ARTICLE_BY_ID);
+    		pstmt = cnx.prepareStatement(DETAIL_VENTE);// SELECT_ARTICLE_BY_ID
 
     		pstmt.setInt(1, articleId);
     		
     		rs = pstmt.executeQuery();
+    		
 
 	        if (rs.next()) {
 	        	String nomArticle = rs.getString("nomArticle");
@@ -221,14 +358,18 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT"
                 article = new ArticleVendu(nomArticle, description, categorieArt, prixVente, acquereur,
 	                        prixInitial, dateFinEncheres, retrait, vendeur);
 	            }
+	      
+	        	System.out.println(" ---->" + article);
+	        
 	    } catch (SQLException e) {
 			e.printStackTrace();
 	    } finally {
 	    	closeResources(cnx, pstmt, rs);
 	    }
+
 	    return article;
 	    }
-
+*/
 
 	@Override
 	public List<ArticleVendu> selectAllArticles() throws BusinessException {

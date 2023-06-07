@@ -3,6 +3,9 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="fr.eni.enienchere.messages.LecteurMessage"%>
+
+
+
     
 <!DOCTYPE html>
 <html>
@@ -24,43 +27,42 @@
 		
 				<div class="conteneurdetails">
 					<div class="titreDetails">
-						<h1>Enchérir une Vente (A dynamiser) </h1>
+						<h1>Enchérir une Vente</h1>
 					</div>
 		
 					<div class="titreProduit">
-						<p>Titre du produit :</p>
+						<p>Titre du produit : ${details.getNomArticle()}</p>
 					</div>
 	
 		
 					<div class="descriptionProduit">
-						<p>Description :</p>
+						<p>Description : ${details.getDescription()}</p>
 					</div>
 		
 					<div class="categorieProduit">
-						<p>Categorie :</p>
+						<p>Categorie :${details.getCategorie()}</p>
 					</div>
 		
 		
 					<div class="miseAPrixProduit">
-						<p>Mise à prix :</p>
+						<p>Mise à prix : ${details.getPrixVente()}</p>
 					</div>
 		
 					<div class="meilleurOffreProduit">
-						<p>Meilleur offre produit :</p>
+						<p>Meilleur offre produit :${details.getPrixVente()}</p>
 					</div>
 		
 					<div class="finEnchereProduit">
-						<p>Fin enchere produit :</p>
+						<p>Fin enchere produit :${details.getDateFinEncheres()}</p>
 		
 					</div>
 		
 					<div class="retraitProduit">
-						<p>Retrait Produit :
-						<p>
+						<p>Retrait Produit :${details.getRetrait()}<p>
 					</div>
 		
 					<div class="vendeurProduit">
-						<p>Vendeur :</p>
+						<p>Vendeur :${details.getVendeur()}</p>
 					</div>
 		
 					<div class="propositionProduit">

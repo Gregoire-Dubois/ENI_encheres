@@ -29,7 +29,7 @@
 
 
 			<div class="titreProduit3">
-				<p>Titre du produit :</p>
+				<p>Titre du produit : ${details.getNomArticle()}</p>
 			</div>
 
 
