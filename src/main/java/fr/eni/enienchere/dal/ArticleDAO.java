@@ -29,16 +29,22 @@ public interface ArticleDAO {
     public List<ArticleVendu> selectAllVentesEnCoursByNoCategorie(int id) throws BusinessException;
     
     // Liste des ventes non commencées et qui ont pour vendeur l'utilisateur connecté.
-    public List<ArticleVendu> selectAllVentesNonCommenceesByNoUtilisateur(int id) throws BusinessException;
+    public List<ArticleVendu> selectAllVentesNonCommenceesByNoUtilisateur(int no_utilisateur) throws BusinessException;
     
     // Liste des ventes en cours et qui ont pour vendeur l'utilisateur connecté.
-    public List<ArticleVendu> selectAllVentesEnCoursByNoUtilisateur(int id) throws BusinessException;
+    public List<ArticleVendu> selectAllVentesEnCoursByNoUtilisateur(int no_utilisateur) throws BusinessException;
     
     // Liste des ventes terminées et qui ont pour vendeur l'utilisateur connecté.
-    public List<ArticleVendu> selectAllVentesTermineesByNoUtilisateur(int id) throws BusinessException;
+    public List<ArticleVendu> selectAllVentesTermineesByNoUtilisateur(int no_utilisateur) throws BusinessException;
     
     // Liste de toutes les enchères en cours.
     public List<ArticleVendu> selectAllEncheresEnCours() throws BusinessException;
+
+    // Liste de toutes les enchères en cours pour un no_utilisateur
+    public List<ArticleVendu> selectAllEncheresEnCoursByNoUtilisateur(int no_utilisateur) throws BusinessException;
+    
+    // Liste de toutes les enchères en cours pour un no_utilisateur
+    public List<ArticleVendu> selectAllEncheresGagneesByNoUtilisateur(int no_utilisateur) throws BusinessException;
 
     public List<ArticleVendu> selectionnerArticlesFiltres(String categorie, String mot, String etatVente);
 

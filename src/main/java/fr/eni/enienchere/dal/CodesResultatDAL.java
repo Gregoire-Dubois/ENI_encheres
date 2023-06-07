@@ -34,5 +34,7 @@ public abstract class CodesResultatDAL {
 	public static final int SELECT_ALL_VENTE_NC_BY_UTILISATEUR_ID_ECHEC = 14003;
 	public static final int SELECT_ALL_VENTE_EC_BY_UTILISATEUR_ID_ECHEC = 14004;
 	public static final int SELECT_ALL_VENTE_VE_BY_UTILISATEUR_ID_ECHEC = 14005;
+	public static final int SELECT_ALL_ENCHERES_EC_BY_UTILISATEUR_ID_ECHEC = 14006;
+	public static final int SELECT_ALL_ENCHERES_VE_BY_UTILISATEUR_ID_ECHEC = 14007;
 
 }
