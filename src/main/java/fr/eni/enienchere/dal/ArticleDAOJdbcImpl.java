@@ -111,6 +111,42 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT"
 			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS as u on a.no_utilisateur=u.no_utilisateur \r\n"
 			+ "							  INNER JOIN CATEGORIES as c on c.no_categorie=a.no_categorie\r\n"
 			+ "			where etat_vente=? and LOWER(nom_article) like ? and ((c.libelle = ?) or (? IS NULL))";
+	
+	
+	private static final String ID_ARTICLE = "SELECT etat_vente "
+			+ "FROM ARTICLES_VENDUS "
+			+ "WHERE no_article = ?;"; 
+	
+	
+	public String idArticleInList(int id) {
+		String etatDeVente = ""; 
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    
+	    
+	    
+		try {
+			cnx = ConnectionProvider.getConnection();
+			pstmt = cnx.prepareStatement(ID_ARTICLE);
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				etatDeVente = rs.getString("etat_vente");
+				
+			}			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+	    	closeResources(cnx, pstmt, rs);
+
+		}
+		
+		return etatDeVente;
+	}
 
 	@Override
 	public ArticleVendu selectArticleById(int articleId) throws BusinessException {
