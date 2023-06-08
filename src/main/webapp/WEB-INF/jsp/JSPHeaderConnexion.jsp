@@ -13,7 +13,6 @@
 	<c:choose>
 		<c:when test="${userConnected != null}"><!-- Si l'utilisateur est connecte -->
 			<p><!-- Mise en place d'une liste possible -->
-				<a href="${pageContext.request.contextPath}/accueilConnected">Enchères</a>
 				<a href="${pageContext.request.contextPath}/vendre">Vendre un article</a>
 				<a href="${pageContext.request.contextPath}/profil?pseudo=${userConnected.getPseudo()}">Mon Profil</a>
 				<a href="${pageContext.request.contextPath}/deconnexion">Déconnexion</a>
