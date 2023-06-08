@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="fr.eni.enienchere.messages.LecteurMessage"%>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +32,7 @@
   </c:when>
   <c:when test="${etatVente == 'NC'}">
 
-		<%@ include file="JSPDetailVenteTerminee.jsp"%>
+		<%@ include file="JSPVenteNonCommencee.jsp"%>
 
 
   </c:when>
@@ -41,3 +42,5 @@
 
 </body>
 </html>
+
+

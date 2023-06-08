@@ -40,6 +40,9 @@ public class ServletTestEncherirAcquisitionDetailMAventeFinEnchere extends HttpS
 		System.out.println(id);
 		String ev = etatVente.idArticleInList(id);
 		session.setAttribute("etatVente", ev);
+			
+		
+		
 		
 		
 		//récupérer les infos d'un article pour sa page enchères
@@ -54,6 +57,7 @@ public class ServletTestEncherirAcquisitionDetailMAventeFinEnchere extends HttpS
 		}
 		session.setAttribute("details", details);
 		
+
 		//récupérer les infos de l'encherisseur
 		UtilisateurDAOJdbcImpl acquereur = new UtilisateurDAOJdbcImpl();
 	    Utilisateur encherisseur = null;
@@ -64,6 +68,9 @@ public class ServletTestEncherirAcquisitionDetailMAventeFinEnchere extends HttpS
 	    }
 	    session.setAttribute("encherisseur", encherisseur);
 	    System.out.println(encherisseur);
+
+
+		System.out.println(details);
 
 		
 		

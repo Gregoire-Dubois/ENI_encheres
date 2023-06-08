@@ -20,7 +20,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	
 	private static final String INSERT_ARTICLE="INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,no_utilisateur,no_categorie) VALUES(?,?,?,?,?,?,?)";
 	
-	private static final String SELECT_ALL_ARTICLE = "SELECT no_article, a.no_utilisateur, nom_article, date_fin_encheres, prix_vente, pseudo\n"
+	private static final String SELECT_ALL_ARTICLE = "SELECT no_article, a.no_utilisateur, nom_article, date_fin_encheres, prix_vente, prix_initial, pseudo\n"
 			+ "FROM ARTICLES_VENDUS as a\n"
 			+ "INNER JOIN UTILISATEURS as u ON a.no_utilisateur = u.no_utilisateur\n"
 			+ "WHERE etat_vente = 'EC';";
@@ -51,7 +51,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 		+ "a.no_article = ?;";
 	
 	private static final String SELECT_ALL_VENTE_EC = "SELECT"
-			+ "a.no_article, nom_article, date_fin_encheres, prix_vente, a.no_utilisateur, u.pseudo"
+			+ "a.no_article, nom_article, date_fin_encheres, prix_vente,prix_initial, a.no_utilisateur, u.pseudo"
 			+ "FROM articles_vendus a"
 			+ "LEFT JOIN utilisateurs u ON a.no_utilisateur = u.no_utilisateur"
 			+ "WHERE etat_vente = 'EC';";
@@ -118,85 +118,85 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 			    + "WHERE no_article = a.no_article)"
 		    + "AND e.no_utilisateur = ?";
 	
-	private static final String SELECT_ALL_ARTICLES_ETAT_MOT_CATEGORIE = "SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+	private static final String SELECT_ALL_ARTICLES_ETAT_MOT_CATEGORIE = "SELECT no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
 			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS as u on a.no_utilisateur=u.no_utilisateur \r\n"
 			+ "							  INNER JOIN CATEGORIES as c on c.no_categorie=a.no_categorie\r\n"
 			+ "			where etat_vente=? and LOWER(nom_article) like ? and ((c.libelle = ?) or (? IS NULL))";
 	
-	private static final String SELECT_EC_ARTICLES_SANS_UTILISATEUR = "SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+	private static final String SELECT_EC_ARTICLES_SANS_UTILISATEUR = "SELECT no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
 			+ "			FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS as u on a.no_utilisateur=u.no_utilisateur \r\n"
 			+ "									  INNER JOIN CATEGORIES as c on c.no_categorie=a.no_categorie\r\n"
 			+ "						where etat_vente='EC' and a.no_utilisateur!=?;";
 	
-	private static final String SELECT_MES_ENCHERES="SELECT e.no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+	private static final String SELECT_MES_ENCHERES="SELECT e.no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
 			+ "						FROM ENCHERES as e INNER JOIN UTILISATEURS as u on e.no_utilisateur=u.no_utilisateur \r\n"
 			+ "												  INNER JOIN ARTICLES_VENDUS as a on a.no_article=e.no_article\r\n"
 			+ "												  \r\n"
 			+ "									where etat_vente='EC' and e.no_utilisateur=?;";
 	
-	private static final String SELECT_ENCHERES_REMPORTEES="SELECT e.no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+	private static final String SELECT_ENCHERES_REMPORTEES="SELECT e.no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
 			+ "						FROM ENCHERES as e INNER JOIN UTILISATEURS as u on e.no_utilisateur=u.no_utilisateur \r\n"
 			+ "												  INNER JOIN ARTICLES_VENDUS as a on a.no_article=e.no_article and e.montant_enchere = a.prix_vente\r\n"
 			+ "												  \r\n"
 			+ "									where etat_vente='VE' and e.no_utilisateur=?;";
-	private static final String SELECT_EC_ARTICLES_SANS_UTILISATEUR_PLUS_ENCHERES_REMPORTEES="SELECT a.no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+	private static final String SELECT_EC_ARTICLES_SANS_UTILISATEUR_PLUS_ENCHERES_REMPORTEES="SELECT a.no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
 			+ "						FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS as u on a.no_utilisateur=u.no_utilisateur \r\n"
 			+ "												  INNER JOIN CATEGORIES as c on c.no_categorie=a.no_categorie\r\n"
 			+ "									where etat_vente='EC' and a.no_utilisateur!=?\r\n"
 			+ "UNION\r\n"
-			+ "SELECT e.no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+			+ "SELECT e.no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
 			+ "									FROM ENCHERES as e INNER JOIN UTILISATEURS as u on e.no_utilisateur=u.no_utilisateur \r\n"
 			+ "															  INNER JOIN ARTICLES_VENDUS as a on a.no_article=e.no_article and e.montant_enchere = a.prix_vente\r\n"
 			+ "\r\n"
 			+ "												where etat_vente='VE' and e.no_utilisateur=?;";
 	
-	private static final String SELECT_MES_ENCHERES_PLUS_ENCHERES_REMPORTEES="SELECT e.no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+	private static final String SELECT_MES_ENCHERES_PLUS_ENCHERES_REMPORTEES="SELECT e.no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
 			+ "									FROM ENCHERES as e INNER JOIN UTILISATEURS as u on e.no_utilisateur=u.no_utilisateur \r\n"
 			+ "															  INNER JOIN ARTICLES_VENDUS as a on a.no_article=e.no_article and e.montant_enchere = a.prix_vente\r\n"
 			+ "\r\n"
 			+ "												where etat_vente='VE' and e.no_utilisateur=?\r\n"
 			+ "UNION\r\n"
-			+ "SELECT e.no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+			+ "SELECT e.no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
 			+ "									FROM ENCHERES as e INNER JOIN UTILISATEURS as u on e.no_utilisateur=u.no_utilisateur \r\n"
 			+ "															  INNER JOIN ARTICLES_VENDUS as a on a.no_article=e.no_article\r\n"
 			+ "															\r\n"
 			+ "												where etat_vente='EC' and e.no_utilisateur=?;";
 	
-	private static final String SELECT_MES_VENTES_EN_COURS="SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+	private static final String SELECT_MES_VENTES_EN_COURS="SELECT no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
 			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
 			+ "	WHERE etat_vente='EC' and a.no_utilisateur=?;";
 	
-	private static final String SELECT_MES_VENTES_NON_DEBUTEES="SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+	private static final String SELECT_MES_VENTES_NON_DEBUTEES="SELECT no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
 			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
 			+ "	WHERE etat_vente='NC' and a.no_utilisateur=?;";
 	
-	private static final String SELECT_MES_VENTES_TERMINEES="SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+	private static final String SELECT_MES_VENTES_TERMINEES="SELECT no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
 			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
 			+ "	WHERE etat_vente='VE' and a.no_utilisateur=?;";
 	
-	private static final String SELECT_MES_VENTES_EN_COURS_PLUS_NON_DEBUTEES="SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+	private static final String SELECT_MES_VENTES_EN_COURS_PLUS_NON_DEBUTEES="SELECT no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
 			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
 			+ "	WHERE etat_vente='EC' and a.no_utilisateur=?\r\n"
 			+ "UNION\r\n"
-			+ "SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+			+ "SELECT no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
 			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
 			+ "	WHERE etat_vente='NC' and a.no_utilisateur=?;";
 			
-	private static final String SELECT_MES_VENTES_EN_COURS_PLUS_TERMINEES="SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+	private static final String SELECT_MES_VENTES_EN_COURS_PLUS_TERMINEES="SELECT no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
 			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
 			+ "	WHERE etat_vente='EC' and a.no_utilisateur=?\r\n"
 			+ "UNION\r\n"
-			+ "SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+			+ "SELECT no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
 			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
 			+ "	WHERE etat_vente='VE' and a.no_utilisateur=?;";
-	private static final String SELECT_MES_VENTES_NON_DEBUTEES_PLUS_TERMINEES="SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+	private static final String SELECT_MES_VENTES_NON_DEBUTEES_PLUS_TERMINEES="SELECT no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
 			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
 			+ "	WHERE etat_vente='NC' and a.no_utilisateur=?\r\n"
 			+ "UNION\r\n"
-			+ "SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+			+ "SELECT no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
 			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
 			+ "	WHERE etat_vente='VE' and a.no_utilisateur=?;";
-	private static final String SELECT_MES_VENTES_EN_COURS_PLUS_NON_DEBUTEES_PLUS_TERMINEES="SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+	private static final String SELECT_MES_VENTES_EN_COURS_PLUS_NON_DEBUTEES_PLUS_TERMINEES="SELECT no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
 			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
 			+ "	WHERE a.no_utilisateur=?;";
 	
@@ -226,6 +226,8 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
         + "a.prix_initial, \r\n"
 
         + "a.date_fin_encheres, \r\n"
+        
+        + "a.date_debut_encheres, \r\n"
 
         + "r.rue , \r\n"
 
@@ -306,6 +308,30 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
+            	
+            	/*
+            	 * 	public ArticleVendu(String nomArticle, String description, Categorie categorie, int prixVente,
+			Utilisateur acquereur, int prixInitial, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			Retrait retrait, Utilisateur vendeur) {
+
+			this.nomArticle = nomArticle;
+			this.description = description;
+			this.categorie = categorie;
+			this.prixVente = prixVente; 
+			this.acquereur = acquereur;
+			this.prixInitial = prixInitial;
+			this.dateDebutEncheres = dateDebutEncheres; 
+			this.dateFinEncheres = dateFinEncheres; 
+			this.retrait = retrait; 
+			this.vendeur = vendeur; 
+		
+	
+	}
+            	 * 
+            	 * 
+            	 */
+            	
+            	
 
                 String nomArticle = rs.getString("nom_article");
                 String description = rs.getString("description");
@@ -314,6 +340,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
                 int noAcquereur = rs.getInt("no_acquereur");
                 String pseudoAcquereur = rs.getString("encherisseur");
                 int prixInitial = rs.getInt("prix_initial");
+                LocalDate dateDebutEncheres = rs.getDate("date_debut_encheres").toLocalDate();
                 LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
                 String rueRetrait = rs.getString("rue");
                 String codePostalRetrait = rs.getString("code_postal");
@@ -348,7 +375,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 
                 article = new ArticleVendu(nomArticle, description, categorieArt, prixVente, acquereur,
 
-                            prixInitial, dateFinEncheres, retrait, vendeur);
+                            prixInitial, dateDebutEncheres, dateFinEncheres, retrait, vendeur);
                 
 
                 }
@@ -362,7 +389,8 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
             closeResources(cnx, pstmt, rs);
 
         }
-        System.out.println("---->" + article);
+        
+        System.out.println("La valeur de article est " + article);
 
         return article;
 
@@ -465,7 +493,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 						rst.getInt("prix_vente"),
 						utilisateur								
 						);
-												
+				articlesVendus.setPrixInitial(rst.getInt("prix_initial"));								
 				listeArticlesEnVente.add(articlesVendus);
 			}	
 			
@@ -907,7 +935,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 				String pseudo = rs.getString("pseudo");
 				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
 				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
-				
+				article.setPrixInitial(rs.getInt("prix_initial"));
 				articles.add(article);
 			}
 		} catch (SQLException e) {
@@ -950,7 +978,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 				String pseudo = rs.getString("pseudo");
 				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
 				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
-				
+				article.setPrixInitial(rs.getInt("prix_initial"));
 				articles.add(article);
 			}
 		} catch (SQLException e) {
@@ -992,7 +1020,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 				String pseudo = rs.getString("pseudo");
 				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
 				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
-				
+				article.setPrixInitial(rs.getInt("prix_initial"));
 				articles.add(article);
 			}
 		} catch (SQLException e) {
@@ -1034,7 +1062,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 				String pseudo = rs.getString("pseudo");
 				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
 				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
-				
+				article.setPrixInitial(rs.getInt("prix_initial"));
 				articles.add(article);
 			}
 		} catch (SQLException e) {
@@ -1077,7 +1105,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 				String pseudo = rs.getString("pseudo");
 				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
 				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
-				
+				article.setPrixInitial(rs.getInt("prix_initial"));
 				articles.add(article);
 			}
 		} catch (SQLException e) {
@@ -1120,7 +1148,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 				String pseudo = rs.getString("pseudo");
 				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
 				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
-				
+				article.setPrixInitial(rs.getInt("prix_initial"));
 				articles.add(article);
 			}
 		} catch (SQLException e) {
@@ -1162,7 +1190,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 				String pseudo = rs.getString("pseudo");
 				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
 				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
-				
+				article.setPrixInitial(rs.getInt("prix_initial"));
 				articles.add(article);
 			}
 		} catch (SQLException e) {
@@ -1204,7 +1232,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 				String pseudo = rs.getString("pseudo");
 				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
 				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
-				
+				article.setPrixInitial(rs.getInt("prix_initial"));
 				articles.add(article);
 			}
 		} catch (SQLException e) {
@@ -1246,7 +1274,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 				String pseudo = rs.getString("pseudo");
 				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
 				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
-				
+				article.setPrixInitial(rs.getInt("prix_initial"));
 				articles.add(article);
 			}
 		} catch (SQLException e) {
@@ -1289,7 +1317,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 				String pseudo = rs.getString("pseudo");
 				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
 				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
-				
+				article.setPrixInitial(rs.getInt("prix_initial"));
 				articles.add(article);
 			}
 		} catch (SQLException e) {
@@ -1332,7 +1360,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 				String pseudo = rs.getString("pseudo");
 				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
 				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
-				
+				article.setPrixInitial(rs.getInt("prix_initial"));
 				articles.add(article);
 			}
 		} catch (SQLException e) {
@@ -1375,7 +1403,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 				String pseudo = rs.getString("pseudo");
 				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
 				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
-				
+				article.setPrixInitial(rs.getInt("prix_initial"));
 				articles.add(article);
 			}
 		} catch (SQLException e) {
@@ -1417,7 +1445,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 				String pseudo = rs.getString("pseudo");
 				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
 				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
-				
+				article.setPrixInitial(rs.getInt("prix_initial"));
 				articles.add(article);
 			}
 		} catch (SQLException e) {
