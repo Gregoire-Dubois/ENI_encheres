@@ -55,7 +55,6 @@
 					</c:if>
 					
 					
-					
 		
 					<div class="finEnchereProduit">
 						<p>Fin enchere produit :${details.getDateFinEncheres()}</p>
