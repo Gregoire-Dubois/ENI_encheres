@@ -32,43 +32,45 @@
 		<c:when test="${userConnected != null}"><!-- Si l'utilisateur est connecte -->
 			<p>
 
-    <form action="/filtre" method="post">
+    <form method="post" action="${pageContext.request.contextPath}/filtre" >
         
-        <input type="radio" name="achats_ventes" value="Achats" id="achats">
+        <input type="radio" name="achatsVentes" value="achats" id="achats" checked="checked">
         <label for="achats">Achats</label>
         <br>
-        <input type="radio" name="achats_ventes" value="ventes" id="ventes">
+        <input type="radio" name="achatsVentes" value="ventes" id="ventes">
         <label for="ventes">Ventes</label>
         
         <br>
 
-        <fieldset id="filtres-achat">
-        <input type="checkbox" name="filtres-achat" value="enchereOuverte" id="enchereOuverte">
+        <fieldset id="filtresAchat">
+        <input type="checkbox" name="filtresAchat" value="enchereOuverte" id="enchereOuverte">
         <label for="enchereOuverte">Enchères ouvertes</label>
         <br>
     
-        <input type="checkbox" name="filtres-achat" value="mesEncheresEnCours" id="mesEncheresEnCours">
+        <input type="checkbox" name="filtresAchat" value="mesEncheresEnCours" id="mesEncheresEnCours">
         <label for="mesEncheresEnCours">Mes enchères en cours</label>
         <br>
     
-        <input type="checkbox" name="filtres-achat" value="mesEncheresRemportees" id="mesEncheresRemportees">
+        <input type="checkbox" name="filtresAchat" value="mesEncheresRemportees" id="mesEncheresRemportees">
         <label for="mesEncheresRemportees">Mes enchères remportées</label>
         </fieldset>
 
         <br>
 
-        <fieldset id="filtres-vente">
-        <input type="checkbox" name="filtres-vente" value="mesVentesEnCours" id="mesVentesEnCours">
+        <fieldset id="filtresVente">
+        <input type="checkbox" name="filtresVente" value="mesVentesEnCours" id="mesVentesEnCours">
         <label for="mesVentesEnCours">Mes ventes en cours</label>
         <br>
     
-        <input type="checkbox" name="filtres-vente" value="VentesNonDébutées" id="VentesNonDébutées">
-        <label for="VentesNonDébutées">Mes ventes non débutées</label>
+        <input type="checkbox" name="filtresVente" value="ventesNonDebutees" id="ventesNonDebutees">
+        <label for="ventesNonDebutees">Mes ventes non débutées</label>
         <br>
     
-        <input type="checkbox" name="filtres-vente" value="VentesTerminees" id="VentesTerminees">
-        <label for="VentesTerminees">Ventes terminées</label>
+        <input type="checkbox" name="filtresVente" value="ventesTerminees" id="ventesTerminees">
+        <label for="ventesTerminees">Ventes terminées</label>
         </fieldset>
+        
+         <input type="submit" value="Filtrer">
     </form>
     </c:when>
     </c:choose>

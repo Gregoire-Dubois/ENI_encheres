@@ -234,4 +234,128 @@ public class ArticleManager {
 //		}
 		
 	}
+	
+	public List<ArticleVendu> selectionnerArticlesFiltresAchats(String[] filtresAchats, int nombreParametres, Utilisateur utilisateur) throws BusinessException {
+		List<ArticleVendu> listeArticles = new ArrayList<>();
+			switch (nombreParametres) {
+			case 1: {
+				String filtre = filtresAchats[0];
+					switch (filtre) {
+					case "enchereOuverte": 
+						listeArticles= this.articleDAO.selectArticlesECSansUtilisateur(utilisateur.getNoUtilisateur());
+					
+						break;
+					case "mesEncheresEnCours": 
+						listeArticles= this.articleDAO.selectMesEncheresEnCours(utilisateur.getNoUtilisateur());
+						break;
+					case "mesEncheresRemportees": 
+						listeArticles= this.articleDAO.selectEncheresRemportees(utilisateur.getNoUtilisateur());
+						
+					default: System.out.println("A faire");
+						break;
+					}break;
+				
+			}
+			case 2: {
+				String filtre1=filtresAchats[0];
+				String filtre2=filtresAchats[1];
+				switch (filtre1) {
+				case "enchereOuverte": 
+						if(filtre2.equals("mesEncheresEnCours")) {
+							listeArticles= this.articleDAO.selectArticlesECSansUtilisateur(utilisateur.getNoUtilisateur()); //Enchere ouverte + Mes encheres en cours = Enchere ouverte car mes encheres en cours sont comprises dedans.
+						}else { //Encheres remportees
+							listeArticles= this.articleDAO.selectArticlesECSansUtilisateurPlusEncheresRemportees(utilisateur.getNoUtilisateur());
+						}
+					break;
+				case "mesEncheresEnCours": 
+						if(filtre2.equals("enchereOuverte")) {
+							listeArticles= this.articleDAO.selectArticlesECSansUtilisateur(utilisateur.getNoUtilisateur());
+						}else {//Encheres remportees
+							listeArticles= this.articleDAO.selectArticlesEncheresRemporteesPlusMesEncheresEnCours(utilisateur.getNoUtilisateur());
+						}
+					break;
+				case "mesEncheresRemportees": 
+					if(filtre2.equals("enchereOuverte")) {
+						listeArticles= this.articleDAO.selectArticlesECSansUtilisateurPlusEncheresRemportees(utilisateur.getNoUtilisateur());
+					}else {//mesEncheresEnCours
+						listeArticles= this.articleDAO.selectArticlesEncheresRemporteesPlusMesEncheresEnCours(utilisateur.getNoUtilisateur());
+					}
+					
+					break;
+				default: System.out.println("A faire");
+					break;
+				}break;
+			}
+			case 3: {
+				listeArticles= this.articleDAO.selectArticlesEncheresRemporteesPlusMesEncheresEnCours(utilisateur.getNoUtilisateur());
+			}break;
+			default:
+				System.out.println("A faire");
+				break;
+			}
+		
+		return listeArticles;
+	}
+
+	public List<ArticleVendu> selectionnerArticlesFiltresVentes(String[] filtresAchats, int nombreParametres,	Utilisateur utilisateur) throws BusinessException {
+		List<ArticleVendu> listeArticles = new ArrayList<>();
+		switch (nombreParametres) {
+		case 1: {
+			String filtre = filtresAchats[0];
+				switch (filtre) {
+				case "mesVentesEnCours": 
+					listeArticles= this.articleDAO.selectMesVentesEnCours(utilisateur.getNoUtilisateur());
+				
+					break;
+				case "ventesNonDebutees": 
+					listeArticles= this.articleDAO.selectMesVentesNonDebutees(utilisateur.getNoUtilisateur());
+					break;
+				case "ventesTerminees": 
+					listeArticles= this.articleDAO.selectMesVentesTerminees(utilisateur.getNoUtilisateur());
+					
+				default: System.out.println("A faire");
+					break;
+				}break;
+			
+		}
+		case 2: {
+			String filtre1=filtresAchats[0];
+			String filtre2=filtresAchats[1];
+			switch (filtre1) {
+			case "mesVentesEnCours": 
+					if(filtre2.equals("ventesNonDebutees")) {
+						listeArticles= this.articleDAO.selectMesVentesEnCoursPlusVentesNonDebutees(utilisateur.getNoUtilisateur()); 
+					}else { //Ventes terminees
+						listeArticles= this.articleDAO.selectMesVentesEnCoursPlusVentesTerminees(utilisateur.getNoUtilisateur());
+					}
+				break;
+			case "ventesNonDebutees": 
+					if(filtre2.equals("mesVentesEnCours")) {
+						listeArticles= this.articleDAO.selectMesVentesEnCoursPlusVentesNonDebutees(utilisateur.getNoUtilisateur()); 
+					}else {//Ventes terminees
+						listeArticles= this.articleDAO.selectVentesNonDebuteesVentesTerminees(utilisateur.getNoUtilisateur());
+					}
+				break;
+			case "ventesTerminees": 
+				if(filtre2.equals("mesVentesEnCours")) {
+					listeArticles= this.articleDAO.selectMesVentesEnCoursPlusVentesTerminees(utilisateur.getNoUtilisateur());
+				}else {//ventes non debutees
+					listeArticles= this.articleDAO.selectVentesNonDebuteesVentesTerminees(utilisateur.getNoUtilisateur());
+				}
+				
+				break;
+			default: System.out.println("A faire");
+				break;
+			}break;
+		}
+		case 3: {
+			listeArticles= this.articleDAO.selectMesVentesEnCoursNonDebuteesEtTerminees(utilisateur.getNoUtilisateur());
+		}break;
+		default:
+			System.out.println("A faire");
+			break;
+		}
+	
+	return listeArticles;
+	}
 }

@@ -53,7 +53,8 @@ public class ModeDeconnecte implements Filter {
 					 httpRequest.getServletPath().toLowerCase().contains("profil")||
 					 httpRequest.getServletPath().toLowerCase().contains("deconnexion")||
 					 httpRequest.getServletPath().toLowerCase().contains("supprimermoncompte")||
-					 httpRequest.getServletPath().toLowerCase().contains("vendre"))){
+					 httpRequest.getServletPath().toLowerCase().contains("vendre")||
+					 httpRequest.getServletPath().toLowerCase().contains("filtre"))){
 					//System.out.println(httpRequest.getServletPath().toLowerCase());
 					HttpServletResponse httpResponse = (HttpServletResponse) response;
 					httpResponse.sendRedirect(httpRequest.getContextPath()+"/accueil");	

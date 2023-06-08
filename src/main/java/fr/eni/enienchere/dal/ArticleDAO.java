@@ -52,5 +52,30 @@ public interface ArticleDAO {
 	public List<ArticleVendu> selectAllArticlesByNoCategorie(int id) throws BusinessException;
 
 	public List<ArticleVendu> selectAllArticlesByNoUtilisateur(int noUtilisateur) throws BusinessException;
+	
+	public List<ArticleVendu> selectArticlesECSansUtilisateur(int noUtilisateur) throws BusinessException;
+	
+	public List<ArticleVendu> selectMesEncheresEnCours(int noUtilisateur) throws BusinessException;
+
+	public List<ArticleVendu> selectEncheresRemportees(int noUtilisateur) throws BusinessException;
+
+	public List<ArticleVendu> selectArticlesECSansUtilisateurPlusEncheresRemportees(int noUtilisateur);
+
+	public List<ArticleVendu> selectArticlesEncheresRemporteesPlusMesEncheresEnCours(int noUtilisateur);
+
+	public List<ArticleVendu> selectMesVentesEnCours(int noUtilisateur);
+
+	public List<ArticleVendu> selectMesVentesNonDebutees(int noUtilisateur);
+
+	public List<ArticleVendu> selectMesVentesTerminees(int noUtilisateur);
+
+	public List<ArticleVendu> selectMesVentesEnCoursPlusVentesNonDebutees(int noUtilisateur);
+
+	public List<ArticleVendu> selectMesVentesEnCoursPlusVentesTerminees(int noUtilisateur);
+
+	public List<ArticleVendu> selectVentesNonDebuteesVentesTerminees(int noUtilisateur);
+
+	public List<ArticleVendu> selectMesVentesEnCoursNonDebuteesEtTerminees(int noUtilisateur);
+
 
 }
