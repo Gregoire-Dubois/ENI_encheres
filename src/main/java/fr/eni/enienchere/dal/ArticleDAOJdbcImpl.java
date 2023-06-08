@@ -226,6 +226,8 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
         + "a.prix_initial, \r\n"
 
         + "a.date_fin_encheres, \r\n"
+        
+        + "a.date_debut_encheres, \r\n"
 
         + "r.rue , \r\n"
 
@@ -314,6 +316,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
                 int noAcquereur = rs.getInt("no_acquereur");
                 String pseudoAcquereur = rs.getString("encherisseur");
                 int prixInitial = rs.getInt("prix_initial");
+                LocalDate dateDebutEncheres = rs.getDate("date_debut_encheres").toLocalDate();
                 LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
                 String rueRetrait = rs.getString("rue");
                 String codePostalRetrait = rs.getString("code_postal");
@@ -349,7 +352,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 
                 article = new ArticleVendu(nomArticle, description, categorieArt, prixVente, acquereur,
 
-                            prixInitial, dateFinEncheres, retrait, vendeur);
+                            prixInitial, dateDebutEncheres, dateFinEncheres, retrait, vendeur);
                 
 
                 }
@@ -363,7 +366,8 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
             closeResources(cnx, pstmt, rs);
 
         }
-        System.out.println("---->" + article);
+        
+        System.out.println("La valeur de article est " + article);
 
         return article;
 

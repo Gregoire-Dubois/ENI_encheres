@@ -37,6 +37,9 @@ public class ServletTestEncherirAcquisitionDetailMAventeFinEnchere extends HttpS
 		int id = Integer.parseInt(request.getParameter("idArticle")) ;
 		String ev = etatVente.idArticleInList(id);
 		session.setAttribute("etatVente", ev);
+			
+		
+		
 		
 		
 		//récupérer les infos d'un article pour sa page enchères
@@ -50,6 +53,8 @@ public class ServletTestEncherirAcquisitionDetailMAventeFinEnchere extends HttpS
 			e.printStackTrace();
 		}
 		session.setAttribute("details", details);
+		
+		System.out.println(details);
 		
 		
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPPageEncherirAcquisitionDetailMaVente.jsp");

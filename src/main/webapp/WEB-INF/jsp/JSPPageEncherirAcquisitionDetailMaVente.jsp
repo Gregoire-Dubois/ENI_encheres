@@ -31,7 +31,7 @@
   </c:when>
   <c:when test="${etatVente == 'NC'}">
 
-		<%@ include file="JSPDetailVenteTerminee.jsp"%>
+		<%@ include file="JSPVenteNonCommencee.jsp"%>
 
 
   </c:when>
@@ -41,3 +41,5 @@
 
 </body>
 </html>
+
+
