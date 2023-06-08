@@ -72,8 +72,8 @@
 					</div>
 				</div>
 			</div>
-			
-
+					<div class="div-encherir">
+					<c:if test="${userConnected.getNoUtilisateur() != article.noVendeur }">
     				<form method ="post">
         				<label for="montantEnchere">Ma Proposition : </label>
         				<input type="number" id="montantEnchere" name="montantEnchere"
@@ -89,6 +89,7 @@
         				/>
 	        			<input type="submit" value="Enchérir" />
     				</form>
+    				</c:if>
     				</div>
 
 	<c:if test="${!empty listeErreursEnchere }">
