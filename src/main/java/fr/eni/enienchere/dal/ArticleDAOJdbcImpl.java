@@ -210,6 +210,8 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 	private static final String DETAIL_VENTE = "SELECT\r\n"
 
         + "a.nom_article, \r\n"
+        
+        + "a.etat_vente, \r\n"
 
         + "a.description, \r\n"
 
@@ -264,7 +266,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 	    
 		try {
 			cnx = ConnectionProvider.getConnection();
-			pstmt = cnx.prepareStatement(ID_ARTICLE);
+			pstmt = cnx.prepareStatement(DETAIL_VENTE);
 			pstmt.setInt(1, id);
 			rs = pstmt.executeQuery();
 

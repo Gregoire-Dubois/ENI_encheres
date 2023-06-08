@@ -40,11 +40,11 @@
 					</div>
 		
 					<div class="categorieProduit">
-						<p>Categorie :${details.getCategorie()}</p>
+						<p>Categorie :${details.getCategorie().getLibelle()}</p>
 					</div>
 		
 					<div class="miseAPrixProduit">
-						<p>Mise à prix : ${details.getPrixVente()}</p>
+						<p>Mise à prix : ${details.getPrixInitial()}</p>
 					</div>
 		
 					<div class="meilleurOffreProduit">
@@ -57,11 +57,14 @@
 					</div>
 		
 					<div class="retraitProduit">
-						<p>Retrait Produit :${details.getRetrait()}<p>
+						<p>Retrait Produit :${details.getRetrait().getRue()}<p>
+						<p>${details.getRetrait().getCodePostal()}<p>
+						<p>${details.getRetrait().getVille()}<p>
+						
 					</div>
 		
 					<div class="vendeurProduit">
-						<p>Vendeur :${details.getVendeur()}</p>
+						<p>Vendeur :${details.getVendeur().getPseudo()}</p>
 					</div>
 		
 					<div class="propositionProduit">
