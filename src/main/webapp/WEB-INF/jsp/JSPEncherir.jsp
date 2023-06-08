@@ -14,7 +14,7 @@
 <title>Enchérir</title>
 </head>
 <body>
-	
+
 	<%@ include file="JSPHeader.jsp"%>
 
 
@@ -77,6 +77,7 @@
 			
 			<c:if test="${details.getVendeur().getPseudo() != userConnected.getPseudo()}">
 					<div class="div-encherir">
+					<c:if test="${userConnected.getNoUtilisateur() != article.noVendeur }">
     				<form method ="post">
         				<label for="montantEnchere">Ma Proposition : </label>
         				<input type="number" id="montantEnchere" name="montantEnchere"
@@ -92,9 +93,17 @@
         				/>
 	        			<input type="submit" value="Enchérir" />
     				</form>
+    				</c:if>
     				</div>
 			</c:if>
 		
+
+	<c:if test="${!empty listeErreursEnchere }">
+	<c:forEach var="code" items="${listeErreursEnchere}">
+			<li style="color: red">Erreur: ${LecteurMessage.getMessageErreur(code)}</li>
+	</c:forEach>
+</c:if>
+	
 		<%@ include file="JSPFooter.jsp"%>
 
 </body>

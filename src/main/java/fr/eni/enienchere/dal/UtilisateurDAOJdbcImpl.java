@@ -24,6 +24,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	private static final String SELECT_BY_EMAIL="SELECT * FROM UTILISATEURS WHERE email=?";
 	private static final String SELECT_BY_ID_MDP="SELECT * FROM UTILISATEURS WHERE no_utilisateur=? AND mot_de_passe = ?"; //AJOUT
 	private static final String UPDATE_CREDIT_APRES_ENCHERE="UPDATE UTILISATEURS SET CREDIT = ? WHERE no_utilisateur = ?";
+	private static final String GET_ENCHERISSEUR_BY_ARTICLE_ID = "SELECT TOP 1 e.no_utilisateur, u.pseudo "
+		    + "FROM ENCHERES e "
+		    + "INNER JOIN UTILISATEURS u ON e.no_utilisateur = u.no_utilisateur "
+		    + "WHERE e.no_article = ? "
+		    + "ORDER BY e.montant_enchere DESC;";
 	
 	public Utilisateur selectById(int id) throws BusinessException {
 		Utilisateur utilisateur = null;
@@ -396,6 +401,64 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		}
 }
 		
+		@Override
+		public Utilisateur getEncherisseurByArticleId(int articleId) throws BusinessException {
+		    Utilisateur encherisseur = null;
+		    Connection cnx = null;
+		    PreparedStatement pstmt = null;
+		    ResultSet rs = null;
+
+		    try {
+		        cnx = ConnectionProvider.getConnection();
+		        pstmt = cnx.prepareStatement(GET_ENCHERISSEUR_BY_ARTICLE_ID);
+		        pstmt.setInt(1, articleId);
+		        rs = pstmt.executeQuery();
+
+		        if (rs.next()) {
+		            int noUtilisateur = rs.getInt("no_utilisateur");
+		            String pseudo = rs.getString("pseudo");
+
+		            encherisseur = new Utilisateur(noUtilisateur, pseudo);
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        closeResources(cnx, pstmt, rs);
+		    }
+
+		    return encherisseur;
+		}
+		
+		public static void closeResources(Connection cnx, PreparedStatement pstmt, ResultSet rs) {
+		    
+			if (rs != null) {
+		        try {
+		        	rs.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		            BusinessException businessException = new BusinessException();
+		            businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_RESULTSET_ECHEC);
+		        }
+		    }
+		    if (pstmt != null) {
+		        try {
+		        	pstmt.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		            BusinessException businessException = new BusinessException();
+		            businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_PREPAREDSTATEMENT_ECHEC);
+		        }
+		    }
+		    if (cnx != null) {
+		        try {
+		        	cnx.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		            BusinessException businessException = new BusinessException();
+		            businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+		        }
+		    }
+		}
 		
 }
 

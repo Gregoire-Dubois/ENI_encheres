@@ -3,6 +3,7 @@ package fr.eni.enienchere.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -62,6 +63,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
     		int id = Integer.parseInt(request.getParameter("idArticle")) ;
     		String ev = etatVente.idArticleInList(id);
     		session.setAttribute("etatVente", ev);
+    		Utilisateur utilisateur = (Utilisateur) session.getAttribute("userConnected");
     		
     		//récupérer les infos d'un article pour sa page enchères
     		
@@ -131,6 +133,9 @@ public class ServletFaireUneEnchere extends HttpServlet {
                     System.out.println("L'acheteur est :" + acheteur);
                 } catch (BusinessException e) {
                     e.printStackTrace();
+                  //On récupère la liste d'erreurs générée plus tôt
+        			List<Integer> listeErreursEnchere = e.getListeCodesErreur();
+        			request.setAttribute("listeErreursEnchere", listeErreursEnchere);
                 }
               //prix de vente est soit = au prix initial ou soit supperieur
                 if((enchere.getArticle().getPrixInitial() <= enchere.getArticle().getPrixVente()) || (enchere.getArticle().getPrixVente() == 0)){
@@ -138,33 +143,34 @@ public class ServletFaireUneEnchere extends HttpServlet {
                     //compare le montantEnchere avec le prix article
                     if (enchere.getArticle().getPrixVente() < montantEnchere){
                     	System.out.println("Je passe dans le deuxième if");
-                        //controle pour savoir si l'acheteur a deja fais la derniere enchere
-                        /*
-                    	*if((enchere.getUtilisateur() == null) || (acheteur.getNoUtilisateur() != enchere.getUtilisateur().getNoUtilisateur())) {
-                        *	System.out.println("Je passe dans le troisième if");
-                        */
-                        //controle pour savoir si le credit de l'utilisateur est superrieur au prix de vente
-                            if(acheteur.getCredit() >= enchere.getArticle().getPrixVente()) {
+                        //controle pour savoir si l'acheteur a les crédits suffisants
+                        //if((acheteur.getCredit() >= montantEnchere)) {
+                        //	System.out.println("Je passe dans le troisième if");
+                        //controle pour savoir si le credit de l'utilisateur est superieur au prix de vente
+                            if(acheteur.getCredit() >= montantEnchere) {
                             	System.out.println("J'arrive au try !");
                                 try {
                                         enchereRetourner = enchereManager.insertNewEnchere(acheteur,idArticle,montantEnchere);
                                         System.out.println("J'ai tenté un insert");
                                         utilisateurRenvoyer = utilisateurManager.selectionner(idUtilisateur);
-                                        message="Votre enchere a reussi !";
                                         session.setAttribute("utilisateur",utilisateurRenvoyer);
                                         request.setAttribute("enchere", enchereRetourner);
                                         request.getRequestDispatcher("WEB-INF/jsp/JSPAccueil.jsp").forward(request,response);
                                     } catch ( BusinessException e) {
                                         e.printStackTrace();
-                                    } 
+                                                                           } 
                                
 
                             }else {
-                               System.out.println("Votre Credit est inferieur au montant de l'enchere");
+                              
+                            	BusinessException businessException = new BusinessException();
+                            	businessException.ajouterErreur(CodesResultatServlet.CREDIT_INFERIEUR_PRIX_VENTE);
+                            	List<Integer> listeErreursEnchere = businessException.getListeCodesErreur();
+                    			request.setAttribute("listeErreursEnchere", listeErreursEnchere);
                                 session.setAttribute("utilisateur",acheteur);
                                 request.setAttribute("enchere",enchere);
                                 request.getRequestDispatcher("WEB-INF/jsp/JSPEncherir.jsp").forward(request,response);
-                            }
+                            } 
                     } 
                     /*
                     else{
@@ -176,13 +182,21 @@ public class ServletFaireUneEnchere extends HttpServlet {
                     
                     }*/
                     else {
-                    	System.out.println("Prix de vente supperieur au montant de l'enchere");
+                    	//System.out.println("Prix de vente supérieur au montant de l'enchere");
+                    	BusinessException businessException = new BusinessException();
+                    	businessException.ajouterErreur(CodesResultatServlet.ENCHERE_INFERIEURE_PRIX_VENTE);
+                    	List<Integer> listeErreursEnchere = businessException.getListeCodesErreur();
+            			request.setAttribute("listeErreursEnchere", listeErreursEnchere);
                         session.setAttribute("utilisateur",acheteur);
                         request.setAttribute("enchere",enchere);
                         request.getRequestDispatcher("WEB-INF/jsp/JSPEncherir.jsp").forward(request,response);
                     }
                 }else{
-                	System.out.println("le prix initial est supperieur aux prix de vente ");
+                	//System.out.println("le prix initial est supérieur aux prix de vente ");
+                	BusinessException businessException = new BusinessException();
+                	businessException.ajouterErreur(CodesResultatServlet.ENCHERE_IMPOSSIBLE);
+                	List<Integer> listeErreursEnchere = businessException.getListeCodesErreur();
+        			request.setAttribute("listeErreursEnchere", listeErreursEnchere);
                     session.setAttribute("utilisateur",acheteur);
                     request.setAttribute("enchere",enchere);
                     request.getRequestDispatcher("WEB-INF/jsp/JSPEncherir.jsp").forward(request,response);
