@@ -51,99 +51,72 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 		+ "a.no_article = ?;";
 	
 	private static final String SELECT_ALL_VENTE_EC = "SELECT"
-			+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur, vendeur.pseudo as vendeur, a.no_categorie as id_categorie, "
-			+ "c.libelle as categorie_libelle, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, "
-			+ "e.no_enchere as id_enchere_max, e.no_article as ench_idArticle, e.no_utilisateur as id_meilleur_encherisseur, "
-			+ "encherisseur.pseudo as pseudo_encherisseur, date_enchere, montant_enchere, etat_vente"
-			+ "FROM "
-			+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON  a.no_article =  e.no_article AND "
-			+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article = e.no_article)"
-			+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
-			+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
-			+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
-			+ "WHERE "
-			+ " a.etat_vente = 'EC';";
+			+ "a.no_article, nom_article, date_fin_encheres, prix_vente, a.no_utilisateur, u.pseudo"
+			+ "FROM articles_vendus a"
+			+ "LEFT JOIN utilisateurs u ON a.no_utilisateur = u.no_utilisateur"
+			+ "WHERE etat_vente = 'EC';";
 	
 	private static final String SELECT_ALL_VENTE_EC_BY_CATEGORIE_ID = "SELECT"
-			+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur, vendeur.pseudo as vendeur,"
-			+ "a.no_categorie as id_categorie, c.libelle as categorie_libelle, nom_article, description,"
-			+ "date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, e.no_enchere as id_enchere_max,"
-			+ "e.no_article as ench_idArticle, e.no_utilisateur as id_meilleur_encherisseur, encherisseur.pseudo as pseudo_encherisseur,"
-			+ "date_enchere, montant_enchere, etat_vente"
-			+ "FROM"
-			+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON a.no_article = e.no_article AND "
-			+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article =  e.no_article)"
-			+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
-			+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
-			+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
-			+ "WHERE "
-			+ "a.etat_vente = 'EC' AND a.no_categorie  = ?;";
+			+ "article.no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente,"
+			+ "vendeur.no_utilisateur as no_vendeur, vendeur.pseudo as pseudo_vendeur, encherisseur.no_utilisateur as no_encherisseur,"
+			+ "encherisseur.pseudo as pseudo_encherisseur, article.no_categorie, categorie.libelle as nom_categorie, retrait.rue,"
+			+ "retrait.code_postal, retrait.ville"
+			+ "FROM ARTICLES_VENDUS article"
+			+ "LEFT JOIN ENCHERES enchere ON article.no_article = enchere.no_article AND"
+			+ "enchere.no_enchere = (SELECT max(enchere.no_enchere) FROM ENCHERES enchere WHERE article.no_article = enchere.no_article)"
+			+ "LEFT JOIN CATEGORIES categorie ON article.no_categorie = categorie.no_categorie"
+			+ "LEFT JOIN UTILISATEURS vendeur ON article.no_utilisateur = vendeur.no_utilisateur"
+			+ "LEFT JOIN UTILISATEURS encherisseur ON article.no_utilisateur = encherisseur.no_utilisateur"
+			+ "LEFT JOIN RETRAITS retrait ON article.no_article = retrait.no_article"
+			+ "WHERE article.etat_vente = 'EC' AND article.no_categorie = ?;";
 	
 	private static final String SELECT_ALL_VENTE_EC_BY_NOM_ART = "SELECT"
-			+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur, vendeur.pseudo as vendeur, a.no_categorie as id_categorie, "
-			+ "c.libelle as categorie_libelle, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, "
-			+ "e.no_enchere as id_enchere_max, e.no_article as ench_idArticle, e.no_utilisateur as id_meilleur_encherisseur,"
-			+ "encherisseur.pseudo as pseudo_encherisseur, date_enchere, montant_enchere, etat_vente "
-			+ "FROM "
-			+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON  a.no_article =  e.no_article AND "
-			+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article =  e.no_article)"
-			+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
-			+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
-			+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
-			+ "WHERE "
-			+ "a.etat_vente = 'EC' AND lower(a.nom_article) LIKE '%?%';";
+			+ "a.no_article, nom_article, date_fin_encheres, prix_vente, prix_initial, a.no_utilisateur, u.pseudo"
+			+ "FROM articles_vendus a"
+			+ "LEFT JOIN utilisateurs u ON a.no_utilisateur = u.no_utilisateur"
+			+ "WHERE a.etat_vente = 'EC' AND lower(a.nom_article) LIKE '%?%';";
 
 	private static final String SELECT_ALL_VENTE_NC_BY_UTILISATEUR_ID = "SELECT"
-			+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur,vendeur.pseudo as vendeur,a.no_categorie as id_categorie, "
-			+ "c.libelle as categorie_libelle, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, "
-			+ "prix_vente, e.no_enchere as id_enchere_max, e.no_article as ench_idArticle,e.no_utilisateur as id_meilleur_encherisseur, "
-			+ "encherisseur.pseudo as pseudo_encherisseur, date_enchere, montant_enchere, etat_vente"
-			+ "FROM "
-			+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON  a.no_article =  e.no_article AND "
-			+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article =  e.no_article)"
-			+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
-			+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
-			+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
-			+ "WHERE "
-			+ "a.etat_vente = 'NC' AND vendeur.no_utilisateur = ?;";
+			+ "a.no_article, nom_article, date_fin_encheres, prix_vente, prix_initial, a.no_utilisateur, u.pseudo"
+			+ "FROM articles_vendus a"
+			+ "LEFT JOIN utilisateurs u ON a.no_utilisateur = u.no_utilisateur"
+			+ "WHERE a.etat_vente = 'NC' AND u.no_utilisateur = ?;";
 	
 	private static final String SELECT_ALL_VENTE_EC_BY_UTILISATEUR_ID = "SELECT"
-			+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur,vendeur.pseudo as vendeur,a.no_categorie as id_categorie, "
-			+ "c.libelle as categorie_libelle, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, "
-			+ "prix_vente, e.no_enchere as id_enchere_max, e.no_article as ench_idArticle,e.no_utilisateur as id_meilleur_encherisseur, "
-			+ "encherisseur.pseudo as pseudo_encherisseur, date_enchere, montant_enchere, etat_vente"
-			+ "FROM "
-			+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON  a.no_article =  e.no_article AND "
-			+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article =  e.no_article)"
-			+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
-			+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
-			+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
-			+ "WHERE "
-			+ "a.etat_vente = 'EC' AND vendeur.no_utilisateur = ?;";
+			+ "a.no_article, nom_article, date_fin_encheres, prix_vente, prix_initial, a.no_utilisateur, u.pseudo"
+			+ "FROM articles_vendus a"
+			+ "LEFT JOIN utilisateurs u ON a.no_utilisateur = u.no_utilisateur"
+			+ "WHERE a.etat_vente = 'EC' AND u.no_utilisateur = ?;";
 	
 	private static final String SELECT_ALL_VENTE_VE_BY_UTILISATEUR_ID = "SELECT"
-			+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur,vendeur.pseudo as vendeur,a.no_categorie as id_categorie, "
-			+ "c.libelle as categorie_libelle, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, "
-			+ "prix_vente, e.no_enchere as id_enchere_max, e.no_article as ench_idArticle,e.no_utilisateur as id_meilleur_encherisseur, "
-			+ "encherisseur.pseudo as pseudo_encherisseur, date_enchere, montant_enchere, etat_vente"
-			+ "FROM "
-			+ "ARTICLES_VENDUS a LEFT JOIN ENCHERES e ON  a.no_article =  e.no_article AND "
-			+ "e.no_enchere = ( SELECT max(e.no_enchere) FROM ENCHERES e WHERE a.no_article =  e.no_article)"
-			+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
-			+ "LEFT JOIN UTILISATEURS vendeur ON a.no_utilisateur = vendeur.no_utilisateur"
-			+ "LEFT JOIN UTILISATEURS encherisseur ON e.no_utilisateur = encherisseur.no_utilisateur"
-			+ "WHERE "
-			+ "a.etat_vente = 'VE' AND vendeur.no_utilisateur = ?;";
+			+ "a.no_article, nom_article, date_fin_encheres, prix_vente, prix_initial, a.no_utilisateur, u.pseudo"
+			+ "FROM articles_vendus a"
+			+ "LEFT JOIN utilisateurs u ON a.no_utilisateur = u.no_utilisateur"
+			+ "WHERE a.etat_vente = 'VE' AND u.no_utilisateur = ?;";
 	
 	private static final String SELECT_ALL_ENCHERES_EC_BY_UTILISATEUR_ID = "SELECT"
-            + "a.no_article, a.nom_article, a.date_fin_encheres, a.prix_vente, u.no_utilisateur, u.pseudo"
-            + "FROM "
-            + "ARTICLES_VENDUS a "
-            + "INNER JOIN ENCHERES e ON a.no_article = e.no_article "
-            + "INNER JOIN UTILISATEURS u ON a.no_utilisateur = u.no_utilisateur "
-            + "WHERE "
-            + "a.etat_vente = 'EC' AND e.no_utilisateur = ?;";
-
+			+ "a.no_article, nom_article, date_fin_encheres, montant_enchere, e.no_utilisateur, u.pseudo"
+			+ "FROM ARTICLES_VENDUS a"
+			+ "LEFT JOIN ENCHERES e ON a.no_article = e.no_article"
+			+ "LEFT JOIN UTILISATEURS u ON e.no_utilisateur = u.no_utilisateur"
+			+ "WHERE a.etat_vente = 'EC'"
+			+ "AND e.montant_enchere = ("
+			    + "SELECT MAX(montant_enchere)"
+			    + "FROM ENCHERES"
+			    + "WHERE no_article = a.no_article)"
+		    + "AND e.no_utilisateur = ?";
+	
+	private static final String SELECT_ALL_ENCHERES_VE_BY_UTILISATEUR_ID = "SELECT"
+			+ "a.no_article, nom_article, date_fin_encheres, montant_enchere, e.no_utilisateur, u.pseudo"
+			+ "FROM ARTICLES_VENDUS a"
+			+ "LEFT JOIN ENCHERES e ON a.no_article = e.no_article"
+			+ "LEFT JOIN UTILISATEURS u ON e.no_utilisateur = u.no_utilisateur"
+			+ "WHERE a.etat_vente = 'VE'"
+			+ "AND e.montant_enchere = ("
+			    + "SELECT MAX(montant_enchere)"
+			    + "FROM ENCHERES"
+			    + "WHERE no_article = a.no_article)"
+		    + "AND e.no_utilisateur = ?";
 	
 	private static final String SELECT_ALL_ARTICLES_ETAT_MOT_CATEGORIE = "SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
 			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS as u on a.no_utilisateur=u.no_utilisateur \r\n"
@@ -154,6 +127,54 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 	private static final String ID_ARTICLE = "SELECT etat_vente "
 			+ "FROM ARTICLES_VENDUS "
 			+ "WHERE no_article = ?;"; 
+	
+	
+	
+	private static final String DETAIL_VENTE = "SELECT\r\n"
+
+        + "a.nom_article, \r\n"
+
+        + "a.description, \r\n"
+
+        + "c.libelle as categorie_libelle, \r\n"
+
+        + "e.montant_enchere, \r\n"
+
+        + "e.no_utilisateur AS no_acquereur, \r\n"
+
+        + "encherisseur.pseudo as encherisseur,\r\n"
+
+        + "a.prix_initial, \r\n"
+
+        + "a.date_fin_encheres, \r\n"
+
+        + "r.rue , \r\n"
+
+        + "r.code_postal , \r\n"
+
+        + "r.ville , \r\n"
+
+        + "vendeur.no_utilisateur as no_vendeur,\r\n"
+
+        + "vendeur.pseudo as pseudo_vendeur\r\n"
+
+        + "FROM\r\n"
+
+        + "ARTICLES_VENDUS a INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie  \r\n"
+
+        + "LEFT JOIN ENCHERES e ON a.no_article = e.no_article and  \r\n"
+
+        + "e.no_enchere = ( select max(e.no_enchere) from ENCHERES e where a.no_article =  e.no_article)\r\n"
+
+        + "LEFT JOIN UTILISATEURS vendeur on a.no_utilisateur = vendeur.no_utilisateur\r\n"
+
+        + "LEFT JOIN UTILISATEURS encherisseur on e.no_utilisateur = encherisseur.no_utilisateur\r\n"
+
+        + "LEFT JOIN RETRAITS r ON a.no_article = r.no_article\r\n"
+
+        + "WHERE\r\n"
+
+        + "a.no_article = ?;";
 	
 	
 	public String idArticleInList(int id) {
@@ -184,8 +205,96 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 		}
 		
 		return etatDeVente;
+		
 	}
+	
+	// méthode en cours de réécriture
+	
+	@Override
 
+    public ArticleVendu selectArticleById(int articleId) throws BusinessException {
+
+        ArticleVendu article = null;
+        Connection cnx = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            cnx = ConnectionProvider.getConnection();
+            pstmt = cnx.prepareStatement(DETAIL_VENTE);
+            pstmt.setInt(1, articleId);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                String nomArticle = rs.getString("nom_article");
+                String description = rs.getString("description");
+                String categorie = rs.getString("categorie_libelle");
+                int prixVente = rs.getInt("montant_enchere");
+                int noAcquereur = rs.getInt("no_acquereur");
+                String pseudoAcquereur = rs.getString("encherisseur");
+                int prixInitial = rs.getInt("prix_initial");
+                LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
+                String rueRetrait = rs.getString("rue");
+                String codePostalRetrait = rs.getString("code_postal");
+                String villeRetrait = rs.getString("ville");
+                int noVendeur = rs.getInt("no_vendeur");
+                String pseudoVendeur = rs.getString("pseudo_vendeur");
+
+                // Récupérer les objets Utilisateur correspondants aux pseudos
+
+                UtilisateurManager utilisateurManager = new UtilisateurManager();
+
+                Utilisateur acquereur = utilisateurManager.selectionner(noAcquereur);
+
+                Utilisateur vendeur = utilisateurManager.selectionner(noVendeur);
+
+//                Utilisateur acquereur = UtilisateurDAO.selectByPseudo(pseudoAcquereur);
+
+//                Utilisateur vendeur = UtilisateurDAO.selectByPseudo(pseudoVendeur);
+
+                // Créer l'objet Retrait
+
+                Retrait retrait = new Retrait(rueRetrait, codePostalRetrait, villeRetrait);
+
+                // Créer l'objet Categorie
+
+                Categorie categorieArt = new Categorie();
+
+                categorieArt.setLibelle(categorie);
+
+ 
+
+                // Créer l'objet ArticleVendu
+
+                article = new ArticleVendu(nomArticle, description, categorieArt, prixVente, acquereur,
+
+                            prixInitial, dateFinEncheres, retrait, vendeur);
+                
+
+                }
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            closeResources(cnx, pstmt, rs);
+
+        }
+        System.out.println("---->" + article);
+
+        return article;
+
+        }
+	
+	
+	
+	
+	
+/*
 	@Override
 	public ArticleVendu selectArticleById(int articleId) throws BusinessException {
 		ArticleVendu article = null;
@@ -195,11 +304,12 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 
 	    try {
     		cnx = ConnectionProvider.getConnection();
-    		pstmt = cnx.prepareStatement(SELECT_ARTICLE_BY_ID);
+    		pstmt = cnx.prepareStatement(DETAIL_VENTE);// SELECT_ARTICLE_BY_ID
 
     		pstmt.setInt(1, articleId);
     		
     		rs = pstmt.executeQuery();
+    		
 
 	        while (rs.next()) {
 	        	int noArticle = rs.getInt("no_article");
@@ -235,14 +345,18 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
                 article = new ArticleVendu(noArticle, description, categorieArt, prixVente, acquereur,
 	                        prixInitial, dateFinEncheres, retrait, vendeur);
 	            }
+	      
+	        	System.out.println(" ---->" + article);
+	        
 	    } catch (SQLException e) {
 			e.printStackTrace();
 	    } finally {
 	    	closeResources(cnx, pstmt, rs);
 	    }
+
 	    return article;
 	    }
-
+*/
 
 	@Override
 	public List<ArticleVendu> selectAllArticles() throws BusinessException {
@@ -432,7 +546,8 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 	}
 	
 	@Override
-	public List<ArticleVendu> selectAllVentesNonCommenceesByNoUtilisateur(int id) throws BusinessException {
+	public List<ArticleVendu> selectAllVentesNonCommenceesByNoUtilisateur(int no_utilisateur) throws BusinessException {
+		
 	    List<ArticleVendu> articlesList = new ArrayList<>();
 	    Connection cnx = null;
 	    PreparedStatement pstmt = null;
@@ -441,7 +556,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 	    try {
 	        cnx = ConnectionProvider.getConnection();
 	        pstmt = cnx.prepareStatement(SELECT_ALL_VENTE_NC_BY_UTILISATEUR_ID);
-	        pstmt.setInt(1, id);
+	        pstmt.setInt(1, no_utilisateur);
 	        rs = pstmt.executeQuery();
 
 	        while (rs.next()) {
@@ -461,7 +576,8 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 	}
 	
 	@Override
-	public List<ArticleVendu> selectAllVentesEnCoursByNoUtilisateur(int id) throws BusinessException {
+	public List<ArticleVendu> selectAllVentesEnCoursByNoUtilisateur(int no_utilisateur) throws BusinessException {
+		
 	    List<ArticleVendu> articlesList = new ArrayList<>();
 	    Connection cnx = null;
 	    PreparedStatement pstmt = null;
@@ -470,7 +586,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 	    try {
 	        cnx = ConnectionProvider.getConnection();
 	        pstmt = cnx.prepareStatement(SELECT_ALL_VENTE_EC_BY_UTILISATEUR_ID);
-	        pstmt.setInt(1, id);
+	        pstmt.setInt(1, no_utilisateur);
 	        rs = pstmt.executeQuery();
 
 	        while (rs.next()) {
@@ -490,7 +606,8 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 	}
 	
 	@Override
-	public List<ArticleVendu> selectAllVentesTermineesByNoUtilisateur(int id) throws BusinessException {
+	public List<ArticleVendu> selectAllVentesTermineesByNoUtilisateur(int no_utilisateur) throws BusinessException {
+		
 	    List<ArticleVendu> articlesList = new ArrayList<>();
 	    Connection cnx = null;
 	    PreparedStatement pstmt = null;
@@ -499,7 +616,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 	    try {
 	        cnx = ConnectionProvider.getConnection();
 	        pstmt = cnx.prepareStatement(SELECT_ALL_VENTE_VE_BY_UTILISATEUR_ID);
-	        pstmt.setInt(1, id);
+	        pstmt.setInt(1, no_utilisateur);
 	        rs = pstmt.executeQuery();
 
 	        while (rs.next()) {
@@ -520,6 +637,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 
 	@Override
 	public List<ArticleVendu> selectAllEncheresEnCours() throws BusinessException {
+		
 		List<ArticleVendu> articlesList = new ArrayList<>();
 	    Connection cnx = null;
 	    PreparedStatement pstmt = null;
@@ -546,20 +664,107 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 	    return articlesList;
 	}
 
+	@Override
+	public List<ArticleVendu> selectAllEncheresEnCoursByNoUtilisateur(int no_utilisateur) throws BusinessException {
+		
+		List<ArticleVendu> articlesList = new ArrayList<>();
+	    Connection cnx = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+
+	    try {
+	        cnx = ConnectionProvider.getConnection();
+	        pstmt = cnx.prepareStatement(SELECT_ALL_ENCHERES_EC_BY_UTILISATEUR_ID);
+	        rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	        	ArticleVendu article = new ArticleVendu();
+	    	    
+	    	    article.setNoArticle(rs.getInt("a.no_article"));
+	    	    article.setNomArticle(rs.getString("nom_article"));
+	    	    article.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
+	    	    article.setPrixVente(rs.getInt("montant_enchere"));
+	    	    
+	    	    Utilisateur vendeur = article.getVendeur();
+	    	    vendeur.setNoUtilisateur(rs.getInt("a.no_utilisateur"));
+	    	    vendeur.setPseudo(rs.getString("u.pseudo"));
+	    	    
+	    	    article.setVendeur(vendeur);
+
+	        	articlesList.add(article);
+	        }
+	    } catch (SQLException e) {
+	    	e.printStackTrace();
+    		BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_ALL_ENCHERES_EC_BY_UTILISATEUR_ID_ECHEC);
+	    } finally {
+	    	closeResources(cnx, pstmt, rs);
+	    }
+
+	    return articlesList;
+	}
+
+	@Override
+	public List<ArticleVendu> selectAllEncheresGagneesByNoUtilisateur(int no_utilisateur) throws BusinessException {
+		
+		List<ArticleVendu> articlesList = new ArrayList<>();
+	    Connection cnx = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+
+	    try {
+	        cnx = ConnectionProvider.getConnection();
+	        pstmt = cnx.prepareStatement(SELECT_ALL_ENCHERES_VE_BY_UTILISATEUR_ID);
+	        rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	        	ArticleVendu article = new ArticleVendu();
+	    	    
+	    	    article.setNoArticle(rs.getInt("a.no_article"));
+	    	    article.setNomArticle(rs.getString("nom_article"));
+	    	    article.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
+	    	    article.setPrixVente(rs.getInt("montant_enchere"));
+	    	    
+	    	    Utilisateur vendeur = article.getVendeur();
+	    	    vendeur.setNoUtilisateur(rs.getInt("a.no_utilisateur"));
+	    	    vendeur.setPseudo(rs.getString("u.pseudo"));
+	    	    
+	    	    article.setVendeur(vendeur);
+
+	        	articlesList.add(article);
+	        }
+	    } catch (SQLException e) {
+	    	e.printStackTrace();
+    		BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_ALL_ENCHERES_VE_BY_UTILISATEUR_ID_ECHEC);
+	    } finally {
+	    	closeResources(cnx, pstmt, rs);
+	    }
+
+	    return articlesList;
+	}
+	
 	private ArticleVendu BuilderArticleVenduPourListe (ResultSet rs) throws SQLException, BusinessException {
 		
 	    ArticleVendu article = new ArticleVendu();
-
-	    article.setNoArticle(rs.getInt("no_article"));
+	    
+	    article.setNoArticle(rs.getInt("a.no_article"));
 	    article.setNomArticle(rs.getString("nom_article"));
 	    article.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
-	    article.setPrixVente(rs.getInt("prix_vente"));
 	    
-	 // Récupérer l'utilisateur (vendeur) à partir de la base de données
-	    int noUtilisateur = rs.getInt("no_utilisateur");
-	    UtilisateurManager utilisateurManager = new UtilisateurManager();
-	    Utilisateur vendeur = utilisateurManager.selectionner(noUtilisateur);
-	    //Utilisateur vendeur =UtilisateurDAO.selectById(noUtilisateur);
+	    // S'il n'y a pas eu d'enchère (prix_vente = null, alors on mettra le prix initial
+	    int prixVente = rs.getInt("prix_vente");
+	    if (rs.wasNull()) {
+	        int prixInitial = rs.getInt("prix_initial");
+	        article.setPrixVente(prixInitial);
+	    } else {
+	        article.setPrixVente(prixVente);
+	    }
+	    
+	    Utilisateur vendeur = article.getVendeur();
+	    vendeur.setNoUtilisateur(rs.getInt("a.no_utilisateur"));
+	    vendeur.setPseudo(rs.getString("u.pseudo"));
+	    
 	    article.setVendeur(vendeur);
 
 	    return article;

@@ -9,7 +9,6 @@ import fr.eni.enienchere.bo.Categorie;
 import fr.eni.enienchere.bo.Retrait;
 import fr.eni.enienchere.bo.Utilisateur;
 import fr.eni.enienchere.dal.ArticleDAO;
-import fr.eni.enienchere.dal.ArticleDAOJdbcImpl;
 import fr.eni.enienchere.dal.DAOFactory;
 
 public class ArticleManager {
@@ -112,18 +111,26 @@ public class ArticleManager {
         return articleDAO.selectAllVentesEnCoursByNoCategorie(id);
     }
 	
-	public List<ArticleVendu> selectAllVentesNonCommenceesByNoUtilisateur(int id) throws BusinessException {
-        return articleDAO.selectAllVentesNonCommenceesByNoUtilisateur(id);
+	public List<ArticleVendu> getAllVentesNonCommenceesByNoUtilisateur(int no_utilisateur) throws BusinessException {
+        return articleDAO.selectAllVentesNonCommenceesByNoUtilisateur(no_utilisateur);
     }
 	
-	public List<ArticleVendu> selectAllVentesEnCoursByNoUtilisateur(int id) throws BusinessException {
-        return articleDAO.selectAllVentesEnCoursByNoUtilisateur(id);
+	public List<ArticleVendu> getAllVentesEnCoursByNoUtilisateur(int no_utilisateur) throws BusinessException {
+        return articleDAO.selectAllVentesEnCoursByNoUtilisateur(no_utilisateur);
     }
 	
-	public List<ArticleVendu> selectAllVentesTermineesByNoUtilisateur(int id) throws BusinessException {
-        return articleDAO.selectAllVentesTermineesByNoUtilisateur(id);
+	public List<ArticleVendu> getAllVentesTermineesByNoUtilisateur(int no_utilisateur) throws BusinessException {
+        return articleDAO.selectAllVentesTermineesByNoUtilisateur(no_utilisateur);
     }
 
+	public List<ArticleVendu> getAllEncheresEnCoursByNoUtilisateur(int no_utilisateur) throws BusinessException {
+        return articleDAO.selectAllEncheresEnCoursByNoUtilisateur(no_utilisateur);
+    }
+	
+	public List<ArticleVendu> getAllEncheresGagneesByNoUtilisateur(int no_utilisateur) throws BusinessException {
+        return articleDAO.selectAllEncheresGagneesByNoUtilisateur(no_utilisateur);
+    }
+	
 	private void checkDateFin(LocalDate dateFinEncheres, LocalDate dateDebutEncheres, BusinessException businessException) {
 		
 		if (dateFinEncheres.isBefore(dateDebutEncheres) || dateFinEncheres.isEqual(dateDebutEncheres)) {
