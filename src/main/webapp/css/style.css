@@ -96,7 +96,7 @@ h3 {
 /*Contenur détails*/
 .conteneurdetails {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(4, 2fr);
 	grid-gap: 10px;
 	grid-auto-rows: minmax(100px, auto);
 }
@@ -123,8 +123,11 @@ h3 {
 }
 
 .meilleurOffreProduit {
-	grid-column: 1;
+	grid-column: 1/3;
 	grid-row: 5;
+	
+	background-color : pink;
+	
 }
 
 .miseAPrixProduit {
@@ -198,8 +201,11 @@ h3 {
 
 
 .meilleurOffreProduit2 {
-	grid-column: 1;
+	grid-column: 1/2;
 	grid-row: 4;
+	
+	background-color : yellow;
+	
 }
 
 .miseAPrixProduit2 {
@@ -223,6 +229,7 @@ h3 {
 	grid-row: 8;
 	
 }
+
 
 
 
@@ -256,8 +263,10 @@ h3 {
 
 
 .meilleurOffreProduit3 {
-	grid-column: 1;
+	grid-column: 1/2;
 	grid-row: 5;
+		
+	
 }
 
 .miseAPrixProduit3 {

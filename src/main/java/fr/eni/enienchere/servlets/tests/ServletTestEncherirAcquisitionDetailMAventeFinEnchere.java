@@ -12,7 +12,9 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bo.ArticleVendu;
+import fr.eni.enienchere.bo.Utilisateur;
 import fr.eni.enienchere.dal.ArticleDAOJdbcImpl;
+import fr.eni.enienchere.dal.UtilisateurDAOJdbcImpl;
 
 /**
  * Servlet implementation class ServletTestEncherirAcquisitionDetailMAventeFinEnchere
@@ -35,6 +37,7 @@ public class ServletTestEncherirAcquisitionDetailMAventeFinEnchere extends HttpS
 		//filtrer l'affichage JSP en fonctionde l'état des vente (EN NC EV)
 		ArticleDAOJdbcImpl etatVente = new ArticleDAOJdbcImpl();
 		int id = Integer.parseInt(request.getParameter("idArticle")) ;
+		System.out.println(id);
 		String ev = etatVente.idArticleInList(id);
 		session.setAttribute("etatVente", ev);
 			
@@ -54,7 +57,21 @@ public class ServletTestEncherirAcquisitionDetailMAventeFinEnchere extends HttpS
 		}
 		session.setAttribute("details", details);
 		
+
+		//récupérer les infos de l'encherisseur
+		UtilisateurDAOJdbcImpl acquereur = new UtilisateurDAOJdbcImpl();
+	    Utilisateur encherisseur = null;
+	    try {
+	        encherisseur = acquereur.getEncherisseurByArticleId(id);
+	    } catch (BusinessException e) {
+	        e.printStackTrace();
+	    }
+	    session.setAttribute("encherisseur", encherisseur);
+	    System.out.println(encherisseur);
+
+
 		System.out.println(details);
+
 		
 		
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPPageEncherirAcquisitionDetailMaVente.jsp");

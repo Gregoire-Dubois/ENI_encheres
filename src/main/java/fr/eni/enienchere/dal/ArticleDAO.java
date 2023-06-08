@@ -77,5 +77,4 @@ public interface ArticleDAO {
 
 	public List<ArticleVendu> selectMesVentesEnCoursNonDebuteesEtTerminees(int noUtilisateur);
 
-
 }

@@ -47,11 +47,12 @@
 						<p>Mise à prix : ${details.getPrixInitial()}</p>
 					</div>
 		
-					<div class="meilleurOffreProduit">
-						<p>Meilleur offre produit :${details.getPrixVente()}</p>
-					</div>
-			
+					<c:if test ="${details.getPrixVente() > details.getPrixInitial()}">
+						<div class="meilleurOffreProduit">
+							<p>Meilleur offre produit :${details.getPrixVente()} points faite par ${details.getAcquereur().getPseudo()}</p>
+						</div>
 					
+					</c:if>
 					
 					
 		
