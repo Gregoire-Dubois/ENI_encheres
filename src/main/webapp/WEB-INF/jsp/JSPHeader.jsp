@@ -4,20 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" >
-
-
 <title>Insert title here</title>
 </head>
 <body>
 
-	<header>
-	
 		<div class="entreprise">
 			<a href="${pageContext.request.contextPath}"><h1>ENI-Enchères</h1></a>
 		</div>
-	
-	</header>
 
 </body>
 </html>

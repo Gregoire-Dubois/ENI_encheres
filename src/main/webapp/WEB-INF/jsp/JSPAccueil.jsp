@@ -7,18 +7,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
 <title>Accueil</title>
-
-
-
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" >
 </head>
 <body>
 
-	<%@ include file="JSPHeader.jsp"%>
+	<header>
+		<div class="header-left">
+			<%@ include file="JSPHeader.jsp"%>
+		</div>
+		<div class="header-right">
+			<%@ include file="JSPHeaderConnexion.jsp"%>
+		</div>
+	</header>
+	
 
-	<%@ include file="JSPHeaderConnexion.jsp"%>
+	
 
 
 	<section>

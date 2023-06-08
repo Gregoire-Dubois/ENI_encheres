@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" >
 <title>Insert title here</title>
 </head>
 <body>
-<header>
 	<c:choose>
 		<c:when test="${userConnected != null}"><!-- Si l'utilisateur est connecte -->
 			<p><!-- Mise en place d'une liste possible -->
@@ -27,6 +27,5 @@
 
 
 	</c:choose>
-</header>
 </body>
 </html>
