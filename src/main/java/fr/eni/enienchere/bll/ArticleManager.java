@@ -234,6 +234,12 @@ public class ArticleManager {
 //		}
 		
 	}
+	public List<ArticleVendu> selectionnerParDefaut(Utilisateur utilisateur) throws BusinessException {
+		List<ArticleVendu> listeArticles = new ArrayList<>();
+				listeArticles= this.articleDAO.selectArticlesECSansUtilisateur(utilisateur.getNoUtilisateur());
+		
+		return listeArticles;
+	}
 	
 	public List<ArticleVendu> selectionnerArticlesFiltresAchats(String[] filtresAchats, int nombreParametres, Utilisateur utilisateur) throws BusinessException {
 		List<ArticleVendu> listeArticles = new ArrayList<>();
@@ -287,7 +293,7 @@ public class ArticleManager {
 				}break;
 			}
 			case 3: {
-				listeArticles= this.articleDAO.selectArticlesEncheresRemporteesPlusMesEncheresEnCours(utilisateur.getNoUtilisateur());
+				listeArticles= this.articleDAO.selectArticlesECSansUtilisateurPlusEncheresRemportees(utilisateur.getNoUtilisateur());
 			}break;
 			default:
 				System.out.println("A faire");

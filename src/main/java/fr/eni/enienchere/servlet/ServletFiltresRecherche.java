@@ -36,8 +36,12 @@ public class ServletFiltresRecherche extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		HttpSession session=request.getSession();
+		String type = request.getParameter("type");
+		session.setAttribute("type", type);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPAccueil.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -59,6 +63,24 @@ public class ServletFiltresRecherche extends HttpServlet {
 		}else {
 			nombreParametresVentes = 0;
 		}
+		List<String> listeFiltresAchats = new ArrayList<>();
+		List<String> listeFiltresVentes = new ArrayList<>();
+		
+		if(nombreParametresAchats!=0) {
+			
+			for(int i =0; i<nombreParametresAchats; i++) {
+				listeFiltresAchats.add(filtresAchats[i]);
+			}
+		}
+		if(nombreParametresVentes!=0) {
+			
+			for(int i =0; i<nombreParametresVentes; i++) {
+				listeFiltresVentes.add(filtresVentes[i]);
+			}
+		}
+		
+		session.setAttribute("listeFiltresAchats", listeFiltresAchats);
+		session.setAttribute("listeFiltresVentes",listeFiltresVentes);
 		System.out.println(nombreParametresAchats);
 		System.out.println(nombreParametresVentes);
 		ArticleManager articleManager = new ArticleManager();
@@ -70,6 +92,8 @@ public class ServletFiltresRecherche extends HttpServlet {
 			}else {
 				if(nombreParametresVentes!=0){
 					listeArticles = articleManager.selectionnerArticlesFiltresVentes(filtresVentes, nombreParametresVentes, userConnected);
+				}else {
+					listeArticles = articleManager.selectionnerParDefaut(userConnected);
 				}
 			}
 			
