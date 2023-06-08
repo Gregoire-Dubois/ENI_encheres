@@ -37,6 +37,11 @@ public class ArticleVendu implements Serializable{
 	private Retrait retrait;
 	private Utilisateur vendeur;//OK
 	
+
+	
+	private Utilisateur acquereur;
+	
+
 	
 	private List<Enchere> listeEncheres; //CCN : quel intérêt ? 
 	
@@ -211,17 +216,26 @@ public class ArticleVendu implements Serializable{
 //		this.categorie = categorie;
 //	}
 
-
-
-
-
-
-
-
 	
+	// début nouveau constructeur our JSP afficher détail vente non commencée
 
+	public ArticleVendu(String nomArticle, String description, Categorie categorie, int prixVente,
+			Utilisateur acquereur, int prixInitial, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			Retrait retrait, Utilisateur vendeur) {
 
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.categorie = categorie;
+		this.prixVente = prixVente; 
+		this.acquereur = acquereur;
+		this.prixInitial = prixInitial;
+		this.dateDebutEncheres = dateDebutEncheres; 
+		this.dateFinEncheres = dateFinEncheres; 
+		this.retrait = retrait; 
+		this.vendeur = vendeur; 
+		
 	
+	}
 
 
 	/*

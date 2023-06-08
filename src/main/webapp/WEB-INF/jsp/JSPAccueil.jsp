@@ -48,7 +48,7 @@
 						<div class="card-content">
 							<h2><a href="${pageContext.request.contextPath}/encherir?idArticle=${article.noArticle}">${article.nomArticle}</a></h2> 
 							
-							<p>Prix :${article.prixVente}</p> 
+							<p>Prix :${article.prixVente != '0' ? article.prixVente : article.prixInitial}</p> 
 							<p>Fin de l'enchère :${article.dateFinEncheres}</p>
 							<p><a href="${pageContext.request.contextPath}/profil?idVendeur=${article.vendeur.noUtilisateur}">Vendeur : ${article.vendeur.getPseudo()}</a></p> 
 		
@@ -68,7 +68,7 @@
 									<img src="#" alt="Image de la card">
 									<div class="card-content">
 										<h2>${article.nomArticle}</h2>
-										<p>Prix : ${article.prixVente}</p>
+										<p>Prix :${article.prixVente != '0' ? article.prixVente : article.prixInitial}</p> 
 										<p>Fin de l'enchère : ${article.dateFinEncheres}</p>
 										<p>Vendeur : ${article.vendeur.pseudo}</p>
 		
