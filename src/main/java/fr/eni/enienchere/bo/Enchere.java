@@ -46,6 +46,14 @@ public class Enchere implements Serializable {
 		this.montantEnchere = montantEnchere;
 	}
 	
+	public Enchere(int noEnchere, Utilisateur utilisateur, LocalDateTime dateEnchere, int montantEnchere) {
+		super();
+		this.noEnchere = noEnchere;
+		this.utilisateur = utilisateur;
+		this.dateEnchere = dateEnchere;
+		this.montantEnchere = montantEnchere;
+	}
+	
 	//Modification des constructeurs LocalDate et ajout des relations?
 //
 //	public Enchere(ArticleVendu article, Utilisateur utilisateur, Timestamp dateEnchere, int montantEnchere) {

@@ -1,11 +1,11 @@
 package fr.eni.enienchere.dal;
 
-import java.net.URISyntaxException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,7 @@ import java.util.List;
 import fr.eni.enienchere.bo.Utilisateur;
 import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.bll.ArticleManager;
+import fr.eni.enienchere.bll.EnchereManager;
 import fr.eni.enienchere.bll.UtilisateurManager;
 import fr.eni.enienchere.bo.ArticleVendu;
 import fr.eni.enienchere.bo.Categorie;
@@ -45,7 +46,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "	a.no_categorie,\r\n"
 			+ "	e.date_enchere, \r\n"
 			+ "	e.montant_enchere\r\n"
-			+ "	FROM ENCHERES AS e INNER JOIN ARTICLES_VENDUS a on e.no_article = a.no_article and e.montant_enchere = (SELECt max(e.montant_enchere) from encheres e where e.no_article = a.no_article)\r\n"
+			+ "	FROM ENCHERES AS e INNER JOIN ARTICLES_VENDUS a on e.no_article = a.no_article and e.montant_enchere = (SELECT max(e.montant_enchere) from encheres e where e.no_article = a.no_article)\r\n"
 			+ "	where a.no_article= ?;";
 	
 	private static final String SELECT_BY_NO_ENCHERE = "SELECT * FROM ENCHERES WHERE no_enchere = ?";
@@ -73,13 +74,14 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
         Utilisateur utilisateur = this.getEnchereUtilisateur(rs.getInt("no_utilisateur"));
         enchere.setUtilisateur(utilisateur);
         enchere.setDateEnchere(rs.getTimestamp("date_enchere").toLocalDateTime());
-        enchere.setMontantEnchere(rs.getInt("montantEnchere"));
+        enchere.setMontantEnchere(rs.getInt("montant_enchere"));
       
         return enchere;
     }
     
     private void retraitPoints(int soldeActuel, int montantEnchere, Utilisateur acheteur) throws BusinessException {
         int soldeDebit = soldeActuel - montantEnchere;
+        System.out.println(soldeDebit + " "+ soldeActuel + " " + montantEnchere);
         Utilisateur utilisateurRetraitPoints = new Utilisateur(acheteur.getNoUtilisateur(), soldeDebit);
         DAOFactory.getUtilisateurDAO().updateUtilisateurApresEnchere(utilisateurRetraitPoints);
     }
@@ -193,40 +195,61 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		Connection cnx = null;
 		//Variable de l'enchère tentée 
 		Enchere enchereAjout = null;
+		EnchereManager enchereManager = new EnchereManager();
 		//Je stocke les données de la meilleure enchère actuelle pour traitement après update
-		Enchere enchere = DAOFactory.getEnchereDAO().selectEnchereMaxByArticle(noArticle);
+		Enchere enchere = enchereManager.selectEnchereMaxByArticle(noArticle);
 		int noAjout = 0;
 		LocalDateTime now = LocalDateTime.now();
+		/*
 		//comparaison du prix initial ou de la meilleure enchère avec la proposition en cours
 		if ((enchere.getArticle().getPrixInitial() < montantEnchere || (enchere.getArticle().getPrixVente() < montantEnchere))) {
 			//on vérifie que l'enchère n'est pas effectuée par l'actuel meilleur enchérisseur
 			if (enchere.getUtilisateur() == null || acheteur.getNoUtilisateur() != enchere.getUtilisateur().getNoUtilisateur()) {
 				//contrôle sur le crédit de points disponible pour l'utilisateur
 				if (enchere.getUtilisateur().getCredit() > montantEnchere)  {
+				*/
 					try {
+						System.out.println("Je me trouve bien dans la methode dinsert de lenchere");
 						cnx = ConnectionProvider.getConnection();
+						if (enchere == null) {
+	                		ArticleVendu article = ArticleManager.getInstance().selectArticleById(noArticle);
+	                		Utilisateur utilisateur = UtilisateurManager.getInstance().selectionner(acheteur.getNoUtilisateur());
+	                		enchere = new Enchere(article,utilisateur,LocalDateTime.now(),montantEnchere);
+	                	}
 						PreparedStatement pstmt = cnx.prepareStatement(INSERT_NEW_ENCHERE, PreparedStatement.RETURN_GENERATED_KEYS);
 						pstmt.setInt(1, acheteur.getNoUtilisateur());
 						pstmt.setInt(2, noArticle);
 						pstmt.setObject(3, now);
 						pstmt.setInt(4, montantEnchere);
+						System.out.println("Avant l'update j'ai les infos suivantes " + acheteur.getNoUtilisateur() + " " + noArticle + " " + now + " " + montantEnchere);
 						pstmt.executeUpdate();
 						ResultSet rs = pstmt.getGeneratedKeys();
+						
+						
 						if (rs.next()) {
 							noAjout = rs.getInt(1);
 						}
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
+								
 					//si ça fonctionne un trigger en base met à jour le prix vente dans la table ARTICLEs avec la nouvelle enchère
 					//Ensuite on ajoute des points à l'ancien meilleur enchérisseur s'il existe
 					if (enchere.getMontantEnchere() > 0) {
 						ajoutPoints(enchere.getUtilisateur().getCredit(), enchere.getMontantEnchere(), enchere.getUtilisateur());
 					}
+					
 					//dans tous les cas je débite l'enchérisseur actuel
+					System.out.println("je tente le retrait de points");
 					retraitPoints(acheteur.getCredit(), montantEnchere, acheteur);
+					System.out.println("J'ai tenté le retrait de points");
+					
+					
 					//je récupère l'enchère créée 
-					enchereAjout = DAOFactory.getEnchereDAO().selectEnchereByNoEnchere(noAjout);
+					enchereAjout = enchereManager.selectEnchereByNoEnchere(noAjout);
+					
+					
+					/*
 				} else {
 					throw new BusinessException();
 				}
@@ -236,6 +259,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		} else {
 			throw new BusinessException();
 		}
+		*/
 		return enchereAjout;
 	}
 

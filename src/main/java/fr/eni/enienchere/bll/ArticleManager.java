@@ -13,10 +13,21 @@ import fr.eni.enienchere.dal.ArticleDAOJdbcImpl;
 import fr.eni.enienchere.dal.DAOFactory;
 
 public class ArticleManager {
-private ArticleDAO articleDAO;
-	
+
+	private static ArticleManager instance = null;
+	private ArticleDAO articleDAO;
+
+    //Constructeur privé
 	public ArticleManager() {
 		this.articleDAO=DAOFactory.getArticleDAO();
+	}
+	
+	//SINGLETON
+	public static ArticleManager getInstance() {
+		if (instance == null) {
+			instance = new ArticleManager();
+		}
+		return instance;
 	}
 	
 	public ArticleVendu selectArticleById(int id) throws BusinessException {

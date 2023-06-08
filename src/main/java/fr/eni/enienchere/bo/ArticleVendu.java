@@ -123,6 +123,22 @@ public class ArticleVendu implements Serializable{
 		this.setVendeur(vendeur);	
 	}
 	
+	//CC : Constructeur pour Détail Vente
+	public ArticleVendu(int noArticle, String description, Categorie categorie, int prixVente,
+			Utilisateur acquereur, int prixInitial, LocalDate dateFinEncheres, Retrait retrait,
+			Utilisateur vendeur) {
+		super();
+		this.noArticle = noArticle;
+		this.description = description;
+		this.setCategorie(categorie);
+		this.prixVente = prixVente;
+		this.setVendeur(acquereur);
+		this.prixInitial = prixInitial;
+		this.dateFinEncheres = dateFinEncheres;
+		this.setRetrait(retrait);
+		this.setVendeur(vendeur);	
+	}
+	
 	//TJ : Constructeur pour la liste des articles sur la page d'acceuil
 	public ArticleVendu(int no_article, String nomArticle, int prixVente, LocalDate dateFinEncheres,Utilisateur vendeur) {
 		super();

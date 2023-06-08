@@ -25,19 +25,30 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "INNER JOIN UTILISATEURS as u ON a.no_utilisateur = u.no_utilisateur\n"
 			+ "WHERE etat_vente = 'EC';";
 	
-private static final String SELECT_ARTICLE_BY_ID = "SELECT"
-			+ "a.nomArticle, a.description, c.libelle AS categorie, e.montant_enchere, ua.pseudo AS acquereur, a.prix_initial, "
-			+ "a.date_fin_encheres, r.rue AS rue_retrait, r.code_postal AS code_postal_retrait, r.ville AS ville_retrait, "
-			+ "UV.pseudo AS pseudo_vendeur, "
-			+ "ROW_NUMBER() OVER (ORDER BY e.montant_enchere DESC) AS row_number"
-			+ "FROM"
-			+ "ARTICLES_VENDUS a INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie"
-			+ "LEFT JOIN ENCHERES e ON a.no_article = e.no_article"
-			+ "LEFT JOIN UTILISATEURS ua ON e.no_utilisateur = ua.no_utilisateur"
-			+ "LEFT JOIN UTILISATEURS uv ON a.no_utilisateur = uv.no_utilisateur"
-			+ "LEFT JOIN RETRAITS r ON a.no_article = r.no_article"
-			+ "WHERE"
-			+ "AV.no_article = ?) AS subquery WHERE row_number = 1;";
+private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
+		+ "a.no_article, \r\n"
+		+ "a.nom_article, \r\n"
+		+ "a.description, \r\n"
+		+ "c.libelle as categorie_libelle, \r\n"
+		+ "e.montant_enchere, \r\n"
+		+ "e.no_utilisateur AS no_acquereur, \r\n"
+		+ "encherisseur.pseudo as encherisseur,\r\n"
+		+ "a.prix_initial, \r\n"
+		+ "a.date_fin_encheres, \r\n"
+		+ "r.rue , \r\n"
+		+ "r.code_postal , \r\n"
+		+ "r.ville , \r\n"
+		+ "vendeur.no_utilisateur as no_vendeur,\r\n"
+		+ "vendeur.pseudo as pseudo_vendeur\r\n"
+		+ "FROM\r\n"
+		+ "ARTICLES_VENDUS a INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie  \r\n"
+		+ "LEFT JOIN ENCHERES e ON a.no_article = e.no_article and  \r\n"
+		+ "e.no_enchere = ( select max(e.no_enchere) from ENCHERES e where a.no_article =  e.no_article)\r\n"
+		+ "LEFT JOIN UTILISATEURS vendeur on a.no_utilisateur = vendeur.no_utilisateur\r\n"
+		+ "LEFT JOIN UTILISATEURS encherisseur on e.no_utilisateur = encherisseur.no_utilisateur\r\n"
+		+ "LEFT JOIN RETRAITS r ON a.no_article = r.no_article\r\n"
+		+ "WHERE\r\n"
+		+ "a.no_article = ?;";
 	
 	private static final String SELECT_ALL_VENTE_EC = "SELECT"
 			+ "a.no_article as id_article, a.no_utilisateur as id_utilisateur, vendeur.pseudo as vendeur, a.no_categorie as id_categorie, "
@@ -190,23 +201,26 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT"
     		
     		rs = pstmt.executeQuery();
 
-	        if (rs.next()) {
-	        	String nomArticle = rs.getString("nomArticle");
+	        while (rs.next()) {
+	        	int noArticle = rs.getInt("no_article");
+	        	String nomArticle = rs.getString("nom_article");
                 String description = rs.getString("description");
-                String categorie = rs.getString("categorie");
+                String categorie = rs.getString("categorie_libelle");
                 int prixVente = rs.getInt("montant_enchere");
-                String pseudoAcquereur = rs.getString("pseudo_acquereur");
+                int noAcquereur = rs.getInt("no_acquereur");
+                String pseudoAcquereur = rs.getString("encherisseur");
                 int prixInitial = rs.getInt("prix_initial");
                 LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
-                String rueRetrait = rs.getString("rue_retrait");
-                String codePostalRetrait = rs.getString("code_postal_retrait");
-                String villeRetrait = rs.getString("ville_retrait");
+                String rueRetrait = rs.getString("rue");
+                String codePostalRetrait = rs.getString("code_postal");
+                String villeRetrait = rs.getString("ville");
+                int noVendeur = rs.getInt("no_vendeur");
                 String pseudoVendeur = rs.getString("pseudo_vendeur");
 
                 // Récupérer les objets Utilisateur correspondants aux pseudos
                 UtilisateurManager utilisateurManager = new UtilisateurManager();
-                Utilisateur acquereur = utilisateurManager.selectionnerPseudo(pseudoAcquereur); 
-                Utilisateur vendeur = utilisateurManager.selectionnerPseudo(pseudoVendeur);
+                Utilisateur acquereur = utilisateurManager.selectionner(noAcquereur); 
+                Utilisateur vendeur = utilisateurManager.selectionner(noVendeur);
 //                Utilisateur acquereur = UtilisateurDAO.selectByPseudo(pseudoAcquereur);
 //                Utilisateur vendeur = UtilisateurDAO.selectByPseudo(pseudoVendeur);
 
@@ -218,7 +232,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT"
                 categorieArt.setLibelle(categorie);
 
                 // Créer l'objet ArticleVendu
-                article = new ArticleVendu(nomArticle, description, categorieArt, prixVente, acquereur,
+                article = new ArticleVendu(noArticle, description, categorieArt, prixVente, acquereur,
 	                        prixInitial, dateFinEncheres, retrait, vendeur);
 	            }
 	    } catch (SQLException e) {
