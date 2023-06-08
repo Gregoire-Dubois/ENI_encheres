@@ -32,9 +32,7 @@
 
 
 		<div class="conteneurdetails3">
-			<div class="titreDetails3">
-				<h1>détail de ma vente à jojo (à dynamiser)</h1>
-			</div>
+
 
 			<div class="titreProduit3">
 				<p>${details.getNomArticle()}</p>
@@ -53,12 +51,10 @@
 			</div>
 
 			<div class="retraitProduit3">
-				<p>Retrait : ${details.getRetrait().getRue()}<p>
-				<p>          ${details.getRetrait().getCodePostal()}<p>
-				<p>          ${details.getRetrait().getVille()}<p>
-
-			<div class="vendeurProduit3">
-				<p>Vendeur : {details.getVendeur().getPseudo()}</p>
+				<p>Retrait : ${details.getRetrait().getRue()}</p>
+				<p>          ${details.getRetrait().getCodePostal()}</p>
+				<p>          ${details.getRetrait().getVille()}</p>
+			</div>
 			<div class="vendeurProduit">
 				<p>Vendeur : ${details.getVendeur().getPseudo()}</p>
 			</div>

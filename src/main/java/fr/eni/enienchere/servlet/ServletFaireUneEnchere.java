@@ -22,6 +22,7 @@ import fr.eni.enienchere.bll.EnchereManager;
 import fr.eni.enienchere.bll.UtilisateurManager;
 import fr.eni.enienchere.dal.ArticleDAOJdbcImpl;
 import fr.eni.enienchere.dal.DAOFactory;
+import fr.eni.enienchere.dal.UtilisateurDAOJdbcImpl;
 
 /**
  * Servlet implementation class ServletFaireUneEnchere
@@ -98,6 +99,17 @@ public class ServletFaireUneEnchere extends HttpServlet {
     			request.setAttribute("article", article);
     			//enchere = null;
     		}
+    		
+    		//récupérer les infos de l'encherisseur
+    		UtilisateurDAOJdbcImpl acquereur = new UtilisateurDAOJdbcImpl();
+    	    Utilisateur encherisseur = null;
+    	    try {
+    	        encherisseur = acquereur.getEncherisseurByArticleId(id);
+    	    } catch (BusinessException e) {
+    	        e.printStackTrace();
+    	    }
+    	    session.setAttribute("encherisseur", encherisseur);
+    	    
     		rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPPageEncherirAcquisitionDetailMaVente.jsp");
     		rd.forward(request, response); 
     		
