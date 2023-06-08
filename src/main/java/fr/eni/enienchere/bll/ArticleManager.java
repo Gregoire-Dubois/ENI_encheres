@@ -249,7 +249,9 @@ public class ArticleManager {
 					switch (filtre) {
 					case "enchereOuverte": 
 						listeArticles= this.articleDAO.selectArticlesECSansUtilisateur(utilisateur.getNoUtilisateur());
-					
+						for(ArticleVendu article : listeArticles) {
+							System.out.println(article);
+						}
 						break;
 					case "mesEncheresEnCours": 
 						listeArticles= this.articleDAO.selectMesEncheresEnCours(utilisateur.getNoUtilisateur());

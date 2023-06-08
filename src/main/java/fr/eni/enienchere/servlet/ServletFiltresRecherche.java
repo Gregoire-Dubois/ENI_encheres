@@ -89,6 +89,9 @@ public class ServletFiltresRecherche extends HttpServlet {
 		try {
 			if(nombreParametresAchats!=0) {
 			listeArticles = articleManager.selectionnerArticlesFiltresAchats(filtresAchats, nombreParametresAchats, userConnected);
+			for(ArticleVendu article : listeArticles) {
+				System.out.println("???"+article);
+			}
 			}else {
 				if(nombreParametresVentes!=0){
 					listeArticles = articleManager.selectionnerArticlesFiltresVentes(filtresVentes, nombreParametresVentes, userConnected);
