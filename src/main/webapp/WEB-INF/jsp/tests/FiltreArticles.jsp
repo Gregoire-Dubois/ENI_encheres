@@ -63,11 +63,11 @@
         <br>
     
         <input type="checkbox" name="filtresVente" value="ventesNonDebutees" id="ventesNonDebutees">
-        <label for="VentesNonDébutées">Mes ventes non débutées</label>
+        <label for="ventesNonDebutees">Mes ventes non débutées</label>
         <br>
     
         <input type="checkbox" name="filtresVente" value="ventesTerminees" id="ventesTerminees">
-        <label for="VentesTerminees">Ventes terminées</label>
+        <label for="ventesTerminees">Ventes terminées</label>
         </fieldset>
         
          <input type="submit" value="Filtrer">
