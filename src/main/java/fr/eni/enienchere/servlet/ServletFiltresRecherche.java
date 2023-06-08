@@ -92,6 +92,8 @@ public class ServletFiltresRecherche extends HttpServlet {
 			}else {
 				if(nombreParametresVentes!=0){
 					listeArticles = articleManager.selectionnerArticlesFiltresVentes(filtresVentes, nombreParametresVentes, userConnected);
+				}else {
+					listeArticles = articleManager.selectionnerParDefaut(userConnected);
 				}
 			}
 			
