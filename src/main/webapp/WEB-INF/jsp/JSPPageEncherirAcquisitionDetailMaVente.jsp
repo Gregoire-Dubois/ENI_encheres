@@ -26,7 +26,7 @@
   </c:when>
   <c:when test="${etatVente == 'VE'}">
 
-		<%@ include file="JSPEncherir.jsp"%>
+		<%@ include file="JSPDetailVenteTerminee.jsp"%>
 		
   </c:when>
   <c:when test="${etatVente == 'NC'}">
