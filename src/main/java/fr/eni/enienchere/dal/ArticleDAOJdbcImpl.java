@@ -308,6 +308,30 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
+            	
+            	/*
+            	 * 	public ArticleVendu(String nomArticle, String description, Categorie categorie, int prixVente,
+			Utilisateur acquereur, int prixInitial, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			Retrait retrait, Utilisateur vendeur) {
+
+			this.nomArticle = nomArticle;
+			this.description = description;
+			this.categorie = categorie;
+			this.prixVente = prixVente; 
+			this.acquereur = acquereur;
+			this.prixInitial = prixInitial;
+			this.dateDebutEncheres = dateDebutEncheres; 
+			this.dateFinEncheres = dateFinEncheres; 
+			this.retrait = retrait; 
+			this.vendeur = vendeur; 
+		
+	
+	}
+            	 * 
+            	 * 
+            	 */
+            	
+            	
 
                 String nomArticle = rs.getString("nom_article");
                 String description = rs.getString("description");

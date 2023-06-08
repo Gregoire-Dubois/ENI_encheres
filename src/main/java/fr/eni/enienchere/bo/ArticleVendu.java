@@ -13,7 +13,8 @@ import fr.eni.enienchere.BusinessException;
 import fr.eni.enienchere.dal.DAOFactory;
 
 public class ArticleVendu implements Serializable{
-	
+
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -37,8 +38,7 @@ public class ArticleVendu implements Serializable{
 	private Retrait retrait;
 	private Utilisateur vendeur;//OK
 	
-
-	
+	//attribut pour pour l'affichage JSP vente en cours
 	private Utilisateur acquereur;
 	
 
@@ -357,6 +357,16 @@ public class ArticleVendu implements Serializable{
 //		if(vendeur!=null) {
 //			vendeur.ajouterArticleVente(this);
 //		}
+	}
+
+	
+	public Utilisateur getAcquereur() {
+		return acquereur;
+	}
+
+
+	public void setAcquereur(Utilisateur acquereur) {
+		this.acquereur = acquereur;
 	}
 
 	public List<Enchere> getListeEncheres() throws BusinessException {
