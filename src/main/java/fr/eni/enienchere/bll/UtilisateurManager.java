@@ -4,7 +4,11 @@ import fr.eni.enienchere.bo.Utilisateur;
 import fr.eni.enienchere.dal.DAOFactory;
 import fr.eni.enienchere.dal.UtilisateurDAO;
 
+import java.util.Base64;
 import java.util.List;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.eclipse.jdt.internal.compiler.ast.ThisReference;
 
@@ -308,5 +312,37 @@ public class UtilisateurManager {
 			businessException.ajouterErreur(CodesResultatBLL.TELEPHONE_NUM_ERREUR);
 		}
 	}
+	
+	//public class EncryptionUtils {
 
-}
+	    private static final String SECRET_KEY = "c6vFN73^3d8gvKkVkUg&3yz4"; // La clé de chiffrement
+
+	    public static String encrypt(String data) {
+	        try {
+	            SecretKeySpec secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "AES");
+	            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+	            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+	            byte[] encryptedBytes = cipher.doFinal(data.getBytes());
+	            return Base64.getEncoder().encodeToString(encryptedBytes);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return null;
+	    }
+
+	    public static String decrypt(String encryptedData) {
+	        try {
+	            SecretKeySpec secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "AES");
+	            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+	            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+	            byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
+	            return new String(decryptedBytes);
+	        } 
+	        
+	        catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return null;
+	        
+	    }
+	}

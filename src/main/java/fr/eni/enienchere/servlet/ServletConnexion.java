@@ -38,11 +38,10 @@ public class ServletConnexion extends HttpServlet {
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("eni_ucred")) {
-					String cookieValue = cookie.getValue();
-					String [] idpwd = cookieValue.split(":");
+					String [] idpwd = cookie.getValue().split(":");
 					if (idpwd.length >= 1 ) {
-						request.setAttribute("identifiant", idpwd[0]);
-						request.setAttribute("mdp", idpwd[1]);
+						request.setAttribute("identifiant", UtilisateurManager.decrypt(idpwd[0]));
+						request.setAttribute("mdp", UtilisateurManager.decrypt(idpwd[1]));
 						String identifiant = request.getParameter("identifiant");
 						String mdp = request.getParameter("mdp");
 						System.out.println(idpwd[0] + " " + idpwd[1]);
@@ -65,8 +64,11 @@ public class ServletConnexion extends HttpServlet {
 		//String mdphash = Utilisateur.hashPwd(mdp);
 		
 		if(cookieId != null){
-			
-			Cookie cookie = new Cookie("eni_ucred", identifiant + ":" + mdp);
+			//Ajout du cryptage 08/06/23
+			String encryptedId = UtilisateurManager.encrypt(identifiant);
+	        String encryptedPassword = UtilisateurManager.encrypt(mdp);
+			//Génération du cookie
+	        Cookie cookie = new Cookie("eni_ucred", encryptedId+":"+encryptedPassword);
 			cookie.setMaxAge(60 * 60 * 24 * 30);
 			response.addCookie(cookie);
 		}
