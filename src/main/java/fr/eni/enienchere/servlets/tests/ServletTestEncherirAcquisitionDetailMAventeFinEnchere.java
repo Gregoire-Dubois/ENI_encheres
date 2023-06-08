@@ -38,30 +38,23 @@ public class ServletTestEncherirAcquisitionDetailMAventeFinEnchere extends HttpS
 		String ev = etatVente.idArticleInList(id);
 		session.setAttribute("etatVente", ev);
 			
-		
-		
-		
+
 		
 		//récupérer les infos d'un article pour sa page enchères
 
 		ArticleDAOJdbcImpl detailsArticle = new ArticleDAOJdbcImpl();
-		ArticleVendu details = null;;
+		ArticleVendu details = null;
 		try {
 			details = detailsArticle.selectArticleById(id);
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		session.setAttribute("details", details);
-		
-		System.out.println(details);
-		
+		session.setAttribute("details", details);		
+
 		
 		rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPPageEncherirAcquisitionDetailMaVente.jsp");
 		rd.forward(request, response); 
-		 
-		
-
 
 	}
 

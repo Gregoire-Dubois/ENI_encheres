@@ -55,7 +55,7 @@
 			</div>
 
 			<div class="vendeurProduit3">
-				<p>Vendeur :</p>
+				<p>Vendeur : {details.getVendeur().getPseudo()}</p>
 			</div>
 
 		</div>

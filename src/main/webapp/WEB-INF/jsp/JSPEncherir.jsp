@@ -73,6 +73,9 @@
 					</div>
 				</div>
 			</div>
+			
+			
+			<c:if test="${details.getVendeur().getPseudo() != userConnected.getPseudo()}">
 					<div class="div-encherir">
     				<form method ="post">
         				<label for="montantEnchere">Ma Proposition : </label>
@@ -90,7 +93,8 @@
 	        			<input type="submit" value="Enchérir" />
     				</form>
     				</div>
-	
+			</c:if>
+		
 		<%@ include file="JSPFooter.jsp"%>
 
 </body>
