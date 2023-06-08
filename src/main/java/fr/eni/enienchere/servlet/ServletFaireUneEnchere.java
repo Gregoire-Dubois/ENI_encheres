@@ -46,15 +46,36 @@ public class ServletFaireUneEnchere extends HttpServlet {
     	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     		
     		HttpSession session = request.getSession();
-    		
     		RequestDispatcher rd = null;
+    		/*
+    		RequestDispatcher rd = null;
+    		
     		ArticleDAOJdbcImpl etatVente = new ArticleDAOJdbcImpl();
     		int id = Integer.parseInt(request.getParameter("idArticle")) ;
     		String ev = etatVente.idArticleInList(id);  	  
     		session.setAttribute("etatVente", ev);
     		session.setAttribute("idArticle", id);
+    		*/
     		
+    		//filtrer l'affichage JSP en fonctionde l'état des vente (EN NC EV)
+    		ArticleDAOJdbcImpl etatVente = new ArticleDAOJdbcImpl();
+    		int id = Integer.parseInt(request.getParameter("idArticle")) ;
+    		String ev = etatVente.idArticleInList(id);
+    		session.setAttribute("etatVente", ev);
     		
+    		//récupérer les infos d'un article pour sa page enchères
+    		
+    		ArticleDAOJdbcImpl detailsArticle = new ArticleDAOJdbcImpl();
+    		ArticleVendu details = null;;
+    		try {
+    			details = detailsArticle.selectArticleById(id);
+    		} catch (BusinessException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    		session.setAttribute("details", details);
+    		
+    		//Bouton Enchérir
     		Enchere enchere = new Enchere();
     		try {
 				enchere = EnchereManager.getInstance().selectEnchereMaxByArticle(id);
@@ -75,7 +96,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
     			request.setAttribute("article", article);
     			//enchere = null;
     		}
-    		rd = request.getRequestDispatcher("/WEB-INF/jsp/tests/JSPencherir.jsp");
+    		rd = request.getRequestDispatcher("/WEB-INF/jsp/JSPPageEncherirAcquisitionDetailMaVente.jsp");
     		rd.forward(request, response); 
     		
     	}
@@ -142,7 +163,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
                                System.out.println("Votre Credit est inferieur au montant de l'enchere");
                                 session.setAttribute("utilisateur",acheteur);
                                 request.setAttribute("enchere",enchere);
-                                request.getRequestDispatcher("WEB-INF/jsp/JSPencherir.jsp").forward(request,response);
+                                request.getRequestDispatcher("WEB-INF/jsp/JSPEncherir.jsp").forward(request,response);
                             }
                     } 
                     /*
@@ -158,13 +179,13 @@ public class ServletFaireUneEnchere extends HttpServlet {
                     	System.out.println("Prix de vente supperieur au montant de l'enchere");
                         session.setAttribute("utilisateur",acheteur);
                         request.setAttribute("enchere",enchere);
-                        request.getRequestDispatcher("WEB-INF/jsp/tests/JSPencherir.jsp").forward(request,response);
+                        request.getRequestDispatcher("WEB-INF/jsp/JSPEncherir.jsp").forward(request,response);
                     }
                 }else{
                 	System.out.println("le prix initial est supperieur aux prix de vente ");
                     session.setAttribute("utilisateur",acheteur);
                     request.setAttribute("enchere",enchere);
-                    request.getRequestDispatcher("WEB-INF/Vjsp/tests/JSPencherir.jsp").forward(request,response);
+                    request.getRequestDispatcher("WEB-INF/jsp/JSPEncherir.jsp").forward(request,response);
                 }
             }
     	}

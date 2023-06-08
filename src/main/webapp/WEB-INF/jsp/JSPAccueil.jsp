@@ -46,12 +46,12 @@
 		
 				
 					<div class="card">
-					<a href="${pageContext.request.contextPath}/ServletTestEncherirAcquisitionDetailMAventeFinEnchere?idArticle=${article.noArticle}">
+					<a href="${pageContext.request.contextPath}/encherir?idArticle=${article.noArticle}">
 						<img
 							src="https://static.fnac-static.com/multimedia/Images/FR/MDM/24/35/1f/18822436/1540-1/tsp20230519135127/The-Legend-of-Zelda-Tears-Of-The-Kingdom-Nintendo-Switch.jpg"
 							alt="Image de la card"></a>
 						<div class="card-content">
-							<h2><a href="${pageContext.request.contextPath}/ServletTestEncherirAcquisitionDetailMAventeFinEnchere?idArticle=${article.noArticle}">${article.nomArticle}</a></h2> 
+							<h2><a href="${pageContext.request.contextPath}/encherir?idArticle=${article.noArticle}">${article.nomArticle}</a></h2> 
 							
 							<p>Prix :${article.prixVente}</p> 
 							<p>Fin de l'enchère :${article.dateFinEncheres}</p>

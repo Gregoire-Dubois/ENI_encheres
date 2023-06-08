@@ -40,11 +40,11 @@
 					</div>
 		
 					<div class="categorieProduit">
-						<p>Categorie :${details.getCategorie()}</p>
+						<p>Categorie :${details.getCategorie().getLibelle()}</p>
 					</div>
 		
 					<div class="miseAPrixProduit">
-						<p>Mise à prix : ${details.getPrixVente()}</p>
+						<p>Mise à prix : ${details.getPrixInitial()}</p>
 					</div>
 		
 					<div class="meilleurOffreProduit">
@@ -57,32 +57,34 @@
 					</div>
 		
 					<div class="retraitProduit">
-						<p>Retrait Produit :${details.getRetrait()}<p>
+						<p>Retrait Produit :${details.getRetrait().getRue()}<p>
+						<p>${details.getRetrait().getCodePostal()}<p>
+						<p>${details.getRetrait().getVille()}<p>
+						
 					</div>
 		
 					<div class="vendeurProduit">
-						<p>Vendeur :${details.getVendeur()}</p>
-					</div>
-		
-					<div class="propositionProduit">
-		
-						<form action="" method="post">
-		
-							<legend>Ma proposition</legend>
-		
-							<select name="price" id="price-select">
-								<option value="">--Votre offre--</option>
-							</select>
-		
-						</form>
-		
-						<div class="button">
-							<button type="submit">Enchérir</button>
-						</div>
-		
+						<p>Vendeur :${details.getVendeur().getPseudo()}</p>
 					</div>
 				</div>
 			</div>
+					<div class="div-encherir">
+    				<form method ="post">
+        				<label for="montantEnchere">Ma Proposition : </label>
+        				<input type="number" id="montantEnchere" name="montantEnchere"
+               			min =      
+        					<c:choose>
+    							<c:when test="${enchere == null}">
+         						"${article.prixInitial}" value="${article.prixInitial + 1}"
+    							</c:when>
+    						<c:otherwise>
+        						"${enchere.montantEnchere + 1}" value="${enchere.montantEnchere + 1}"
+    						</c:otherwise>
+							</c:choose>
+        				/>
+	        			<input type="submit" value="Enchérir" />
+    				</form>
+    				</div>
 	
 		<%@ include file="JSPFooter.jsp"%>
 
