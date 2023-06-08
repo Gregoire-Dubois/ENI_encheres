@@ -128,11 +128,10 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 			+ "									  INNER JOIN CATEGORIES as c on c.no_categorie=a.no_categorie\r\n"
 			+ "						where etat_vente='EC' and a.no_utilisateur!=?;";
 	
-	private static final String SELECT_MES_ENCHERES="SELECT DISTINCT e.no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
-			+ "						FROM ENCHERES as e INNER JOIN UTILISATEURS as u on e.no_utilisateur=u.no_utilisateur \r\n"
-			+ "												  INNER JOIN ARTICLES_VENDUS as a on a.no_article=e.no_article\r\n"
-			+ "												  \r\n"
-			+ "									where etat_vente='EC' and e.no_utilisateur=?;";
+	private static final String SELECT_MES_ENCHERES="SELECT DISTINCT e.no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, pseudo\r\n"
+			+ "								FROM ENCHERES as e INNER JOIN ARTICLES_VENDUS as a on a.no_article=e.no_article\r\n"
+			+ "								INNER JOIN UTILISATEURS as u on a.no_utilisateur=u.no_utilisateur \r\n"
+			+ "												where etat_vente='EC' and e.no_utilisateur=?;";
 	
 	private static final String SELECT_ENCHERES_REMPORTEES="SELECT e.no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, pseudo\r\n"
 			+ "								FROM ENCHERES as e INNER JOIN ARTICLES_VENDUS as a on a.no_article=e.no_article and e.montant_enchere = a.prix_vente\r\n"
@@ -155,10 +154,9 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 			+ "\r\n"
 			+ "												where etat_vente='VE' and e.no_utilisateur=?\r\n"
 			+ "UNION\r\n"
-			+ "SELECT DISTINCT e.no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
-			+ "									FROM ENCHERES as e INNER JOIN UTILISATEURS as u on e.no_utilisateur=u.no_utilisateur \r\n"
-			+ "															  INNER JOIN ARTICLES_VENDUS as a on a.no_article=e.no_article\r\n"
-			+ "															\r\n"
+			+ "SELECT DISTINCT e.no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, pseudo\r\n"
+			+ "								FROM ENCHERES as e INNER JOIN ARTICLES_VENDUS as a on a.no_article=e.no_article\r\n"
+			+ "								INNER JOIN UTILISATEURS as u on a.no_utilisateur=u.no_utilisateur \r\n"
 			+ "												where etat_vente='EC' and e.no_utilisateur=?;";
 	
 	private static final String SELECT_MES_VENTES_EN_COURS="SELECT no_article, nom_article, prix_vente, prix_initial, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
