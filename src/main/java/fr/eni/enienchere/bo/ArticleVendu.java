@@ -36,6 +36,7 @@ public class ArticleVendu implements Serializable{
 	private Categorie categorie;
 	private Retrait retrait;
 	private Utilisateur vendeur;//OK
+	
 
 	
 	private Utilisateur acquereur;

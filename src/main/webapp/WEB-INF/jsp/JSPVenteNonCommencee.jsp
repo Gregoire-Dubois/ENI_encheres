@@ -41,6 +41,7 @@
 					</div>				
 		
 		
+		
 					<div class="debutEncheres">
 						<p>Début encheres produit :${details.getDateDebutEncheres()}</p>
 		
