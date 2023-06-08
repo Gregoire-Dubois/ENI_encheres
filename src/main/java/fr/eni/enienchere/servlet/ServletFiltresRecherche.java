@@ -63,6 +63,24 @@ public class ServletFiltresRecherche extends HttpServlet {
 		}else {
 			nombreParametresVentes = 0;
 		}
+		List<String> listeFiltresAchats = new ArrayList<>();
+		List<String> listeFiltresVentes = new ArrayList<>();
+		
+		if(nombreParametresAchats!=0) {
+			
+			for(int i =0; i<nombreParametresAchats; i++) {
+				listeFiltresAchats.add(filtresAchats[i]);
+			}
+		}
+		if(nombreParametresVentes!=0) {
+			
+			for(int i =0; i<nombreParametresVentes; i++) {
+				listeFiltresVentes.add(filtresVentes[i]);
+			}
+		}
+		
+		session.setAttribute("listeFiltresAchats", listeFiltresAchats);
+		session.setAttribute("listeFiltresVentes",listeFiltresVentes);
 		System.out.println(nombreParametresAchats);
 		System.out.println(nombreParametresVentes);
 		ArticleManager articleManager = new ArticleManager();

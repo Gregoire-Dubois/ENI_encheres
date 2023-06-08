@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,15 +55,15 @@
 					        </fieldset>
 					        
 					        <fieldset id="filtresVente">
-					        <input type="checkbox" name="filtresVente" value="mesVentesEnCours" id="mesVentesEnCours">
+					        <input type="checkbox" name="filtresVente" value="mesVentesEnCours" id="mesVentesEnCours" ${fn:contains(listeFiltresVentes, 'mesVentesEnCours') ? 'checked' : ''}>
 					        <label for="mesVentesEnCours">Mes ventes en cours</label>
 					        <br>
 					    
-					        <input type="checkbox" name="filtresVente" value="ventesNonDebutees" id="ventesNonDebutees">
+					        <input type="checkbox" name="filtresVente" value="ventesNonDebutees" id="ventesNonDebutees" ${fn:contains(listeFiltresVentes, 'ventesNonDebutees') ? 'checked' : ''}>
 					        <label for="ventesNonDebutees">Mes ventes non débutées</label>
 					        <br>
 					    
-					        <input type="checkbox" name="filtresVente" value="ventesTerminees" id="ventesTerminees">
+					        <input type="checkbox" name="filtresVente" value="ventesTerminees" id="ventesTerminees" ${fn:contains(listeFiltresVentes, 'ventesTerminees') ? 'checked' :''}>
 					        <label for="ventesTerminees">Ventes terminées</label>
 					        </fieldset>
 							
@@ -73,15 +74,15 @@
 				        	
 					        
 					        <fieldset id="filtresAchat">
-					        <input type="checkbox" name="filtresAchat" value="enchereOuverte" id="enchereOuverte">
+					        <input type="checkbox" name="filtresAchat" value="enchereOuverte" id="enchereOuverte"  ${fn:contains(listeFiltresAchats, 'enchereOuverte') ? 'checked' : ''}>
 					        <label for="enchereOuverte">Enchères ouvertes</label>
 					        <br>
 					    
-					        <input type="checkbox" name="filtresAchat" value="mesEncheresEnCours" id="mesEncheresEnCours">
+					        <input type="checkbox" name="filtresAchat" value="mesEncheresEnCours" id="mesEncheresEnCours" ${fn:contains(listeFiltresAchats, 'mesEncheresEnCours') ? 'checked' :''}>
 					        <label for="mesEncheresEnCours">Mes enchères en cours</label>
 					        <br>
 					    
-					        <input type="checkbox" name="filtresAchat" value="mesEncheresRemportees" id="mesEncheresRemportees">
+					        <input type="checkbox" name="filtresAchat" value="mesEncheresRemportees" id="mesEncheresRemportees" ${fn:contains(listeFiltresAchats, 'mesEncheresRemportees') ? 'checked' :''}>
 					        <label for="mesEncheresRemportees">Mes enchères remportées</label>
 					        </fieldset>
 					        

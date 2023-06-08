@@ -287,7 +287,7 @@ public class ArticleManager {
 				}break;
 			}
 			case 3: {
-				listeArticles= this.articleDAO.selectArticlesEncheresRemporteesPlusMesEncheresEnCours(utilisateur.getNoUtilisateur());
+				listeArticles= this.articleDAO.selectArticlesECSansUtilisateurPlusEncheresRemportees(utilisateur.getNoUtilisateur());
 			}break;
 			default:
 				System.out.println("A faire");

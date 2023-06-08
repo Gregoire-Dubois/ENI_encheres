@@ -188,7 +188,7 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 			+ "UNION\r\n"
 			+ "SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
 			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
-			+ "	WHERE etat_vente='VE' and a.no_utilisateur=.;";
+			+ "	WHERE etat_vente='VE' and a.no_utilisateur=?;";
 	private static final String SELECT_MES_VENTES_NON_DEBUTEES_PLUS_TERMINEES="SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
 			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
 			+ "	WHERE etat_vente='NC' and a.no_utilisateur=?\r\n"
@@ -1411,7 +1411,6 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
     		pstmt = cnx.prepareStatement(SELECT_MES_VENTES_EN_COURS_PLUS_NON_DEBUTEES_PLUS_TERMINEES);
 
     		pstmt.setInt(1, idUtilisateur);
-    		pstmt.setInt(2, idUtilisateur);
     		ResultSet rs = pstmt.executeQuery();
 
     		while(rs.next()) {
