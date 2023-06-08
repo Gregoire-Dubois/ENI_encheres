@@ -131,7 +131,6 @@ public class ServletFaireUneEnchere extends HttpServlet {
                                         utilisateurRenvoyer = utilisateurManager.selectionner(idUtilisateur);
                                         message="Votre enchere a reussi !";
                                         session.setAttribute("utilisateur",utilisateurRenvoyer);
-                                        request.setAttribute("message_succes",message);
                                         request.setAttribute("enchere", enchereRetourner);
                                         request.getRequestDispatcher("WEB-INF/jsp/JSPAccueil.jsp").forward(request,response);
                                     } catch ( BusinessException e) {
@@ -143,7 +142,6 @@ public class ServletFaireUneEnchere extends HttpServlet {
                                System.out.println("Votre Credit est inferieur au montant de l'enchere");
                                 session.setAttribute("utilisateur",acheteur);
                                 request.setAttribute("enchere",enchere);
-                                request.setAttribute("message",message);
                                 request.getRequestDispatcher("WEB-INF/jsp/JSPencherir.jsp").forward(request,response);
                             }
                     } 
@@ -152,7 +150,6 @@ public class ServletFaireUneEnchere extends HttpServlet {
                             System.out.println("Vous etes deja le dernier encherisseur");
                             session.setAttribute("utilisateur",acheteur);
                             request.setAttribute("enchere",enchere);
-                            request.setAttribute("message",message);
                             request.getRequestDispatcher("WEB-INF/jsp/tests/JSPencherir.jsp").forward(request,response);
                     }
                     
@@ -161,14 +158,12 @@ public class ServletFaireUneEnchere extends HttpServlet {
                     	System.out.println("Prix de vente supperieur au montant de l'enchere");
                         session.setAttribute("utilisateur",acheteur);
                         request.setAttribute("enchere",enchere);
-                        request.setAttribute("message",message);
                         request.getRequestDispatcher("WEB-INF/jsp/tests/JSPencherir.jsp").forward(request,response);
                     }
                 }else{
                 	System.out.println("le prix initial est supperieur aux prix de vente ");
                     session.setAttribute("utilisateur",acheteur);
                     request.setAttribute("enchere",enchere);
-                    request.setAttribute("message",message);
                     request.getRequestDispatcher("WEB-INF/Vjsp/tests/JSPencherir.jsp").forward(request,response);
                 }
             }
