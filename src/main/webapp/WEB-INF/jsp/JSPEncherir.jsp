@@ -14,7 +14,7 @@
 <title>Enchérir</title>
 </head>
 <body>
-	
+
 	<%@ include file="JSPHeader.jsp"%>
 
 
@@ -68,7 +68,8 @@
 					</div>
 				</div>
 			</div>
-					<div class="div-encherir">
+			
+
     				<form method ="post">
         				<label for="montantEnchere">Ma Proposition : </label>
         				<input type="number" id="montantEnchere" name="montantEnchere"
@@ -85,6 +86,12 @@
 	        			<input type="submit" value="Enchérir" />
     				</form>
     				</div>
+
+	<c:if test="${!empty listeErreursEnchere }">
+	<c:forEach var="code" items="${listeErreursEnchere}">
+			<li style="color: red">Erreur: ${LecteurMessage.getMessageErreur(code)}</li>
+	</c:forEach>
+</c:if>
 	
 		<%@ include file="JSPFooter.jsp"%>
 
