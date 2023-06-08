@@ -123,6 +123,83 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 			+ "							  INNER JOIN CATEGORIES as c on c.no_categorie=a.no_categorie\r\n"
 			+ "			where etat_vente=? and LOWER(nom_article) like ? and ((c.libelle = ?) or (? IS NULL))";
 	
+	private static final String SELECT_EC_ARTICLES_SANS_UTILISATEUR = "SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+			+ "			FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS as u on a.no_utilisateur=u.no_utilisateur \r\n"
+			+ "									  INNER JOIN CATEGORIES as c on c.no_categorie=a.no_categorie\r\n"
+			+ "						where etat_vente='EC' and a.no_utilisateur!=?;";
+	
+	private static final String SELECT_MES_ENCHERES="SELECT e.no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+			+ "						FROM ENCHERES as e INNER JOIN UTILISATEURS as u on e.no_utilisateur=u.no_utilisateur \r\n"
+			+ "												  INNER JOIN ARTICLES_VENDUS as a on a.no_article=e.no_article\r\n"
+			+ "												  \r\n"
+			+ "									where etat_vente='EC' and e.no_utilisateur=?;";
+	
+	private static final String SELECT_ENCHERES_REMPORTEES="SELECT e.no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+			+ "						FROM ENCHERES as e INNER JOIN UTILISATEURS as u on e.no_utilisateur=u.no_utilisateur \r\n"
+			+ "												  INNER JOIN ARTICLES_VENDUS as a on a.no_article=e.no_article and e.montant_enchere = a.prix_vente\r\n"
+			+ "												  \r\n"
+			+ "									where etat_vente='VE' and e.no_utilisateur=?;";
+	private static final String SELECT_EC_ARTICLES_SANS_UTILISATEUR_PLUS_ENCHERES_REMPORTEES="SELECT a.no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+			+ "						FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS as u on a.no_utilisateur=u.no_utilisateur \r\n"
+			+ "												  INNER JOIN CATEGORIES as c on c.no_categorie=a.no_categorie\r\n"
+			+ "									where etat_vente='EC' and a.no_utilisateur!=?\r\n"
+			+ "UNION\r\n"
+			+ "SELECT e.no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+			+ "									FROM ENCHERES as e INNER JOIN UTILISATEURS as u on e.no_utilisateur=u.no_utilisateur \r\n"
+			+ "															  INNER JOIN ARTICLES_VENDUS as a on a.no_article=e.no_article and e.montant_enchere = a.prix_vente\r\n"
+			+ "\r\n"
+			+ "												where etat_vente='VE' and e.no_utilisateur=?;";
+	
+	private static final String SELECT_MES_ENCHERES_PLUS_ENCHERES_REMPORTEES="SELECT e.no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+			+ "									FROM ENCHERES as e INNER JOIN UTILISATEURS as u on e.no_utilisateur=u.no_utilisateur \r\n"
+			+ "															  INNER JOIN ARTICLES_VENDUS as a on a.no_article=e.no_article and e.montant_enchere = a.prix_vente\r\n"
+			+ "\r\n"
+			+ "												where etat_vente='VE' and e.no_utilisateur=?\r\n"
+			+ "UNION\r\n"
+			+ "SELECT e.no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, pseudo \r\n"
+			+ "									FROM ENCHERES as e INNER JOIN UTILISATEURS as u on e.no_utilisateur=u.no_utilisateur \r\n"
+			+ "															  INNER JOIN ARTICLES_VENDUS as a on a.no_article=e.no_article\r\n"
+			+ "															\r\n"
+			+ "												where etat_vente='EC' and e.no_utilisateur=?;";
+	
+	private static final String SELECT_MES_VENTES_EN_COURS="SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
+			+ "	WHERE etat_vente='EC' and a.no_utilisateur=?;";
+	
+	private static final String SELECT_MES_VENTES_NON_DEBUTEES="SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
+			+ "	WHERE etat_vente='NC' and a.no_utilisateur=?;";
+	
+	private static final String SELECT_MES_VENTES_TERMINEES="SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
+			+ "	WHERE etat_vente='VE' and a.no_utilisateur=?;";
+	
+	private static final String SELECT_MES_VENTES_EN_COURS_PLUS_NON_DEBUTEES="SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
+			+ "	WHERE etat_vente='EC' and a.no_utilisateur=?\r\n"
+			+ "UNION\r\n"
+			+ "SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
+			+ "	WHERE etat_vente='NC' and a.no_utilisateur=?;";
+			
+	private static final String SELECT_MES_VENTES_EN_COURS_PLUS_TERMINEES="SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
+			+ "	WHERE etat_vente='EC' and a.no_utilisateur=?\r\n"
+			+ "UNION\r\n"
+			+ "SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
+			+ "	WHERE etat_vente='VE' and a.no_utilisateur=.;";
+	private static final String SELECT_MES_VENTES_NON_DEBUTEES_PLUS_TERMINEES="SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
+			+ "	WHERE etat_vente='NC' and a.no_utilisateur=?\r\n"
+			+ "UNION\r\n"
+			+ "SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
+			+ "	WHERE etat_vente='VE' and a.no_utilisateur=?;";
+	private static final String SELECT_MES_VENTES_EN_COURS_PLUS_NON_DEBUTEES_PLUS_TERMINEES="SELECT no_article, nom_article, prix_vente, date_fin_encheres, a.no_utilisateur, u.pseudo \r\n"
+			+ "	FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur=a.no_utilisateur\r\n"
+			+ "	WHERE a.no_utilisateur=?;";
+	
 	
 	private static final String ID_ARTICLE = "SELECT etat_vente "
 			+ "FROM ARTICLES_VENDUS "
@@ -852,6 +929,515 @@ private static final String SELECT_ARTICLE_BY_ID = "SELECT\r\n"
 		return articles;
 		
 	}
+	
+	@Override
+	public List<ArticleVendu> selectArticlesECSansUtilisateur(int idUtilisateur) throws BusinessException {
+		List<ArticleVendu> articles = new ArrayList<>();
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+	 
 
+	    try {
+    		cnx = ConnectionProvider.getConnection();
+    		pstmt = cnx.prepareStatement(SELECT_EC_ARTICLES_SANS_UTILISATEUR);
+
+    		pstmt.setInt(1, idUtilisateur);
+    		ResultSet rs = pstmt.executeQuery();
+
+    		while(rs.next()) {
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
+				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
+				
+				articles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_EC_ARTICLES_SANS_UTILISATEUR_ECHEC);
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		return articles;
+	    }
+
+	@Override
+	public List<ArticleVendu> selectMesEncheresEnCours(int idUtilisateur) throws BusinessException {
+		List<ArticleVendu> articles = new ArrayList<>();
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+	 
+
+	    try {
+    		cnx = ConnectionProvider.getConnection();
+    		pstmt = cnx.prepareStatement(SELECT_MES_ENCHERES);
+
+    		pstmt.setInt(1, idUtilisateur);
+    		ResultSet rs = pstmt.executeQuery();
+
+    		while(rs.next()) {
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
+				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
+				
+				articles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_MES_ENCHERES_ECHEC);
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		return articles;
+	}
+
+	@Override
+	public List<ArticleVendu> selectEncheresRemportees(int idUtilisateur) throws BusinessException {
+		List<ArticleVendu> articles = new ArrayList<>();
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+	 
+
+	    try {
+    		cnx = ConnectionProvider.getConnection();
+    		pstmt = cnx.prepareStatement(SELECT_ENCHERES_REMPORTEES);
+
+    		pstmt.setInt(1, idUtilisateur);
+    		ResultSet rs = pstmt.executeQuery();
+
+    		while(rs.next()) {
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
+				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
+				
+				articles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_MES_ENCHERES_REMPORTEES_ECHEC);
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		return articles;
+	}
+
+	@Override
+	public List<ArticleVendu> selectArticlesECSansUtilisateurPlusEncheresRemportees(int idUtilisateur) {
+		List<ArticleVendu> articles = new ArrayList<>();
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+	 
+
+	    try {
+    		cnx = ConnectionProvider.getConnection();
+    		pstmt = cnx.prepareStatement(SELECT_EC_ARTICLES_SANS_UTILISATEUR_PLUS_ENCHERES_REMPORTEES);
+
+    		pstmt.setInt(1, idUtilisateur);
+    		pstmt.setInt(2, idUtilisateur);
+    		ResultSet rs = pstmt.executeQuery();
+
+    		while(rs.next()) {
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
+				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
+				
+				articles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_EC_ARTICLES_SANS_UTILISATEUR_PLUS_ENCHERES_REMPORTEES_ECHEC);
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		return articles;
+	}
+
+	@Override
+	public List<ArticleVendu> selectArticlesEncheresRemporteesPlusMesEncheresEnCours(int idUtilisateur) {
+		List<ArticleVendu> articles = new ArrayList<>();
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+	 
+
+	    try {
+    		cnx = ConnectionProvider.getConnection();
+    		pstmt = cnx.prepareStatement(SELECT_MES_ENCHERES_PLUS_ENCHERES_REMPORTEES);
+
+    		pstmt.setInt(1, idUtilisateur);
+    		pstmt.setInt(2, idUtilisateur);
+    		ResultSet rs = pstmt.executeQuery();
+
+    		while(rs.next()) {
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
+				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
+				
+				articles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_MES_ENCHERES_PLUS_ENCHERES_REMPORTEES_ECHEC);
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		return articles;
+	}
+
+	@Override
+	public List<ArticleVendu> selectMesVentesEnCours(int idUtilisateur) {
+		List<ArticleVendu> articles = new ArrayList<>();
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+	 
+
+	    try {
+    		cnx = ConnectionProvider.getConnection();
+    		pstmt = cnx.prepareStatement(SELECT_MES_VENTES_EN_COURS);
+
+    		pstmt.setInt(1, idUtilisateur);
+    		ResultSet rs = pstmt.executeQuery();
+
+    		while(rs.next()) {
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
+				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
+				
+				articles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_MES_VENTES_EN_COURS_ECHEC);
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		return articles;
+	}
+
+	@Override
+	public List<ArticleVendu> selectMesVentesNonDebutees(int idUtilisateur) {
+		List<ArticleVendu> articles = new ArrayList<>();
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+	 
+
+	    try {
+    		cnx = ConnectionProvider.getConnection();
+    		pstmt = cnx.prepareStatement(SELECT_MES_VENTES_NON_DEBUTEES);
+
+    		pstmt.setInt(1, idUtilisateur);
+    		ResultSet rs = pstmt.executeQuery();
+
+    		while(rs.next()) {
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
+				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
+				
+				articles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_MES_VENTES_NON_DEBUTEES_ECHEC);
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		return articles;
+	}
+
+	@Override
+	public List<ArticleVendu> selectMesVentesTerminees(int idUtilisateur) {
+		List<ArticleVendu> articles = new ArrayList<>();
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+	 
+
+	    try {
+    		cnx = ConnectionProvider.getConnection();
+    		pstmt = cnx.prepareStatement(SELECT_MES_VENTES_TERMINEES);
+
+    		pstmt.setInt(1, idUtilisateur);
+    		ResultSet rs = pstmt.executeQuery();
+
+    		while(rs.next()) {
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
+				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
+				
+				articles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_MES_VENTES_TERMINEES_ECHEC);
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		return articles;
+	}
+
+	@Override
+	public List<ArticleVendu> selectMesVentesEnCoursPlusVentesNonDebutees(int idUtilisateur) {
+		List<ArticleVendu> articles = new ArrayList<>();
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+	 
+
+	    try {
+    		cnx = ConnectionProvider.getConnection();
+    		pstmt = cnx.prepareStatement(SELECT_MES_VENTES_EN_COURS_PLUS_NON_DEBUTEES);
+
+    		pstmt.setInt(1, idUtilisateur);
+    		pstmt.setInt(2, idUtilisateur);
+    		ResultSet rs = pstmt.executeQuery();
+
+    		while(rs.next()) {
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
+				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
+				
+				articles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_MES_VENTES_EN_COURS_PLUS_NON_DEBUTEES);
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		return articles;
+	}
+
+	@Override
+	public List<ArticleVendu> selectMesVentesEnCoursPlusVentesTerminees(int idUtilisateur) {
+		List<ArticleVendu> articles = new ArrayList<>();
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+	 
+
+	    try {
+    		cnx = ConnectionProvider.getConnection();
+    		pstmt = cnx.prepareStatement(SELECT_MES_VENTES_EN_COURS_PLUS_TERMINEES);
+
+    		pstmt.setInt(1, idUtilisateur);
+    		pstmt.setInt(2, idUtilisateur);
+    		ResultSet rs = pstmt.executeQuery();
+
+    		while(rs.next()) {
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
+				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
+				
+				articles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_MES_VENTES_EN_COURS_PLUS_TERMINEES_ECHEC);
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		return articles;
+	}
+
+	@Override
+	public List<ArticleVendu> selectVentesNonDebuteesVentesTerminees(int idUtilisateur) {
+		List<ArticleVendu> articles = new ArrayList<>();
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+	 
+
+	    try {
+    		cnx = ConnectionProvider.getConnection();
+    		pstmt = cnx.prepareStatement(SELECT_MES_VENTES_NON_DEBUTEES_PLUS_TERMINEES);
+
+    		pstmt.setInt(1, idUtilisateur);
+    		pstmt.setInt(2, idUtilisateur);
+    		ResultSet rs = pstmt.executeQuery();
+
+    		while(rs.next()) {
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
+				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
+				
+				articles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_MES_VENTES_NON_DEBUTEES_PLUS_TERMINEES_ECHEC);
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		return articles;
+	}
+
+	@Override
+	public List<ArticleVendu> selectMesVentesEnCoursNonDebuteesEtTerminees(int idUtilisateur) {
+		List<ArticleVendu> articles = new ArrayList<>();
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+	 
+
+	    try {
+    		cnx = ConnectionProvider.getConnection();
+    		pstmt = cnx.prepareStatement(SELECT_MES_VENTES_EN_COURS_PLUS_NON_DEBUTEES_PLUS_TERMINEES);
+
+    		pstmt.setInt(1, idUtilisateur);
+    		pstmt.setInt(2, idUtilisateur);
+    		ResultSet rs = pstmt.executeQuery();
+
+    		while(rs.next()) {
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo);
+				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), utilisateur);
+				
+				articles.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_MES_VENTES_ECHEC);
+		}finally {
+			if(cnx !=null) {
+				try {
+					cnx.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.DECONNEXION_ECHEC);
+				}
+			}
+			
+		}
+		
+		return articles;
+	}
 
 }
