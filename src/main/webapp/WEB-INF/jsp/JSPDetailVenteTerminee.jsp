@@ -3,6 +3,8 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="fr.eni.enienchere.messages.LecteurMessage"%>
+<%@ page import="fr.eni.enienchere.bo.Utilisateur" %>
+
     
 <!DOCTYPE html>
 <html>
@@ -22,16 +24,12 @@
 
 		</div>
 		
-		<div class="titreDetails3">
-		    <c:choose>
-		        <c:when test="${details.acquereur.selectionnerPseudo() eq userConnected.getPseudo()}">
-		            <h1>Vous avez remporté la vente</h1>
-		        </c:when>
-		        <c:otherwise>
-		            <h1>${details.acquereur.selectionnerPseudo()} a remporté la vente</h1>
-		        </c:otherwise>
-		    </c:choose>
-		</div>
+		<% Utilisateur encherisseur = (Utilisateur) session.getAttribute("encherisseur"); %>
+		
+		<% if (encherisseur.getPseudo() != null) { %>
+    		<h1><%= encherisseur.getPseudo() %> a remporté la vente</h1>
+		<% } %>
+
 
 		<div class="conteneurdetails3">
 			<div class="titreDetails3">

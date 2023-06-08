@@ -11,7 +11,8 @@
 <body>
 
 		<div class="entreprise">
-			<a href="${pageContext.request.contextPath}"><h1>ENI-Enchères</h1></a>
+			<a href="${pageContext.request.contextPath}"><h1 class="header-title">ENI-Enchères</h1>
+    		</a>
 		</div>
 
 </body>

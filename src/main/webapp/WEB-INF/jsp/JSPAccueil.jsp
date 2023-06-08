@@ -14,17 +14,13 @@
 <body>
 
 	<header>
-		<div class="header-left">
-			<%@ include file="JSPHeader.jsp"%>
-		</div>
-		<div class="header-right">
-			<%@ include file="JSPHeaderConnexion.jsp"%>
-		</div>
-	</header>
-	
-
-	
-
+  <div class="header-left">
+    <%@ include file="JSPHeader.jsp"%>
+  </div>
+  <div class="header-right">
+    <%@ include file="JSPHeaderConnexion.jsp"%>
+  </div>
+</header>
 
 	<section>
 
