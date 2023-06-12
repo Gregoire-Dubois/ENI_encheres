@@ -21,3 +21,9 @@ L'utilisateur peut :
 Le projet repose sur une base de données SQL server.
 
 Le langage utilisé est java avec java ee. 
+
+Ce travail est le frit d'une colaboration : 
+- Cedric CREPIN
+- Tanguy JOSSE
+- Priscillia POPIEUL
+- Grégoire DUBOIS
